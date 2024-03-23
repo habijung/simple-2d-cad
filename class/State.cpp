@@ -142,12 +142,11 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 	mPos = event->pos();
 	mShapes = mScene->retShapes();
 
-	// TODO: Reverse iterator로 상위 shape 순서 맞추기
 	if (!(mButton == Qt::LeftButton))
 	{
-		list<Shape*>::iterator iter = mShapes.begin();
+		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
 
-		for (iter; iter != mShapes.end(); iter++)
+		for (iter; iter != mShapes.rend(); iter++)
 		{
 			if (!(*iter)->retType().compare("Point"))
 			{
