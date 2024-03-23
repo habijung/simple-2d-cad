@@ -17,8 +17,10 @@ class Vertex : public Shape
 public:
 	Vertex(float x = 0, float y = 0);
 	Vertex(QPointF p);
-	virtual void render(QPainter* painter, Camera* camera);
 	QPointF retVertex();
+	void updateVertex(QPointF p);
+
+	virtual void render(QPainter* painter, Camera* camera);
 
 private:
 	string mType;

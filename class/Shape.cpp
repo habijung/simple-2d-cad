@@ -16,16 +16,22 @@ Vertex::Vertex(QPointF p)
 	mY = p.y();
 }
 
+QPointF Vertex::retVertex()
+{
+	return QPointF(mX, mY);
+}
+
+void Vertex::updateVertex(QPointF p)
+{
+	mX = p.x();
+	mY = p.y();
+}
+
 void Vertex::render(QPainter* painter, Camera* camera)
 {
 	QPoint p = camera->setWindowToScreen(QPointF(mX, mY));
 	painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(p);
-}
-
-QPointF Vertex::retVertex()
-{
-	return QPointF(mX, mY);
 }
 
 Line::Line(Vertex* v1, Vertex* v2)

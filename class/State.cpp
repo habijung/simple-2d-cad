@@ -127,6 +127,9 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
+
+	// Test
+	v = new Vertex(QPointF(1, 1));
 }
 
 void SelectPointState::mousePressEvent(QMouseEvent* event)
@@ -135,7 +138,6 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	mButton = event->button();
 
 	pol = QPolygonF();
-	v = new Vertex(QPointF(1, 1));
 	pol = createPointBoundingBox(mCamera, v, 25);
 	hit = hitTestingPoint(mPos, pol);
 	qDebug() << hit;
@@ -150,7 +152,13 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 	if (hit && mButton == Qt::LeftButton && event->button() == Qt::NoButton)
 	{
-		qDebug() << mPos;
+		float dx = this->mViewport->width() / 2.0;
+		float dy = this->mViewport->height() / 2.0;
+		float scale = 100.0;
+
+		v->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+		pol = createPointBoundingBox(mCamera, v, 25);
+		mViewport->update();
 	}
 }
 
