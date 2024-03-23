@@ -2,12 +2,12 @@
 #include "../viewport/Viewport.h"
 
 
-State::State(string name, component* comp)
+State::State(string name, viewportData* data)
 {
 	mName = name;
-	mViewport = comp->viewport;
-	mScene = comp->scene;
-	mCamera = comp->camera;
+	mViewport = data->viewport;
+	mScene = data->scene;
+	mCamera = data->camera;
 }
 
 string State::getStateName()

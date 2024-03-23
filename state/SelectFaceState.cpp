@@ -2,13 +2,13 @@
 #include "../viewport/Viewport.h"
 
 
-SelectFaceState::SelectFaceState(string name, component* comp)
-	: State(name, comp)
+SelectFaceState::SelectFaceState(string name, viewportData* data)
+	: State(name, data)
 {
 	mName = name;
-	mViewport = comp->viewport;
-	mScene = comp->scene;
-	mCamera = comp->camera;
+	mViewport = data->viewport;
+	mScene = data->scene;
+	mCamera = data->camera;
 	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
 }
 

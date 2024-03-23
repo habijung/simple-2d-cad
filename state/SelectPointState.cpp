@@ -2,13 +2,13 @@
 #include "../viewport/Viewport.h"
 
 
-SelectPointState::SelectPointState(string name, component* comp)
-	: State(name, comp)
+SelectPointState::SelectPointState(string name, viewportData* data)
+	: State(name, data)
 {
 	mName = name;
-	mViewport = comp->viewport;
-	mScene = comp->scene;
-	mCamera = comp->camera;
+	mViewport = data->viewport;
+	mScene = data->scene;
+	mCamera = data->camera;
 	mVertex = new Vertex(QPointF(INFINITY, INFINITY));
 	mSnap = false;
 }

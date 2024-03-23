@@ -15,7 +15,7 @@ public:
 	State* getState(string name);
 	void setState(string name);
 	void deleteState(string name);
-	void transition(string name, component* comp);
+	void transition(string name, viewportData* data);
 	void printAllStates();
 
 private:

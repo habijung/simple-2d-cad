@@ -2,13 +2,13 @@
 #include "../viewport/Viewport.h"
 
 
-DrawFaceState::DrawFaceState(string name, component* comp)
-	: State(name, comp)
+DrawFaceState::DrawFaceState(string name, viewportData* data)
+	: State(name, data)
 {
 	mName = name;
-	mViewport = comp->viewport;
-	mScene = comp->scene;
-	mCamera = comp->camera;
+	mViewport = data->viewport;
+	mScene = data->scene;
+	mCamera = data->camera;
 	mPoints = {};
 	mDrawPolygon = false;
 	mVertex = new Vertex(QPoint(INFINITY, INFINITY));

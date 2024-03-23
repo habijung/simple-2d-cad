@@ -16,7 +16,7 @@ class Viewport; // Circular Dependency
 class State
 {
 public:
-	State(string name, component* comp);
+	State(string name, viewportData* data);
 	string getStateName();
 	bool getMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
@@ -37,7 +37,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(string name, component* comp);
+	DrawLineState(string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -60,7 +60,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(string name, component* comp);
+	DrawFaceState(string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -89,7 +89,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(string name, component* comp);
+	SelectPointState(string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -122,7 +122,7 @@ private:
 class SelectLineState : public State
 {
 public:
-	SelectLineState(string name, component* comp);
+	SelectLineState(string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -151,7 +151,7 @@ private:
 class SelectFaceState : public State
 {
 public:
-	SelectFaceState(string name, component* comp);
+	SelectFaceState(string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;

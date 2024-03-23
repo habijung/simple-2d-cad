@@ -9,7 +9,7 @@ class Viewport;
 class Scene;
 class Camera;
 
-struct component
+struct viewportData
 {
 	Viewport* viewport;
 	Scene* scene;

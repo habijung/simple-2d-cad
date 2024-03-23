@@ -101,10 +101,10 @@ void StateMachine::deleteState(string name)
 	}
 }
 
-void StateMachine::transition(string name, component* comp)
+void StateMachine::transition(string name, viewportData* data)
 {
 	setState(name);
-	mState->updateScene(comp->scene);
+	mState->updateScene(data->scene);
 }
 
 void StateMachine::printAllStates()

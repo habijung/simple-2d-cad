@@ -30,9 +30,9 @@ private:
 	int mButton;
 	QPointF mPos;
 
-	// Viewport components
+	// Viewport data
 	Scene* mScene;
 	Camera* mCamera;
-	component* mComp;
+	viewportData* mData;
 	StateMachine* mMachine;
 };

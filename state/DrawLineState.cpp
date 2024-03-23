@@ -2,13 +2,13 @@
 #include "../viewport/Viewport.h"
 
 
-DrawLineState::DrawLineState(string name, component* comp)
-	: State(name, comp)
+DrawLineState::DrawLineState(string name, viewportData* data)
+	: State(name, data)
 {
 	mName = name;
-	mViewport = comp->viewport;
-	mScene = comp->scene;
-	mCamera = comp->camera;
+	mViewport = data->viewport;
+	mScene = data->scene;
+	mCamera = data->camera;
 	mPoints = {};
 	mDrawLine = false;
 }

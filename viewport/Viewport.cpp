@@ -23,13 +23,13 @@ Viewport::Viewport(QWidget* parent)
 	mScene->createSampleShapes();
 
 	// Define States
-	mComp = new component{ this, mScene, mCamera };
+	mData = new viewportData{ this, mScene, mCamera };
 	mMachine = new StateMachine;
-	mMachine->addState(new SelectPointState("SELECT_POINT", mComp));
-	mMachine->addState(new SelectLineState("SELECT_LINE", mComp));
-	mMachine->addState(new SelectFaceState("SELECT_FACE", mComp));
-	mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
-	mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
+	mMachine->addState(new SelectPointState("SELECT_POINT", mData));
+	mMachine->addState(new SelectLineState("SELECT_LINE", mData));
+	mMachine->addState(new SelectFaceState("SELECT_FACE", mData));
+	mMachine->addState(new DrawLineState("DRAW_LINE", mData));
+	mMachine->addState(new DrawFaceState("DRAW_FACE", mData));
 	mMachine->setState("SELECT_POINT");
 }
 
@@ -39,16 +39,16 @@ void Viewport::updateState(string name)
 	{
 		mMachine->deleteState(name);
 		delete dynamic_cast<DrawLineState*>(mMachine->getState(name));
-		mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
+		mMachine->addState(new DrawLineState("DRAW_LINE", mData));
 	}
 	else if (!name.compare("DRAW_FACE"))
 	{
 		mMachine->deleteState(name);
 		delete dynamic_cast<DrawFaceState*>(mMachine->getState(name));
-		mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
+		mMachine->addState(new DrawFaceState("DRAW_FACE", mData));
 	}
 
-	mMachine->transition(name, mComp);
+	mMachine->transition(name, mData);
 }
 
 void Viewport::saveScene()
@@ -202,7 +202,7 @@ void Viewport::createNewScene()
 	// TODO: Create new scene 할 때는 sample 그리고, Load scene 할 때는 sample 그리지 않기
 	delete mScene;
 	mScene = new Scene(mCamera);
-	mComp->scene = mScene;
+	mData->scene = mScene;
 	mMachine->state()->updateScene(mScene);
 	mCamera->reset(size());
 	update();
