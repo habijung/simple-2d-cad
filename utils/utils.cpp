@@ -25,3 +25,28 @@ QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)
 
 	return poly;
 }
+
+bool hitTestingPoint(QPointF pos, QPolygonF poly)
+{
+	int count = 0;
+
+	for (int i = 0; i < poly.size(); i++)
+	{
+		// 모든 점과 다음 점의 라인으로 cross check
+		int j = (i + 1) % static_cast<int>(poly.size());
+		PointReal p1 = { poly[i].x(), poly[i].y() }; // prev
+		PointReal p2 = { poly[j].x(), poly[j].y() }; // next
+
+		if (p1.y < pos.y() != p2.y < pos.y())
+		{
+			qreal x = (p2.x - p1.x) / (p2.y - p1.y) * (pos.y() - p1.y) + p1.x;
+
+			if (pos.x() < x)
+			{
+				count += 1;
+			}
+		}
+	}
+
+	return (count % 2 == 1 ? true : false);
+}

@@ -137,22 +137,7 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	pol = QPolygonF();
 	v = new Vertex(QPointF(1, 1));
 	pol = createPointBoundingBox(mCamera, v, 25);
-
-	int count = 0;
-	for (int i = 0; i < pol.size(); i++)
-	{
-		int j = (i + 1) % static_cast<int>(pol.size());
-		struct real { qreal x, y; };
-		real curr = { pol[i].x(), pol[i].y() };
-		real next = { pol[j].x(), pol[j].y() };
-
-		if (curr.y < mPos.y() != next.y < mPos.y())
-		{
-			qreal x = (next.x - curr.x) / (next.y - curr.y) * (mPos.y() - curr.y) + curr.x;
-			if (mPos.x() < x) { count += 1; }
-		}
-	}
-	bool test = count % 2 == 1 ? true : false;
+	bool test = hitTestingPoint(mPos, pol);
 	qDebug() << test;
 
 	mViewport->update();

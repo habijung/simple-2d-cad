@@ -29,3 +29,4 @@ struct PointReal
 };
 
 QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d);
+bool hitTestingPoint(QPointF pos, QPolygonF poly);
