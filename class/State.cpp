@@ -413,3 +413,29 @@ void SelectLineState::paintEvent(QPainter* painter)
 		painter->drawPolygon(mPolygon);
 	}
 }
+
+SelectPolygonState::SelectPolygonState(string name, component* comp)
+	: State(name, comp)
+{
+
+}
+
+void SelectPolygonState::mousePressEvent(QMouseEvent* event)
+{
+	qDebug() << "Select Polygon State :: Mouse Press";
+}
+
+void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
+{
+	qDebug() << "Select Polygon State :: Mouse Move";
+}
+
+void SelectPolygonState::mouseReleaseEvent(QMouseEvent* event)
+{
+	qDebug() << "Select Polygon State :: Mouse Release";
+}
+
+void SelectPolygonState::paintEvent(QPainter* painter)
+{
+	qDebug() << "Select Polygon State :: Paint";
+}

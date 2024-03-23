@@ -38,6 +38,7 @@ private:
 	DrawPolygonState* mDrawPolygonState;
 	SelectPointState* mSelectPointState;
 	SelectLineState* mSelectLineState;
+	SelectPolygonState* mSelectPolygonState;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);

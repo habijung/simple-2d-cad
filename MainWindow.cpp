@@ -30,11 +30,13 @@ MainWindow::MainWindow(QWidget* parent)
 	mDrawPolygonState = new DrawPolygonState("DRAW_POLY", mData);
 	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
 	mSelectLineState = new SelectLineState("SELECT_LINE", mData);
+	mSelectPolygonState = new SelectPolygonState("SELECT_POLYGON", mData);
 
 	machine->addState(mDrawLineState);
 	machine->addState(mDrawPolygonState);
 	machine->addState(mSelectPointState);
 	machine->addState(mSelectLineState);
+	machine->addState(mSelectPolygonState);
 	machine->setState(mSelectPointState);
 	machine->getCurrentState();
 
@@ -170,6 +172,8 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Select Poly Clicked";
+			machine->transition(mSelectPolygonState);
+			this->widget->updateState(machine->getCurrentState());
 		});
 
 	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
