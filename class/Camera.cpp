@@ -35,3 +35,15 @@ QPoint Camera::setWindowToScreen(QPointF pWindow)
 	};
 	return pScreen;
 }
+
+
+// Camera action
+void Camera::zoomIn()
+{
+	this->scale = this->scale < 300 ? this->scale + 50 : 300;
+}
+
+void Camera::zoomOut()
+{
+	this->scale = this->scale > 50 ? this->scale - 50 : 50;
+}

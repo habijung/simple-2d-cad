@@ -14,10 +14,15 @@ Viewport::Viewport(QWidget* parent)
 
 void Viewport::getKeyEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_1)
+	if (event->key() == Qt::Key_E)
 	{
-		qDebug() << "Key: 1";
+		this->camera->zoomIn();
 	}
+	else if (event->key() == Qt::Key_Q)
+	{
+		this->camera->zoomOut();
+	}
+	repaint();
 }
 
 void Viewport::paintEvent(QPaintEvent* event)
@@ -33,11 +38,11 @@ void Viewport::paintEvent(QPaintEvent* event)
 
 	// Class Scene test
 	QPainter* painter1 = new QPainter(this);
-	scene->renderScreenCoordinate(painter1, camera);
+	scene->renderScreenCoordinate(painter1, this->camera);
 	painter1->end();
 
 	QPainter* painter2 = new QPainter(this);
-	scene->renderScenePoint(painter2, camera);
+	scene->renderScenePoint(painter2, this->camera);
 	painter2->end();
 }
 
