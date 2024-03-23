@@ -4,12 +4,13 @@
 #include "Viewport.h"
 
 
-Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera)
+Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera, StateMachine* mainMachine)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
 	scene = mainScene;
 	camera = mainCamera;
+	machine = mainMachine;
 	this->state = new State("NULL");
 	this->pValue = 60.0;
 	this->zValue = 60.0;
@@ -66,6 +67,7 @@ void Viewport::paintEvent(QPaintEvent* event)
 	painter1->end();
 
 	QPainter* painter2 = new QPainter(this);
+	machine->getCurrentState()->paintEvent(painter2);
 	scene->renderScenePoint(painter2, this->camera);
 	painter2->end();
 

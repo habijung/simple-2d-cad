@@ -20,6 +20,7 @@ public:
 	virtual void mousePressEvent(QPoint p) {}
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
+	virtual void paintEvent(QPainter* painter) {}
 
 private:
 	string mName;
@@ -36,6 +37,7 @@ public:
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
+	virtual void paintEvent(QPainter* painter);
 
 private:
 	string mName;

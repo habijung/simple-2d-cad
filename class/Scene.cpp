@@ -52,8 +52,6 @@ void Scene::renderScreenCoordinate(QPainter* painter, Camera* camera)
 void Scene::renderScenePoint(QPainter* painter, Camera* camera)
 {
 	vector<QPointF>::iterator iter = this->vert.begin();
-	QPen pen(Qt::black, 5);
-	painter->setPen(pen);
 
 	for (iter; iter != this->vert.end(); iter++)
 	{

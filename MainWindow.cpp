@@ -12,19 +12,19 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setMenuBar();
 	this->setToolbar();
 
+	// Define State Machine and States
+	machine = new StateMachine();
+
 	// Create main scene, camera, viewport
 	mScene = new Scene(this);
 	mCamera = new Camera(this, QSize(600, 600), 100.0);
-	this->widget = new Viewport(this, mScene, mCamera);
+	this->widget = new Viewport(this, mScene, mCamera, machine);
 	mData = new metadata{ this->widget, mScene, mCamera };
 	setCentralWidget(this->widget);
 
 	this->setSidebarWidget(this->widget);
 	this->setUnderbarWidget(this->widget);
 
-	// Define State Machine and States
-	machine = new StateMachine();
-	// TODO: Global to Member variables
 	sIDLE = new State("IDLE");
 	sDLS = new DrawLineState("DRAW_LINE", mData);
 	sDLS1 = new DrawLineState("DRAW_LINE", mData);

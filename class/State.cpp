@@ -33,3 +33,9 @@ void DrawLineState::mousePressEvent(QPoint p)
 	float scale = 100.0;
 	this->mScene->addVertex(this->mCamera->setScreenToWindow(p, dx, dy, scale));
 }
+
+void DrawLineState::paintEvent(QPainter* painter)
+{
+	QPen pen(Qt::green, 10);
+	painter->setPen(pen);
+}
