@@ -1,11 +1,25 @@
 #include "Scene.h"
 
-Scene::Scene()
+Scene::Scene(QWidget* parent) : QWidget(parent)
 {
-	qDebug() << "\n" << "Scene::Scene()" << "\n";
+	this->width = parent->width();
+	this->height = parent->height();
 }
 
-void Scene::Render()
+void Scene::render(QPainter* painter)
 {
-	qDebug() << "\n" << "Scene::Render()" << "\n";
+	painter->drawText
+	(
+		this->width / 2,
+		this->height / 2,
+		QString("%1, %2")
+		.arg(this->width / 2)
+		.arg(this->height / 2)
+	);
+}
+
+void Scene::resize(QSize* screenSize)
+{
+	this->width = screenSize->width();
+	this->height = screenSize->height();
 }

@@ -7,8 +7,7 @@ CentralWidget::CentralWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
-	Scene* scene = new Scene();
-	scene->Render();
+	scene = new Scene(this);
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
@@ -21,6 +20,11 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 
 	// Selection test
 	//this->selectLine(this->pStart);
+
+	// Class Scene test
+	QPainter* scenePainter = new QPainter(this);
+	scene->render(scenePainter);
+	scenePainter->end();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -60,6 +64,12 @@ void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 		pair<QPoint, QPoint> p = { this->pStart, this->pEnd };
 		this->vert.push_back(p);
 	}
+}
+
+void CentralWidget::resizeEvent(QResizeEvent* event)
+{
+	QSize* screenSize = new QSize(width(), height());
+	scene->resize(screenSize);
 }
 
 void CentralWidget::drawLine()

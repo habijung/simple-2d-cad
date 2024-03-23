@@ -17,6 +17,7 @@ private:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
+	void resizeEvent(QResizeEvent* event) override;
 
 	void drawLine();
 	void renderAll();
@@ -27,4 +28,6 @@ private:
 	int button;
 	QPoint pStart, pEnd;
 	vector<pair<QPoint, QPoint>> vert;
+
+	Scene* scene;
 };
