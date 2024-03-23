@@ -20,13 +20,12 @@ Viewport::Viewport(QWidget* parent)
 
 	// Define States
 	mComp = new component{ this, mScene, mCamera };
-
 	mMachine = new StateMachine;
-	mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
-	mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
 	mMachine->addState(new SelectPointState("SELECT_POINT", mComp));
 	mMachine->addState(new SelectLineState("SELECT_LINE", mComp));
 	mMachine->addState(new SelectFaceState("SELECT_FACE", mComp));
+	mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
+	mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
 	mMachine->setState("SELECT_POINT");
 }
 
@@ -58,6 +57,19 @@ void Viewport::getKeyEvent(QKeyEvent* event)
 
 void Viewport::updateState(string name)
 {
+	if (!name.compare("DRAW_LINE"))
+	{
+		mMachine->deleteState(name);
+		delete dynamic_cast<DrawLineState*>(mMachine->getState(name));
+		mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
+	}
+	else if (!name.compare("DRAW_FACE"))
+	{
+		mMachine->deleteState(name);
+		delete dynamic_cast<DrawFaceState*>(mMachine->getState(name));
+		mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
+	}
+
 	mMachine->transition(name, mComp);
 }
 

@@ -60,6 +60,10 @@ State* StateMachine::getState(string name)
 	{
 		return *iter;
 	}
+	else
+	{
+		return mStates.front(); // State: SELECT_POINT
+	}
 }
 
 void StateMachine::setState(string name)
@@ -82,20 +86,23 @@ void StateMachine::setState(string name)
 	}
 }
 
+void StateMachine::deleteState(string name)
+{
+	list<State*>::iterator iter = mStates.begin();
+	bool checkSameName = false;
+
+	for (iter; iter != mStates.end(); iter++)
+	{
+		if (!(*iter)->getStateName().compare(name))
+		{
+			iter = mStates.erase(iter);
+			break;
+		}
+	}
+}
+
 void StateMachine::transition(string name, component* comp)
 {
-	// TODO: Transition QEvent with enter, leave
-	if (!name.compare("DRAW_LINE"))
-	{
-		//delete getState(name);
-		addState(new DrawLineState("DRAW_LINE", comp));
-	}
-	else if (!name.compare("DRAW_FACE"))
-	{
-		//delete getState(name);
-		addState(new DrawFaceState("DRAW_FACE", comp));
-	}
-
 	setState(name);
 	mState->updateScene(comp->scene);
 }

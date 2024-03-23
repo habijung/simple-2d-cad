@@ -14,6 +14,7 @@ public:
 	void addState(State* state);
 	State* getState(string name);
 	void setState(string name);
+	void deleteState(string name);
 	void transition(string name, component* comp);
 	void printAllStates();
 

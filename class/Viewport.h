@@ -35,12 +35,5 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 	component* mComp;
-
-	// Define States
 	StateMachine* mMachine;
-	DrawLineState* mDrawLineState;
-	DrawFaceState* mDrawFaceState;
-	SelectPointState* mSelectPointState;
-	SelectLineState* mSelectLineState;
-	SelectFaceState* mSelectFaceState;
 };
