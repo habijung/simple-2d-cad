@@ -26,22 +26,14 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setUnderbarWidget(this->widget);
 
 	component* comp = new component;
-	sIDLE = new State("IDLE", comp);
-	sDLS = new DrawLineState("DRAW_LINE", mData);
-	sDLS1 = new DrawLineState("DRAW_LINE", mData);
-	sDLS2 = new DrawLineState("DRAW_LINE2", mData);
-	sDFS = new DrawFaceState("DRAW_FACE", mData);
-	sSPS = new SelectPointState("SELECT_POINT", mData);
+	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
+	mDrawFaceState = new DrawFaceState("DRAW_FACE", mData);
+	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
 
-	this->machine->addState(sIDLE);
-	this->machine->addState(sDLS);
-	this->machine->addState(sDLS1);
-	this->machine->addState(sDLS2);
-	this->machine->addState(sSPS);
-	this->machine->printAllStates();
-	this->machine->setState(sIDLE);
-	this->machine->setState(sSPS);
-	this->machine->getCurrentState();
+	machine->addState(mDrawLineState);
+	machine->addState(mSelectPointState);
+	machine->setState(mSelectPointState);
+	machine->getCurrentState();
 }
 
 MainWindow::~MainWindow()
@@ -127,7 +119,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Draw Line Clicked";
-			this->machine->transition(sDLS);
+			this->machine->transition(mDrawLineState);
 			this->widget->updateState
 			(
 				this->machine->getCurrentState()
@@ -136,7 +128,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Draw Face Clicked";
-			this->machine->transition(sDFS);
+			this->machine->transition(mDrawFaceState);
 			this->widget->updateState
 			(
 				this->machine->getCurrentState()

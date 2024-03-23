@@ -28,14 +28,15 @@ public:
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* widget;
-	StateMachine* machine;
-	State* sIDLE;
-	DrawLineState* sDLS, * sDLS1, * sDLS2;
-	DrawFaceState* sDFS;
-	SelectPointState* sSPS;
 	Scene* mScene;
 	Camera* mCamera;
 	component* mData;
+
+	// State Machine
+	StateMachine* machine;
+	DrawLineState* mDrawLineState;
+	DrawFaceState* mDrawFaceState;
+	SelectPointState* mSelectPointState;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);
