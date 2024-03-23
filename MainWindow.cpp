@@ -131,18 +131,7 @@ void MainWindow::setToolbar()
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
-			QString fileName = QString(getenv("USERPROFILE")) + "/Desktop/Scene";
-			QString filePath = QFileDialog::getSaveFileName(
-				this,
-				tr("Save Scene"),
-				fileName,
-				tr("Scene (*.scn);; Image (*.png *jpg);; Text (*.txt);; Xml (*.xml)")
-			);
-			qDebug() << filePath;
-			QFile f(filePath);
-			f.open(QIODevice::WriteOnly);
-			f.write("Sample Text");
-			f.close();
+			widget->saveScene();
 		});
 }
 

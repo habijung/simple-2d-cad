@@ -1,6 +1,9 @@
 #include <QPainter>
 #include <QMouseEvent>
 #include <QKeyEvent>
+#include <QFileDialog>
+#include <QJsonObject>
+#include <QJsonDocument>
 #include "Viewport.h"
 
 
@@ -48,6 +51,42 @@ void Viewport::updateState(State* state, Scene* newScene)
 {
 	this->state = state;
 	this->state->updateScene(newScene);
+}
+
+void Viewport::saveScene()
+{
+	QJsonObject content;
+	list<Shape*> shapes = scene->retShapes();
+	int count = 0;
+
+	for (auto i = shapes.begin(); i != shapes.end(); i++)
+	{
+		QJsonObject obj;
+		obj.insert("Num", count);
+		obj.insert("Type", (*i)->retType().c_str());
+		string name = (*i)->retType() + "_" + to_string(count);
+		content.insert(name.c_str(), obj);
+		count++;
+	}
+
+	QJsonDocument document;
+	document.setObject(content);
+
+	QString fileName = QString(getenv("USERPROFILE")) + "/Desktop/Scene";
+	QString filePath = QFileDialog::getSaveFileName(
+		this,
+		tr("Save Scene"),
+		fileName,
+		tr("JSON (*.json);; Image (*.png *jpg);; Text (*.txt);; XML (*.xml)")
+	);
+
+	QFile file(filePath);
+
+	if (file.open(QIODevice::WriteOnly))
+	{
+		file.write(document.toJson(QJsonDocument::Indented));
+		file.close();
+	}
 }
 
 Scene* Viewport::createNewScene(Scene* oldScene)
