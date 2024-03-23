@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QPainter>
 #include "ui_MainWindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -20,4 +21,14 @@ public:
 
 private:
 	Ui::MainWindowClass* ui;
+
+protected:
+	//void paintEvent(QPaintEvent* event) override;
+};
+
+class CentralWidget : public QWidget
+{
+public:
+	CentralWidget(QWidget* parent = nullptr);
+	void paintEvent(QPaintEvent* event) override;
 };
