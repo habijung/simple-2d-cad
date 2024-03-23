@@ -102,6 +102,12 @@ void Viewport::mouseReleaseEvent(QMouseEvent* event)
 	state->mouseReleaseEvent(event);
 }
 
+void Viewport::wheelEvent(QWheelEvent* event)
+{
+	camera->zoom(static_cast<float>(event->angleDelta().y() / 8));
+	update();
+}
+
 void Viewport::resizeEvent(QResizeEvent* event)
 {
 	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
