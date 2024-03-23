@@ -129,6 +129,17 @@ void MainWindow::setToolbar()
 				//ui->filePathEdit->setText(filePath);
 			}
 		});
+	connect(save, &QAction::triggered, qApp, [this]()
+		{
+			QString fileName = QString(getenv("USERPROFILE")) + "/Desktop/Scene";
+			QString filePath = QFileDialog::getSaveFileName(
+				this,
+				tr("Save Scene"),
+				fileName,
+				tr("Scene (*.scn);; Image (*.png *jpg);; Text (*.txt);; Xml (*.xml)")
+			);
+			qDebug() << filePath;
+		});
 }
 
 void MainWindow::setSidebarWidget(QWidget* widget)
