@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget* parent)
 	mScene = new Scene(this);
 	mCamera = new Camera(this, QSize(600, 600), 100.0);
 	this->widget = new Viewport(this, mScene, mCamera);
+	mData = new metadata{ this->widget, mScene, mCamera };
 	setCentralWidget(this->widget);
 
 	this->setSidebarWidget(this->widget);
@@ -25,9 +26,9 @@ MainWindow::MainWindow(QWidget* parent)
 	machine = new StateMachine();
 	// TODO: Global to Member variables
 	sIDLE = new State("IDLE");
-	sDLS = new DrawLineState("DRAW_LINE", this->widget, mScene, mCamera);
-	sDLS1 = new DrawLineState("DRAW_LINE", this->widget, mScene, mCamera);
-	sDLS2 = new DrawLineState("DRAW_LINE2", this->widget, mScene, mCamera);
+	sDLS = new DrawLineState("DRAW_LINE", mData);
+	sDLS1 = new DrawLineState("DRAW_LINE", mData);
+	sDLS2 = new DrawLineState("DRAW_LINE2", mData);
 
 	this->machine->addState(sIDLE);
 	this->machine->addState(sDLS);

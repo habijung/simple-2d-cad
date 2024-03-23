@@ -1,6 +1,7 @@
 #include <QDebug>
 #include <QWidget>
 #include "State.h"
+#include "Viewport.h"
 
 
 State::State(string name)
@@ -14,14 +15,14 @@ string State::getStateName()
 	return this->mName;
 }
 
-DrawLineState::DrawLineState(string name, QWidget* viewport, Scene* scene, Camera* camera)
+DrawLineState::DrawLineState(string name, metadata* data)
 	: State(name)
 {
 	qDebug() << "Create DrawLineState:" << name;
 	this->mName = name;
-	this->mViewport = viewport;
-	this->mScene = scene;
-	this->mCamera = camera;
+	this->mViewport = data->viewport;
+	this->mScene = data->scene;
+	this->mCamera = data->camera;
 }
 
 void DrawLineState::mousePressEvent(QPoint p)

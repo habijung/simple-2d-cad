@@ -5,6 +5,7 @@
 #include "ui_MainWindow.h"
 #include "class/Viewport.h"
 #include "class/StateMachine.h"
+#include "utils/utils.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };
@@ -32,6 +33,7 @@ private:
 	DrawLineState* sDLS, * sDLS1, * sDLS2;
 	Scene* mScene;
 	Camera* mCamera;
+	metadata* mData;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);
