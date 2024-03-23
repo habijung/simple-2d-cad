@@ -17,9 +17,10 @@ Viewport::Viewport(QWidget* parent)
 	setMouseTracking(true);
 
 	// Initialization
+	mButton = Qt::NoButton;
 	mCamera = new Camera(this, parent->size(), 80.0);
 	mScene = new Scene(mCamera);
-	mButton = Qt::NoButton;
+	mScene->createSampleShapes();
 
 	// Define States
 	mComp = new component{ this, mScene, mCamera };
@@ -198,6 +199,7 @@ void Viewport::loadScene()
 
 void Viewport::createNewScene()
 {
+	// TODO: Create new scene 할 때는 sample 그리고, Load scene 할 때는 sample 그리지 않기
 	delete mScene;
 	mScene = new Scene(mCamera);
 	mComp->scene = mScene;

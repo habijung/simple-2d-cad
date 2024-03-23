@@ -6,7 +6,6 @@ constexpr int SCREEN_LIMIT = 15;
 Scene::Scene(Camera* camera)
 {
 	mCamera = camera;
-	createSampleShapes();
 }
 
 list<Shape*> Scene::retShapes()
