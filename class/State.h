@@ -20,10 +20,10 @@ public:
 	string getStateName();
 
 	virtual ~State() {}
-	virtual void mousePressEvent(QMouseEvent* event) {}
-	virtual void mouseMoveEvent(QMouseEvent* event) {}
-	virtual void mouseReleaseEvent(QMouseEvent* event) {}
-	virtual void paintEvent(QPainter* painter) {}
+	virtual void mousePressEvent(QMouseEvent* event) = 0;
+	virtual void mouseMoveEvent(QMouseEvent* event) = 0;
+	virtual void mouseReleaseEvent(QMouseEvent* event) = 0;
+	virtual void paintEvent(QPainter* painter) = 0;
 
 private:
 	string mName;
@@ -59,10 +59,10 @@ class DrawFaceState : public State
 public:
 	DrawFaceState(string name, component* comp);
 
-	virtual void mousePressEvent(QPoint p);
-	virtual void mouseMoveEvent() {}
-	virtual void mouseReleaseEvent() {}
-	virtual void paintEvent(QPainter* painter);
+	virtual void mousePressEvent(QMouseEvent* event) override;
+	virtual void mouseMoveEvent(QMouseEvent* event) override {}
+	virtual void mouseReleaseEvent(QMouseEvent* event) override {}
+	virtual void paintEvent(QPainter* painter) override;
 
 private:
 	string mName;
@@ -75,6 +75,11 @@ class SelectPointState : public State
 {
 public:
 	SelectPointState(string name, component* comp);
+
+	virtual void mousePressEvent(QMouseEvent* event) override {}
+	virtual void mouseMoveEvent(QMouseEvent* event) override {}
+	virtual void mouseReleaseEvent(QMouseEvent* event) override {}
+	virtual void paintEvent(QPainter* painter) override {}
 
 private:
 	string mName;

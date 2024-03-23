@@ -103,7 +103,7 @@ DrawFaceState::DrawFaceState(string name, component* comp)
 	mCamera = comp->camera;
 }
 
-void DrawFaceState::mousePressEvent(QPoint p)
+void DrawFaceState::mousePressEvent(QMouseEvent* event)
 {
 	qDebug() << "DrawFaceState::mousePressEvent()";
 	float dx = this->mViewport->width() / 2.0;
