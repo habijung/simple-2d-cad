@@ -2,7 +2,10 @@
 #include <QWidget>
 #include <QPainter>
 #include <QSize>
-//#include "CentralWidget.h"
+#include <vector>
+#include <utility>
+using namespace std;
+
 
 class Scene : public QWidget
 {
@@ -13,4 +16,5 @@ public:
 
 private:
 	int width, height;
+	vector<pair<QPoint, QPoint>> vert;
 };
