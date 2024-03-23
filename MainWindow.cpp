@@ -5,15 +5,19 @@ MainWindow::MainWindow(QWidget* parent)
 	, ui(new Ui::MainWindowClass())
 {
 	ui->setupUi(this);
-
-	QAction* quit = new QAction("&Quit", this);
-	QMenu* file = menuBar()->addMenu("&File");
-	file->addAction(quit);
-
-	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+	this->setMenuBar();
 }
 
 MainWindow::~MainWindow()
 {
 	delete ui;
+}
+
+void MainWindow::setMenuBar()
+{
+	QAction* quit = new QAction("&Quit", this);
+	QMenu* file = menuBar()->addMenu("&File");
+	file->addAction(quit);
+
+	connect(quit, &QAction::triggered, qApp, QApplication::quit);
 }
