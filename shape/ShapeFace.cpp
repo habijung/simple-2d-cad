@@ -38,7 +38,7 @@ QPolygonF Face::GetFace(Camera* cam)
 	return poly;
 }
 
-void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
+void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex>& vertices)
 {
 	QPointF offset = pEnd - pStart;
 
@@ -54,9 +54,8 @@ void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, s
 			{
 				count++;
 				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
-				Vertex* v = dynamic_cast<Vertex*>(*iter);
 				QPointF p = offset + cam->SetScreenCoordinate(vertices[fSize - count].GetVertex());
-				v->UpdateVertex(cam->SetWindowCoordinate(p.toPoint()));
+				dynamic_cast<Vertex*>(*iter)->UpdateVertex(cam->SetWindowCoordinate(p.toPoint()));
 			}
 
 			break;

@@ -39,7 +39,7 @@ public:
 	Line(std::list<Vertex*> vertices);
 	std::vector<Vertex> GetVertices();
 	QLineF GetLine(Camera* cam);
-	void UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex> vStart);
+	void UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex>& vertices);
 	QJsonObject SaveLine();
 
 	virtual std::string Type() override;
@@ -59,7 +59,7 @@ public:
 	Face(Vertex* v);
 	std::vector<Vertex> GetVertices();
 	QPolygonF GetFace(Camera* cam);
-	void UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices);
+	void UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex>& vertices);
 	QJsonObject SaveFace();
 
 	virtual std::string Type() override;

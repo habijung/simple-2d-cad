@@ -39,11 +39,11 @@ QLineF Line::GetLine(Camera* cam)
 	return QLineF(p1, p2);
 }
 
-void Line::UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex> vec)
+void Line::UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex>& vertices)
 {
 	QPointF offset = pEnd - pStart;
-	QPointF p1 = offset + cam->SetScreenCoordinate(vec.front().GetVertex());
-	QPointF p2 = offset + cam->SetScreenCoordinate(vec.back().GetVertex());
+	QPointF p1 = offset + cam->SetScreenCoordinate(vertices.front().GetVertex());
+	QPointF p2 = offset + cam->SetScreenCoordinate(vertices.back().GetVertex());
 	mV1->UpdateVertex(cam->SetWindowCoordinate(p1.toPoint()));
 	mV2->UpdateVertex(cam->SetWindowCoordinate(p2.toPoint()));
 }
