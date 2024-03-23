@@ -89,4 +89,9 @@ private:
 
 	QPointF mPos;
 	int mButton;
+
+	// Test
+	Vertex* v;
+	QPointF p;
+	QPolygonF pol;
 };

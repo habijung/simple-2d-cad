@@ -133,6 +133,37 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mButton = event->button();
+
+	pol = QPolygonF();
+	v = new Vertex(QPointF(1, 1));
+	p = mCamera->setWindowToScreen(v->retVertex());
+	int w = 25;
+	QPointF dt[2] = { QPointF(w, w), QPointF(-w, w) };
+	QPointF ps[4] = {
+		p + dt[0],
+		p + dt[1],
+		p - dt[0],
+		p - dt[1]
+	};
+	for (int i = 0; i < 4; i++) { pol << ps[i]; }
+
+	int count = 0;
+	for (int i = 0; i < pol.size(); i++)
+	{
+		int j = (i + 1) % static_cast<int>(pol.size());
+		struct real { qreal x, y; };
+		real curr = { pol[i].x(), pol[i].y() };
+		real next = { pol[j].x(), pol[j].y() };
+
+		if (curr.y < mPos.y() != next.y < mPos.y())
+		{
+			qreal x = (next.x - curr.x) / (next.y - curr.y) * (mPos.y() - curr.y) + curr.x;
+			if (mPos.x() < x) { count += 1; }
+		}
+	}
+	bool test = count % 2 == 1 ? true : false;
+	qDebug() << test;
+
 	mViewport->update();
 }
 
@@ -147,4 +178,8 @@ void SelectPointState::mouseReleaseEvent(QMouseEvent* event) {}
 
 void SelectPointState::paintEvent(QPainter* painter)
 {
+	painter->setPen(QPen(Qt::red, 10));
+	painter->drawPoint(p.toPoint());
+	painter->setPen(QPen(Qt::blue, 3));
+	painter->drawPolygon(pol);
 }
