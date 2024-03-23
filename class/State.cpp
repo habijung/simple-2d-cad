@@ -268,6 +268,7 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mScene = comp->scene;
 	mCamera = comp->camera;
 	mVertex = new Vertex(QPointF(INFINITY, INFINITY));
+	mSnap = false;
 }
 
 void SelectPointState::mousePressEvent(QMouseEvent* event)
@@ -308,6 +309,30 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		float scale = 100.0;
 
 		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+
+		// Check snapping
+		list<Shape*>::iterator iter = mShapes.begin();
+
+		for (iter; iter != mShapes.end(); iter++)
+		{
+			if (!(*iter)->retType().compare("Point") && ((*iter) != mVertex))
+			{
+				mSnapVertex = dynamic_cast<Vertex*>(*iter)->retVertex();
+				mSnapPolygon = createPointBoundingBox(mCamera, &mSnapVertex, 10);
+				mSnap = hitTestingPoint(mPos, mSnapPolygon);
+
+				if (mSnap)
+				{
+					// Snap이 발생하면 현재 Vertex를 해당 위치로 업데이트
+					QPointF p = mSnapVertex.retVertex();
+					mVertex->updateVertex(p);
+					mSnapPoint = mCamera->setWindowToScreen(p);
+					break;
+				}
+			}
+		}
+
+		// Snap 발생과 상관없이 Vertex의 마지막 위치에서 bounding box 생성
 		mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
 	}
 
@@ -317,6 +342,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 void SelectPointState::mouseReleaseEvent(QMouseEvent* event)
 {
 	mButton = Qt::NoButton;
+	mSnap = false;
 }
 
 void SelectPointState::paintEvent(QPainter* painter)

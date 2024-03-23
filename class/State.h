@@ -107,6 +107,12 @@ private:
 	Vertex* mVertex;
 	QPolygonF mPolygon;
 	bool mHit;
+
+	// For snapping
+	QPolygonF mSnapPolygon;
+	QPointF mSnapPoint;
+	Vertex mSnapVertex;
+	bool mSnap;
 };
 
 class SelectLineState : public State
