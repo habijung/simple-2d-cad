@@ -8,7 +8,7 @@ CentralWidget::CentralWidget(QWidget* parent)
 {
 	qDebug() << "\n Central Widget \n";
 	scene = new Scene(this);
-	camera = new Camera(this);
+	camera = new Camera(this, QSize(600, 600), 100.0);
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
@@ -83,6 +83,7 @@ void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 
 void CentralWidget::resizeEvent(QResizeEvent* event)
 {
+	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
 	QSize* screenSize = new QSize(width(), height());
 	scene->resize(screenSize);
 }

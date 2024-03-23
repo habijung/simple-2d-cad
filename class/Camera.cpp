@@ -1,11 +1,12 @@
 #include "Camera.h"
 
 
-Camera::Camera(QWidget* parent) : QWidget(parent)
+Camera::Camera(QWidget* parent, QSize size, float scale)
+	: QWidget(parent)
 {
-	this->dx = width() / 2.0;
-	this->dy = height() / 2.0;
-	this->scale = 100.0;
+	this->dx = size.width() / 2.0;
+	this->dy = size.height() / 2.0;
+	this->scale = scale;
 }
 
 
