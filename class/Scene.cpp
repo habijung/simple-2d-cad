@@ -1,18 +1,11 @@
 #include "Scene.h"
 
+constexpr int INF = 15;
+
 
 Scene::Scene(Camera* camera)
 {
 	mCamera = camera;
-
-	for (int i = -10; i <= 10; i++)
-	{
-		for (int j = -10; j <= 10; j++)
-		{
-			this->vertScreen.push_back(QPointF(i, j));
-		}
-	}
-
 	createSampleShapes();
 }
 
@@ -58,28 +51,44 @@ void Scene::createSampleShapes()
 
 
 // Render method
-void Scene::renderScreenCoordinate(QPainter* painter)
+void Scene::renderCoordinate(QPainter* painter)
 {
-	vector<QPointF>::iterator iter = this->vertScreen.begin();
-	QPen pen(Qt::black, 2);
-	painter->setPen(pen);
-
-	for (iter; iter != this->vertScreen.end(); iter++)
+	for (int i = -INF; i <= INF; i++)
 	{
-		QPointF pWindow = *iter;
-		QPoint  pScreen = mCamera->setWindowToScreen(pWindow);
-		painter->drawPoint(pScreen);
-
-		if (pWindow.x() == 0 || pWindow.y() == 0)
+		for (int j = -INF; j <= INF; j++)
 		{
-			if (pWindow.x() == 0)
+			QLine xAxis = QLine(mCamera->setWindowToScreen(QPoint(i, j)), mCamera->setWindowToScreen(QPoint(-i, j)));
+			QLine yAxis = QLine(mCamera->setWindowToScreen(QPoint(i, -j)), mCamera->setWindowToScreen(QPoint(i, j)));
+
+			if (i == 0 || j == 0)
 			{
-				painter->drawText(pScreen, QString("%1").arg(pWindow.y()));
+				QPoint p = mCamera->setWindowToScreen(QPoint(i, j));
+				painter->setPen(QPen(Qt::black, 0.1));
+				painter->setFont(QFont("Arial", 12));
+
+				if (!i && j)
+				{
+					p += QPoint(5, 7);
+					painter->drawText(p, QString("%1").arg(j));
+				}
+				else if (i && !j)
+				{
+					p += QPoint(-5, 20);
+					painter->drawText(p, QString("%1").arg(i));
+				}
+				else
+				{
+					p += QPoint(5, 20);
+					painter->drawText(p, QString("%1").arg(i));
+				}
 			}
 			else
 			{
-				painter->drawText(pScreen, QString("%1").arg(pWindow.x()));
+				painter->setPen(QPen(Qt::lightGray, 0.05));
 			}
+
+			painter->drawLine(xAxis);
+			painter->drawLine(yAxis);
 		}
 	}
 }

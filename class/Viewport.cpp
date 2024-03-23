@@ -207,7 +207,7 @@ void Viewport::paintEvent(QPaintEvent* event)
 	QPainter* painter = new QPainter(this);
 
 	painter->save();
-	mScene->renderScreenCoordinate(painter);
+	mScene->renderCoordinate(painter);
 	mScene->renderShape(painter);
 	painter->restore();
 

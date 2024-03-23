@@ -21,11 +21,10 @@ public:
 	void createSampleShapes();
 
 	// Render method
-	void renderScreenCoordinate(QPainter* painter);
+	void renderCoordinate(QPainter* painter);
 	void renderShape(QPainter* painter);
 
 private:
-	vector<QPointF> vertScreen;
 	list<Shape*> mShapes;
 	Camera* mCamera;
 };
