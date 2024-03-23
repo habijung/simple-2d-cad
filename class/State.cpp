@@ -42,16 +42,16 @@ void DrawLineState::mousePressEvent(QMouseEvent* event)
 		);
 		mScene->addShape(mV1);
 	}
+
+	mViewport->update();
 }
 
 void DrawLineState::mouseMoveEvent(QMouseEvent* event)
 {
 	mOffsetX = event->pos().x() - mP1.x();
 	mOffsetY = event->pos().y() - mP2.y();
-	//if ((mButton == Qt::LeftButton) && (event->button() == Qt::NoButton))
-	//{
-	//	mViewport->update();
-	//}
+
+	mViewport->update();
 }
 
 void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
@@ -76,6 +76,8 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 		mOffsetY = 0;
 		mButton = Qt::NoButton;
 	}
+
+	mViewport->update();
 }
 
 void DrawLineState::paintEvent(QPainter* painter)

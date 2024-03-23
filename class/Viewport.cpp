@@ -79,19 +79,16 @@ void Viewport::paintEvent(QPaintEvent* event)
 void Viewport::mousePressEvent(QMouseEvent* event)
 {
 	state->mousePressEvent(event);
-	repaint();
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
 	state->mouseMoveEvent(event);
-	update();
 }
 
 void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
 	state->mouseReleaseEvent(event);
-	repaint();
 }
 
 void Viewport::resizeEvent(QResizeEvent* event)
