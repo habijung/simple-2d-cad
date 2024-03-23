@@ -3,6 +3,11 @@
 #include "MainWindow.h"
 
 
+State* sIDLE = new State("IDLE");
+DrawLineState* sDLS = new DrawLineState("DRAW_LINE");
+DrawLineState* sDLS1 = new DrawLineState("DRAW_LINE");
+DrawLineState* sDLS2 = new DrawLineState("DRAW_LINE2");
+
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindowClass())
@@ -20,13 +25,12 @@ MainWindow::MainWindow(QWidget* parent)
 
 	// Define State Machine and States
 	machine = new StateMachine();
-	State* sIDLE = new State("IDLE");
-	DrawLineState* sDLS = new DrawLineState("DRAW_LINE");
-	this->machine->addState("IDLE");
-	this->machine->addState("DRAW_LINE");
-	this->machine->addState("DRAW_FACE");
+	this->machine->addState(sIDLE);
+	this->machine->addState(sDLS);
+	this->machine->addState(sDLS1);
+	this->machine->addState(sDLS2);
 	this->machine->printAllStates();
-	this->machine->setState("IDLE");
+	this->machine->setState(sIDLE);
 	this->machine->getCurrentState();
 }
 
@@ -113,7 +117,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Line Clicked";
-			this->machine->transition("DRAW_LINE");
+			this->machine->transition(sDLS);
 			this->machine->getCurrentState();
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()

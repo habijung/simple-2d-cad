@@ -10,10 +10,10 @@ class StateMachine
 {
 public:
 	StateMachine();
-	void addState(string name);
-	void setState(string name);
-	void transition(string name);
-	string getCurrentState();
+	void addState(State* state);
+	void setState(State* state);
+	void transition(State* state);
+	State* getCurrentState();
 
 	void printAllStates();
 

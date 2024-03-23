@@ -2,16 +2,15 @@
 #include "StateMachine.h"
 
 
-// TODO: Change string to class State in StateMachine
 StateMachine::StateMachine()
 {
 	this->mState = nullptr;
 	this->mStates = {};
 }
 
-void StateMachine::addState(string name)
+void StateMachine::addState(State* state)
 {
-	State* state = new State(name);
+	string name = state->getStateName();
 	list<State*>::iterator iter = this->mStates.begin();
 	bool checkSameName = false;
 
@@ -38,31 +37,23 @@ void StateMachine::addState(string name)
 	}
 }
 
-void StateMachine::setState(string name)
+void StateMachine::setState(State* state)
 {
-	list<State*>::iterator iter = this->mStates.begin();
-
-	for (iter; iter != this->mStates.end(); iter++)
-	{
-		if (!(*iter)->getStateName().compare(name))
-		{
-			this->mState = *iter;
-			break;
-		}
-	}
+	this->mState = state;
 }
 
-void StateMachine::transition(string name)
+void StateMachine::transition(State* state)
 {
 	// TODO: Transmission QEvent with enter, leave
-	this->setState(name);
+	this->setState(state);
 }
 
-string StateMachine::getCurrentState()
+State* StateMachine::getCurrentState()
 {
 	string name = this->mState->getStateName();
 	qDebug() << "Current State:" << name;
-	return name;
+
+	return this->mState;
 }
 
 void StateMachine::printAllStates()
