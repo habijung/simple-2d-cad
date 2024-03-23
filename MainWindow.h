@@ -1,11 +1,8 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include <QKeyEvent>
 #include "ui_MainWindow.h"
 #include "class/Viewport.h"
-#include "class/StateMachine.h"
-#include "utils/utils.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };
@@ -25,7 +22,10 @@ public:
 	void setSidebarWidget(QWidget* widget);
 	void setUnderbarWidget(QWidget* widget);
 
+	void resizeEvent(QResizeEvent* event) override;
+
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* mViewport;
+	QWidget* mSidebar, * mUnderbar;
 };

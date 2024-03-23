@@ -8,12 +8,16 @@ MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindowClass())
 {
-	ui->setupUi(this);
-	setMenuBar();
-	setToolbar();
-
 	// Create main Viewport
 	mViewport = new Viewport(this);
+	mSidebar = new QWidget(mViewport);
+	mUnderbar = new QWidget(mViewport);
+
+	// Set UI
+	ui->setupUi(this);
+	setMinimumSize(400, 400);
+	setMenuBar();
+	setToolbar();
 	setCentralWidget(mViewport);
 	setSidebarWidget(mViewport);
 	setUnderbarWidget(mViewport);
@@ -102,9 +106,17 @@ void MainWindow::setToolbar()
 
 void MainWindow::setSidebarWidget(QWidget* widget)
 {
-	QWidget* wSidebar = new QWidget(widget);
-	QPushButton* btnLine = new QPushButton("Line", wSidebar);
-	QPushButton* btnFace = new QPushButton("Poly", wSidebar);
+	mSidebar = new QWidget(widget);
+	QVBoxLayout* vBox = new QVBoxLayout(mSidebar);
+	QPushButton* btnLine = new QPushButton("Line", mSidebar);
+	QPushButton* btnFace = new QPushButton("Face", mSidebar);
+
+	vBox->addWidget(btnLine);
+	vBox->addWidget(btnFace);
+	mSidebar->setLayout(vBox);
+	mSidebar->setFixedSize(90, 100);
+	btnLine->setFixedHeight(35);
+	btnFace->setFixedHeight(35);
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
@@ -114,20 +126,24 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 		{
 			mViewport->updateState("DRAW_FACE");
 		});
-
-	QVBoxLayout* vBox = new QVBoxLayout(wSidebar);
-	vBox->addWidget(btnLine);
-	vBox->addStretch();
-	vBox->addWidget(btnFace);
-	wSidebar->setLayout(vBox);
 }
 
 void MainWindow::setUnderbarWidget(QWidget* widget)
 {
-	QWidget* wUnderbar = new QWidget(widget);
-	QPushButton* btnPoint = new QPushButton("Point", wUnderbar);
-	QPushButton* btnLine = new QPushButton("Line", wUnderbar);
-	QPushButton* btnFace = new QPushButton("Poly", wUnderbar);
+	mUnderbar = new QWidget(widget);
+	QHBoxLayout* hBox = new QHBoxLayout(mUnderbar);
+	QPushButton* btnPoint = new QPushButton("Point", mUnderbar);
+	QPushButton* btnLine = new QPushButton("Line", mUnderbar);
+	QPushButton* btnFace = new QPushButton("Poly", mUnderbar);
+
+	hBox->addWidget(btnPoint);
+	hBox->addWidget(btnLine);
+	hBox->addWidget(btnFace);
+	mUnderbar->setLayout(hBox);
+	mUnderbar->setFixedSize(300, 50);
+	btnPoint->setFixedSize(90, 30);
+	btnLine->setFixedSize(90, 30);
+	btnFace->setFixedSize(90, 30);
 
 	connect(btnPoint, &QPushButton::clicked, [this]()
 		{
@@ -141,13 +157,10 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 		{
 			mViewport->updateState("SELECT_FACE");
 		});
+}
 
-	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
-	hBox->addWidget(btnPoint);
-	hBox->addStretch();
-	hBox->addWidget(btnLine);
-	hBox->addStretch();
-	hBox->addWidget(btnFace);
-	wUnderbar->setLayout(hBox);
-	wUnderbar->move(100, 450);
+void MainWindow::resizeEvent(QResizeEvent* event)
+{
+	mSidebar->move(10, (height() - mSidebar->height()) / 3);
+	mUnderbar->move((width() - mUnderbar->width()) / 2, (height() - mUnderbar->height()) - 100);
 }
