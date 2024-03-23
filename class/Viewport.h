@@ -28,7 +28,7 @@ private:
 
 	int xOffset, yOffset;
 	int button;
-	float panFactor;
+	float pValue, zValue;
 	QPoint pStart, pEnd;
 	vector<pair<QPoint, QPoint>> vert;
 

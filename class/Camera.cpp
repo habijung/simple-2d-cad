@@ -40,14 +40,18 @@ QPoint Camera::setWindowToScreen(QPointF pWindow)
 
 
 // Camera action
-void Camera::zoomIn()
+void Camera::zoom(float scale)
 {
-	this->scale = this->scale <= 300 ? this->scale + 50 : this->scale;
-}
+	this->scale += scale;
 
-void Camera::zoomOut()
-{
-	this->scale = this->scale >= 50 ? this->scale - 50 : this->scale;
+	if (this->scale >= 300.0)
+	{
+		this->scale = 300.0;
+	}
+	else if (this->scale <= 50.0)
+	{
+		this->scale = 50.0;
+	}
 }
 
 void Camera::pan(float dx, float dy)

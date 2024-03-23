@@ -12,8 +12,7 @@ public:
 	QPoint  setWindowToScreen(QPointF pWindow);
 
 	// Camera action
-	void zoomIn();
-	void zoomOut();
+	void zoom(float scale);
 	void pan(float dx, float dy);
 
 private:
