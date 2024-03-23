@@ -61,8 +61,8 @@ Line::Line(QPointF p1, QPointF p2)
 Line::Line(list<Vertex*> vertices)
 {
 	mType = "Line";
-	mV1 = new Vertex(vertices.front()->retVertex());
-	mV2 = new Vertex(vertices.back()->retVertex());
+	mV1 = vertices.front();
+	mV2 = vertices.back();
 }
 
 vector<Vertex> Line::retVertices()
