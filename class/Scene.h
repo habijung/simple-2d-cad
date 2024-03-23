@@ -6,7 +6,7 @@
 #include <utility>
 #include <list>
 #include "Camera.h"
-#include "Shape.h"
+#include "../shape/Shape.h"
 using namespace std;
 
 

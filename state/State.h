@@ -6,7 +6,7 @@
 #include <QMouseEvent>
 #include "../class/Scene.h"
 #include "../class/Camera.h"
-#include "../class/Shape.h"
+#include "../shape/Shape.h"
 #include "../utils/utils.h"
 using namespace std;
 

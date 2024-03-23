@@ -2,7 +2,7 @@
 #include <list>
 #include <QPainter>
 #include <QJsonObject>
-#include "Camera.h"
+#include "../class/Camera.h"
 using namespace std;
 
 

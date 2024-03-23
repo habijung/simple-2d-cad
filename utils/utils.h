@@ -1,7 +1,7 @@
 #pragma once
 #include <QPoint>
 #include <QPolygon>
-#include "../class/Shape.h"
+#include "../shape/Shape.h"
 
 
 // Circular Dependency
