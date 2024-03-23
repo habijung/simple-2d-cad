@@ -99,7 +99,7 @@ void Line::render(QPainter* painter, Camera* camera)
 Face::Face(list<Vertex*> vertices)
 {
 	mType = "Face";
-	this->vertices = vertices;
+	mVertices = vertices;
 }
 
 string Face::retType()
@@ -109,17 +109,26 @@ string Face::retType()
 
 void Face::render(QPainter* painter, Camera* camera)
 {
-	QPolygonF polygon;
-	list<Vertex*>::iterator iter = this->vertices.begin();
+	QPolygonF poly;
+	list<Vertex*>::iterator iter = mVertices.begin();
+	vector<QPoint> screenPoints;
 
-	for (iter; iter != this->vertices.end(); iter++)
+	for (iter; iter != mVertices.end(); iter++)
 	{
-		polygon << camera->setWindowToScreen((*iter)->retVertex());
+		QPoint p = camera->setWindowToScreen((*iter)->retVertex());
+		poly << p;
+		screenPoints.push_back(p);
 	}
 
-	QPen pen(Qt::black, 3);
-	QBrush brush(Qt::green, Qt::SolidPattern);
-	painter->setPen(pen);
-	painter->setBrush(brush);
-	painter->drawPolygon(polygon);
+	// Draw polygon
+	painter->setPen(QPen(Qt::darkGray, 3));
+	painter->setBrush(QBrush(Qt::cyan));
+	painter->drawPolygon(poly, Qt::OddEvenFill);
+
+	// Draw polygon points again for priority
+	for (int i = 0; i < screenPoints.size(); i++)
+	{
+		painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
+		painter->drawPoint(screenPoints[i]);
+	}
 }

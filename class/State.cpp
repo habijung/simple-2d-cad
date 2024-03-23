@@ -133,7 +133,7 @@ void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 
 		mLine = QLineF(mPoints.back(), mPos);
 		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
-		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // 편의를 위해서 box를 크게 만들기
+		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
 		mHit = hitTestingPoint(mPos, mPolygon);
 
 		if (mHit && (mPoints.size() > 1))
@@ -229,7 +229,6 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 			// Draw polygon points again for priority
 			for (int i = 0; i < mPoints.size(); i++)
 			{
-				// Draw polygon points
 				painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 				painter->drawPoint(mPoints[i]);
 				painter->drawPoint(mPos);

@@ -57,5 +57,5 @@ public:
 
 private:
 	string mType;
-	list<Vertex*> vertices;
+	list<Vertex*> mVertices;
 };
