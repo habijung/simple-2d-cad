@@ -15,7 +15,8 @@ MainWindow::MainWindow(QWidget* parent)
 	this->widget = new Viewport(this);
 	setCentralWidget(this->widget);
 
-	this->setSidebarWidget();
+	this->setSidebarWidget(this->widget);
+	this->setUnderbarWidget(this->widget);
 }
 
 MainWindow::~MainWindow()
@@ -92,13 +93,11 @@ void MainWindow::setToolbar()
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 }
 
-void MainWindow::setSidebarWidget()
+void MainWindow::setSidebarWidget(QWidget* widget)
 {
-	QWidget* wSidebar = new QWidget(this->widget);
+	QWidget* wSidebar = new QWidget(widget);
 	QPushButton* btnLine = new QPushButton("Line", wSidebar);
 	QPushButton* btnFace = new QPushButton("Face", wSidebar);
-	btnLine->resize(100, 200);
-	btnLine->move(300, 300);
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
@@ -114,6 +113,29 @@ void MainWindow::setSidebarWidget()
 	vBox->addStretch();
 	vBox->addWidget(btnFace);
 	wSidebar->setLayout(vBox);
+}
+
+void MainWindow::setUnderbarWidget(QWidget* widget)
+{
+	QWidget* wUnderbar = new QWidget(widget);
+	QPushButton* btnLine = new QPushButton("Line", wUnderbar);
+	QPushButton* btnFace = new QPushButton("Face", wUnderbar);
+
+	connect(btnLine, &QPushButton::clicked, [this]()
+		{
+			qDebug() << "Line Clicked";
+		});
+	connect(btnFace, &QPushButton::clicked, [this]()
+		{
+			qDebug() << "Face Clicked";
+		});
+
+	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
+	hBox->addWidget(btnLine);
+	hBox->addStretch();
+	hBox->addWidget(btnFace);
+	wUnderbar->setLayout(hBox);
+	wUnderbar->move(100, 450);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event)

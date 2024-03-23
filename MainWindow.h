@@ -20,7 +20,8 @@ public:
 
 	void setMenuBar();
 	void setToolbar();
-	void setSidebarWidget();
+	void setSidebarWidget(QWidget* widget);
+	void setUnderbarWidget(QWidget* widget);
 
 private:
 	Ui::MainWindowClass* ui;
