@@ -3,12 +3,6 @@
 #include "MainWindow.h"
 
 
-// TODO: Global to Member variables
-State* sIDLE = new State("IDLE");
-DrawLineState* sDLS = new DrawLineState("DRAW_LINE");
-DrawLineState* sDLS1 = new DrawLineState("DRAW_LINE");
-DrawLineState* sDLS2 = new DrawLineState("DRAW_LINE2");
-
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
 	, ui(new Ui::MainWindowClass())
@@ -18,7 +12,10 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setMenuBar();
 	this->setToolbar();
 
-	this->widget = new Viewport(this);
+	// Create main scene, camera, viewport
+	mScene = new Scene(this);
+	mCamera = new Camera(this, QSize(600, 600), 100.0);
+	this->widget = new Viewport(this, mScene, mCamera);
 	setCentralWidget(this->widget);
 
 	this->setSidebarWidget(this->widget);
@@ -26,6 +23,12 @@ MainWindow::MainWindow(QWidget* parent)
 
 	// Define State Machine and States
 	machine = new StateMachine();
+	// TODO: Global to Member variables
+	sIDLE = new State("IDLE");
+	sDLS = new DrawLineState("DRAW_LINE", this->widget, mScene, mCamera);
+	sDLS1 = new DrawLineState("DRAW_LINE", this->widget, mScene, mCamera);
+	sDLS2 = new DrawLineState("DRAW_LINE2", this->widget, mScene, mCamera);
+
 	this->machine->addState(sIDLE);
 	this->machine->addState(sDLS);
 	this->machine->addState(sDLS1);

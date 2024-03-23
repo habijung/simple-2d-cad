@@ -1,7 +1,9 @@
 #pragma once
 
 #include <string>
-#include <QPoint>
+#include <QWidget>
+#include "Scene.h"
+#include "Camera.h"
 using namespace std;
 
 class State
@@ -17,12 +19,15 @@ public:
 
 private:
 	string mName;
+	QWidget* mViewport;
+	Scene* mScene;
+	Camera* mCamera;
 };
 
 class DrawLineState : public State
 {
 public:
-	DrawLineState(string name);
+	DrawLineState(string name, QWidget* viewport, Scene* scene, Camera* camera);
 
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
@@ -30,4 +35,7 @@ public:
 
 private:
 	string mName;
+	QWidget* mViewport;
+	Scene* mScene;
+	Camera* mCamera;
 };

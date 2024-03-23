@@ -28,6 +28,10 @@ private:
 	Ui::MainWindowClass* ui;
 	Viewport* widget;
 	StateMachine* machine;
+	State* sIDLE;
+	DrawLineState* sDLS, * sDLS1, * sDLS2;
+	Scene* mScene;
+	Camera* mCamera;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);

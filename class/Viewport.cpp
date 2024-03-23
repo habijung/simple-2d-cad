@@ -4,12 +4,12 @@
 #include "Viewport.h"
 
 
-Viewport::Viewport(QWidget* parent)
+Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
-	scene = new Scene(this);
-	camera = new Camera(this, QSize(600, 600), 100.0);
+	scene = mainScene;
+	camera = mainCamera;
 	this->state = new State("NULL");
 	this->pValue = 60.0;
 	this->zValue = 60.0;
@@ -88,15 +88,9 @@ void Viewport::mousePressEvent(QMouseEvent* event)
 
 	if (this->button == Qt::LeftButton)
 	{
-		//qDebug() << "Point:" << this->pStart;
-		float dx = width() / 2.0;
-		float dy = height() / 2.0;
-		float scale = 100.0;
-		scene->addVertex(camera->setScreenToWindow(this->pStart, dx, dy, scale));
-		repaint();
-
 		// Get state and state mouse event test
 		this->state->mousePressEvent(this->pStart);
+		repaint();
 	}
 }
 

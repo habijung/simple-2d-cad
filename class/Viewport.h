@@ -12,7 +12,7 @@ class Viewport :
 	public QWidget
 {
 public:
-	Viewport(QWidget* parent = nullptr);
+	Viewport(QWidget* parent = nullptr, Scene* mainScene = nullptr, Camera* mainCamera = nullptr);
 	void getKeyEvent(QKeyEvent* event);
 	void updateState(State* state);
 
