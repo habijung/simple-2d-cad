@@ -16,6 +16,7 @@ public:
 	~MainWindow();
 
 	void setMenuBar();
+	void setToolbar();
 
 private:
 	Ui::MainWindowClass* ui;

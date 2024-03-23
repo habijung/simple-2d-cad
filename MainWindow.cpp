@@ -5,7 +5,9 @@ MainWindow::MainWindow(QWidget* parent)
 	, ui(new Ui::MainWindowClass())
 {
 	ui->setupUi(this);
+
 	this->setMenuBar();
+	this->setToolbar();
 }
 
 MainWindow::~MainWindow()
@@ -51,4 +53,16 @@ void MainWindow::setMenuBar()
 	{
 		statusBar()->hide();
 	}
+}
+
+void MainWindow::setToolbar()
+{
+	QToolBar* toolbar = addToolBar("main toolbar");
+	toolbar->addAction("New File");
+	toolbar->addAction("Open File");
+	toolbar->addSeparator();
+
+	QAction* quit = toolbar->addAction("Quit Application");
+
+	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 }
