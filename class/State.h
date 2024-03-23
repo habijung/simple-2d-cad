@@ -90,9 +90,8 @@ private:
 	QPointF mPos;
 	int mButton;
 
-	// Test
-	Vertex* v; // Selected Vertex*
-	QPointF p;
-	QPolygonF pol;
-	bool hit;
+	// For select point
+	Vertex* mVertex;
+	QPolygonF mPolygon;
+	bool mHit;
 };

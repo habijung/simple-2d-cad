@@ -128,17 +128,19 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
-
-	// Test
-	v = new Vertex(QPointF(INFINITY, INFINITY));
+	mVertex = new Vertex(QPointF(INFINITY, INFINITY));
 }
 
 void SelectPointState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mButton = event->button();
+}
 
-	// TODO: Scene의 point select
+void SelectPointState::mouseMoveEvent(QMouseEvent* event)
+{
+	mPos = event->pos();
+
 	list<Shape*> shapes = mScene->retShapes();
 	list<Shape*>::iterator iter = shapes.begin();
 
@@ -147,37 +149,27 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	{
 		if (!(*iter)->retType().compare("Point"))
 		{
-			v = static_cast<Vertex*>(*iter);
-			hit = hitTestingPoint(mPos, createPointBoundingBox(mCamera, v, 20));
+			mVertex = static_cast<Vertex*>(*iter);
+			mPolygon = createPointBoundingBox(mCamera, mVertex, 15);
+			mHit = hitTestingPoint(mPos, mPolygon);
 
-			if (hit)
+			if (mHit)
 			{
 				break;
 			}
 		}
 	}
 
-	//mViewport->update();
-}
-
-void SelectPointState::mouseMoveEvent(QMouseEvent* event)
-{
-	mPos = event->pos();
-
-	if (hit && mButton == Qt::LeftButton && event->button() == Qt::NoButton)
+	if (mHit && (mButton == Qt::LeftButton) && (event->button() == Qt::NoButton))
 	{
 		float dx = this->mViewport->width() / 2.0;
 		float dy = this->mViewport->height() / 2.0;
 		float scale = 100.0;
 
-		v->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
-		pol = createPointBoundingBox(mCamera, v, 20);
-
-		mViewport->update();
+		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+		mPolygon = createPointBoundingBox(mCamera, mVertex, 15);
 	}
 
-	pol = createPointBoundingBox(mCamera, v, 25);
-	hit = hitTestingPoint(mPos, pol);
 	mViewport->update();
 }
 
@@ -188,15 +180,14 @@ void SelectPointState::mouseReleaseEvent(QMouseEvent* event)
 
 void SelectPointState::paintEvent(QPainter* painter)
 {
-	if (mPos.x() > 0 && mPos.y() > 0)
+	if (mHit)
 	{
+		// Vertex highlight
 		painter->setPen(QPen(Qt::red, 10));
-		painter->drawPoint(mCamera->setWindowToScreen(v->retVertex()));
-	}
+		painter->drawPoint(mCamera->setWindowToScreen(mVertex->retVertex()));
 
-	if (hit)
-	{
+		// Show bounding box
 		painter->setPen(QPen(Qt::blue, 3));
-		painter->drawPolygon(pol);
+		painter->drawPolygon(mPolygon);
 	}
 }
