@@ -17,7 +17,7 @@ Camera::Camera(QWidget* parent, QSize size, float scale)
 
 
 // Coordinate conversion
-QPointF Camera::setScreenToWindow(QPoint pScreen)
+QPointF Camera::setWindow(QPoint pScreen)
 {
 	// f({ x, y }) = { (x - mX) / scale, (y - mY) / (-mScale) }
 	QPointF pWindow =
@@ -28,7 +28,7 @@ QPointF Camera::setScreenToWindow(QPoint pScreen)
 	return pWindow;
 }
 
-QPoint Camera::setWindowToScreen(QPointF pWindow)
+QPoint Camera::setScreen(QPointF pWindow)
 {
 	QPoint pScreen =
 	{

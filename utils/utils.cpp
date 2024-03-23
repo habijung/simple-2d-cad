@@ -7,7 +7,7 @@
 QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)
 {
 	QPolygonF poly = QPolygonF();
-	QPointF p = cam->setWindowToScreen(v->retVertex());
+	QPointF p = cam->setScreen(v->retVertex());
 	QPointF dt[2] = { QPointF(d, d), QPointF(-d, d) };
 	QPointF points[4] =
 	{

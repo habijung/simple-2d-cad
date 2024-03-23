@@ -57,12 +57,12 @@ void Scene::renderCoordinate(QPainter* painter)
 	{
 		for (int j = -INF; j <= INF; j++)
 		{
-			QLine xAxis = QLine(mCamera->setWindowToScreen(QPoint(i, j)), mCamera->setWindowToScreen(QPoint(-i, j)));
-			QLine yAxis = QLine(mCamera->setWindowToScreen(QPoint(i, -j)), mCamera->setWindowToScreen(QPoint(i, j)));
+			QLine xAxis = QLine(mCamera->setScreen(QPoint(i, j)), mCamera->setScreen(QPoint(-i, j)));
+			QLine yAxis = QLine(mCamera->setScreen(QPoint(i, -j)), mCamera->setScreen(QPoint(i, j)));
 
 			if (i == 0 || j == 0)
 			{
-				QPoint p = mCamera->setWindowToScreen(QPoint(i, j));
+				QPoint p = mCamera->setScreen(QPoint(i, j));
 				painter->setPen(QPen(Qt::black, 0.1));
 				painter->setFont(QFont("Arial", 12));
 

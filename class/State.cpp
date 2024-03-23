@@ -59,8 +59,8 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 
 		if (mPoints.size() == 2)
 		{
-			Vertex* v1 = new Vertex(mCamera->setScreenToWindow(mPoints.front().toPoint()));
-			Vertex* v2 = new Vertex(mCamera->setScreenToWindow(mPos.toPoint()));
+			Vertex* v1 = new Vertex(mCamera->setWindow(mPoints.front().toPoint()));
+			Vertex* v2 = new Vertex(mCamera->setWindow(mPos.toPoint()));
 			Line* line = new Line(v1, v2);
 			mScene->addShape(v1);
 			mScene->addShape(v2);
@@ -95,8 +95,8 @@ void DrawLineState::paintEvent(QPainter* painter)
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setScreenToWindow(mPos.toPoint()).x(), 0, 'f', 2)
-		.arg(mCamera->setScreenToWindow(mPos.toPoint()).y(), 0, 'f', 2)
+		.arg(mCamera->setWindow(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->setWindow(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }
 
@@ -130,7 +130,7 @@ void DrawFaceState::mouseMoveEvent(QMouseEvent* event)
 	{
 		// Create bounding box and hit testing by start point.
 		mLine = QLineF(mPoints.back(), mPos);
-		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint()));
+		mVertex = new Vertex(mCamera->setWindow(mPoints[0].toPoint()));
 		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
 		mHit = hitTestingPoint(mPos, mPolygon);
 
@@ -170,7 +170,7 @@ void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 				// 마지막 점은 polygon 구성에서 빼기
 				for (int i = 0; i < mPoints.size() - 1; i++)
 				{
-					v = new Vertex(mCamera->setScreenToWindow(mPoints[i].toPoint()));
+					v = new Vertex(mCamera->setWindow(mPoints[i].toPoint()));
 					vertices.push_back(v);
 					mScene->addShape(v);
 				}
@@ -245,8 +245,8 @@ void DrawFaceState::paintEvent(QPainter* painter)
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setScreenToWindow(mPos.toPoint()).x(), 0, 'f', 2)
-		.arg(mCamera->setScreenToWindow(mPos.toPoint()).y(), 0, 'f', 2)
+		.arg(mCamera->setWindow(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->setWindow(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }
 
@@ -299,7 +299,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 	if (getMouseLeftPressed(mHit, mButton, event) && mShapes.size())
 	{
-		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint()));
+		mVertex->updateVertex(mCamera->setWindow(mPos.toPoint()));
 
 		// Check snapping
 		list<Shape*>::iterator iter = mShapes.begin();
@@ -317,7 +317,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 					// Snap이 발생하면 현재 Vertex를 해당 위치로 업데이트
 					QPointF p = mSnapVertex.retVertex();
 					mVertex->updateVertex(p);
-					mSnapPoint = mCamera->setWindowToScreen(p);
+					mSnapPoint = mCamera->setScreen(p);
 					break;
 				}
 			}
@@ -342,7 +342,7 @@ void SelectPointState::paintEvent(QPainter* painter)
 	{
 		// Vertex highlight
 		painter->setPen(QPen(Qt::red, 10, Qt::SolidLine, Qt::RoundCap));
-		painter->drawPoint(mCamera->setWindowToScreen(mVertex->retVertex()));
+		painter->drawPoint(mCamera->setScreen(mVertex->retVertex()));
 
 		// Draw bounding box
 		painter->setPen(QPen(Qt::blue, 2));

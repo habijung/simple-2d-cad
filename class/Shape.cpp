@@ -39,7 +39,7 @@ bool Vertex::checkType(string s)
 
 void Vertex::render(QPainter* painter, Camera* camera)
 {
-	QPoint p = camera->setWindowToScreen(QPointF(mX, mY));
+	QPoint p = camera->setScreen(QPointF(mX, mY));
 	painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(p);
 }
@@ -76,8 +76,8 @@ vector<Vertex> Line::retVertices()
 
 QLineF Line::retLine(Camera* cam)
 {
-	QPointF p1 = cam->setWindowToScreen(mV1->retVertex());
-	QPointF p2 = cam->setWindowToScreen(mV2->retVertex());
+	QPointF p1 = cam->setScreen(mV1->retVertex());
+	QPointF p2 = cam->setScreen(mV2->retVertex());
 
 	return QLineF(p1, p2);
 }
@@ -85,10 +85,10 @@ QLineF Line::retLine(Camera* cam)
 void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec)
 {
 	QPointF offset = pEnd - pStart;
-	QPointF p1 = offset + cam->setWindowToScreen(vec.front().retVertex());
-	QPointF p2 = offset + cam->setWindowToScreen(vec.back().retVertex());
-	mV1->updateVertex(cam->setScreenToWindow(p1.toPoint()));
-	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint()));
+	QPointF p1 = offset + cam->setScreen(vec.front().retVertex());
+	QPointF p2 = offset + cam->setScreen(vec.back().retVertex());
+	mV1->updateVertex(cam->setWindow(p1.toPoint()));
+	mV2->updateVertex(cam->setWindow(p2.toPoint()));
 }
 
 QJsonObject Line::saveLine()
@@ -114,8 +114,8 @@ bool Line::checkType(string s)
 
 void Line::render(QPainter* painter, Camera* camera)
 {
-	QPointF p1 = camera->setWindowToScreen(mV1->retVertex());
-	QPointF p2 = camera->setWindowToScreen(mV2->retVertex());
+	QPointF p1 = camera->setScreen(mV1->retVertex());
+	QPointF p2 = camera->setScreen(mV2->retVertex());
 	QLineF line = QLineF(p1, p2);
 	painter->setPen(QPen(Qt::darkGray, 3, Qt::SolidLine, Qt::RoundCap));
 	painter->drawLine(line);
@@ -156,7 +156,7 @@ QPolygonF Face::retFace(Camera* cam)
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
-		QPoint p = cam->setWindowToScreen((*iter)->retVertex());
+		QPoint p = cam->setScreen((*iter)->retVertex());
 		poly << p;
 	}
 
@@ -181,8 +181,8 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> sh
 				count++;
 				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
 				Vertex* v = dynamic_cast<Vertex*>(*iter);
-				QPointF p = offset + cam->setWindowToScreen(vertices[fSize - count].retVertex());
-				v->updateVertex(cam->setScreenToWindow(p.toPoint()));
+				QPointF p = offset + cam->setScreen(vertices[fSize - count].retVertex());
+				v->updateVertex(cam->setWindow(p.toPoint()));
 			}
 
 			break;
@@ -223,7 +223,7 @@ void Face::render(QPainter* painter, Camera* camera)
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
-		QPoint p = camera->setWindowToScreen((*iter)->retVertex());
+		QPoint p = camera->setScreen((*iter)->retVertex());
 		poly << p;
 		screenPoints.push_back(p);
 	}
