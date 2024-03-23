@@ -102,6 +102,20 @@ Face::Face(list<Vertex*> vertices)
 	mVertices = vertices;
 }
 
+QPolygonF Face::retFace(Camera* cam)
+{
+	QPolygonF poly;
+	list<Vertex*>::iterator iter = mVertices.begin();
+
+	for (iter; iter != mVertices.end(); iter++)
+	{
+		QPoint p = cam->setWindowToScreen((*iter)->retVertex());
+		poly << p;
+	}
+
+	return poly;
+}
+
 string Face::retType()
 {
 	return mType;

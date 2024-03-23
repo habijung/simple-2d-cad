@@ -153,7 +153,12 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 
+	QPointF mPos;
+	int mButton;
+
 	// For select line
 	list<Shape*> mShapes;
+	Face* mFace;
+	QPolygonF mPolygon;
 	bool mHit;
 };

@@ -51,6 +51,7 @@ class Face : public Shape
 {
 public:
 	Face(list<Vertex*> vertices = {});
+	QPolygonF retFace(Camera* cam);
 
 	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);

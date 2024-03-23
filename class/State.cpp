@@ -417,22 +417,45 @@ void SelectLineState::paintEvent(QPainter* painter)
 SelectPolygonState::SelectPolygonState(string name, component* comp)
 	: State(name, comp)
 {
-
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
 }
 
 void SelectPolygonState::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "Select Polygon State :: Mouse Press";
+	mPos = event->pos();
+	mButton = event->button();
 }
 
 void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 {
-	qDebug() << "Select Polygon State :: Mouse Move";
+	mPos = event->pos();
+	mShapes = mScene->retShapes();
+
+	if (mButton != Qt::LeftButton)
+	{
+		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
+
+		for (iter; iter != mShapes.rend(); iter++)
+		{
+			if (!(*iter)->retType().compare("Face"))
+			{
+				// No need to consider square bounding box type
+				mFace = static_cast<Face*>(*iter);
+				mPolygon = mFace->retFace(mCamera);
+				mHit = hitTestingPoint(mPos, mPolygon);
+
+				qDebug() << mHit;
+			}
+		}
+	}
 }
 
 void SelectPolygonState::mouseReleaseEvent(QMouseEvent* event)
 {
-	qDebug() << "Select Polygon State :: Mouse Release";
+	mButton = Qt::NoButton;
 }
 
 void SelectPolygonState::paintEvent(QPainter* painter)
