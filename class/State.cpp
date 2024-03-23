@@ -48,9 +48,7 @@ void DrawLineState::mousePressEvent(QMouseEvent* event)
 
 void DrawLineState::mouseMoveEvent(QMouseEvent* event)
 {
-	mOffsetX = event->pos().x() - mP1.x();
-	mOffsetY = event->pos().y() - mP2.y();
-
+	mP2 = event->pos();
 	mViewport->update();
 }
 
@@ -71,12 +69,9 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 
 		Line* l = new Line(mV1, mV2);
 		mScene->addShape(l);
-
-		mOffsetX = 0;
-		mOffsetY = 0;
-		mButton = Qt::NoButton;
 	}
 
+	mButton = Qt::NoButton;
 	mViewport->update();
 }
 

@@ -49,7 +49,6 @@ private:
 
 	QPoint mP1, mP2;
 	Vertex* mV1, * mV2;
-	int mOffsetX, mOffsetY;
 	int mButton;
 };
 
