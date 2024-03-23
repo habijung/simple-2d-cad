@@ -14,8 +14,6 @@ private:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 
-	QPoint point;
-	QPoint start, end;
+	QPoint pStart, pEnd;
 	int xOffset, yOffset;
-	int count;
 };

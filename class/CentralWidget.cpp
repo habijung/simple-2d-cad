@@ -7,54 +7,55 @@ CentralWidget::CentralWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
-	count = 0;
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
 	// TODO: Add attribute with Qt::WA_OpaquePaintEvent
-
-	int x = this->point.x();
-	int y = this->point.y();
-	int offset = 100;
+	int xStart = this->pStart.x();
+	int yStart = this->pStart.y();
+	int xEnd = xStart + this->xOffset;
+	int yEnd = yStart + this->yOffset;
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 
-	if (x | y)
+	if (xStart | yStart)
 	{
-		painter.drawLine(x, y, x + this->xOffset, y + this->yOffset);
+		painter.drawLine(xStart, yStart, xEnd, yEnd);
 		painter.drawText
 		(
-			this->point.x() + 10,
-			this->point.y(),
+			xStart + 10,
+			yStart,
 			QString("x: %1, y: %2")
-			.arg(this->point.x())
-			.arg(this->point.y())
+			.arg(xStart)
+			.arg(yStart)
+		);
+		painter.drawText
+		(
+			xEnd + 10,
+			yEnd,
+			QString("x: %1, y: %2")
+			.arg(xEnd)
+			.arg(yEnd)
 		);
 	}
 	painter.end();
-
-	qDebug();
-	qDebug() << "x: " << this->point.x();
-	qDebug() << "y: " << this->point.y();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "Mouse Press";
-	this->point = event->pos();
-	this->start = event->pos();
+	this->pStart = event->pos();
 }
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	xOffset = event->pos().x() - this->start.x();
-	yOffset = event->pos().y() - this->start.y();
+	xOffset = event->pos().x() - this->pStart.x();
+	yOffset = event->pos().y() - this->pStart.y();
 	update();
 }
 
 void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	qDebug() << "Mouse Release";
+	this->pEnd = event->pos();
 }
