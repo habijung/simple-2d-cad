@@ -63,29 +63,31 @@ void Viewport::saveScene()
 
 	for (auto iter = shapes.begin(); iter != shapes.end(); iter++)
 	{
+		size_t n = 3; // Max precision
+		string s = to_string(numShape);
+		int precision = n - min(n, s.size());
+		string name = "Shape-" + string(precision, '0').append(s);
 		QJsonObject obj;
 
 		if ((*iter)->checkType("Line"))
 		{
-			string name = (*iter)->type() + "-" + to_string(numLine);
-			obj.insert("Num", numShape);
 			obj.insert("Type", (*iter)->type().c_str());
+			obj.insert("Num", numLine);
 			obj.insert("Vertices", dynamic_cast<Line*>(*iter)->saveLine());
 			content.insert(name.c_str(), obj);
 			numLine++;
+			numShape++;
 		}
 
 		if ((*iter)->checkType("Face"))
 		{
-			string name = (*iter)->type() + "-" + to_string(numFace);
-			obj.insert("Num", numShape);
 			obj.insert("Type", (*iter)->type().c_str());
+			obj.insert("Num", numFace);
 			obj.insert("Vertices", dynamic_cast<Face*>(*iter)->saveFace());
 			content.insert(name.c_str(), obj);
 			numFace++;
+			numShape++;
 		}
-
-		numShape++;
 	}
 
 	QJsonDocument document;
