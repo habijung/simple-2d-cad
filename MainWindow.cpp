@@ -1,3 +1,5 @@
+#include <QPushButton>
+#include <QBoxLayout>
 #include "MainWindow.h"
 
 
@@ -12,6 +14,8 @@ MainWindow::MainWindow(QWidget* parent)
 
 	this->widget = new Viewport(this);
 	setCentralWidget(this->widget);
+
+	this->setSidebarWidget();
 }
 
 MainWindow::~MainWindow()
@@ -86,6 +90,30 @@ void MainWindow::setToolbar()
 	QAction* quit = toolbar->addAction(QIcon(quitpix), "Quit Application");
 
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
+}
+
+void MainWindow::setSidebarWidget()
+{
+	QWidget* wSidebar = new QWidget(this->widget);
+	QPushButton* btnLine = new QPushButton("Line", wSidebar);
+	QPushButton* btnFace = new QPushButton("Face", wSidebar);
+	btnLine->resize(100, 200);
+	btnLine->move(300, 300);
+
+	connect(btnLine, &QPushButton::clicked, [this]()
+		{
+			qDebug() << "Line Clicked";
+		});
+	connect(btnFace, &QPushButton::clicked, [this]()
+		{
+			qDebug() << "Face Clicked";
+		});
+
+	QVBoxLayout* vBox = new QVBoxLayout(wSidebar);
+	vBox->addWidget(btnLine);
+	vBox->addStretch();
+	vBox->addWidget(btnFace);
+	wSidebar->setLayout(vBox);
 }
 
 void MainWindow::keyPressEvent(QKeyEvent* event)

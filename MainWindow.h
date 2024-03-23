@@ -20,6 +20,7 @@ public:
 
 	void setMenuBar();
 	void setToolbar();
+	void setSidebarWidget();
 
 private:
 	Ui::MainWindowClass* ui;
