@@ -35,6 +35,10 @@ void MainWindow::setMenuBar()
 
 
 	/* Edit */
+	QMenu* edit = menuBar()->addMenu("&Edit");
+	edit->addAction(newa);
+	edit->addAction(open);
+
 
 	/* View */
 	QAction* viewst = new QAction("&View statusbar", this);
@@ -43,7 +47,7 @@ void MainWindow::setMenuBar()
 
 	QMenu* view = menuBar()->addMenu("&View");
 	view->addAction(viewst);
-	statusBar();
+	statusBar()->showMessage("Ready");
 
 	if (viewst->isChecked())
 	{
