@@ -64,7 +64,7 @@ void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, s
 	}
 }
 
-QJsonObject Face::saveFace()
+QJsonObject Face::SaveFace()
 {
 	QVariantMap map;
 	std::vector<Vertex> vertices = GetVertices();

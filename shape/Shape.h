@@ -60,7 +60,7 @@ public:
 	std::vector<Vertex> GetVertices();
 	QPolygonF GetFace(Camera* cam);
 	void UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices);
-	QJsonObject saveFace();
+	QJsonObject SaveFace();
 
 	virtual std::string Type() override;
 	virtual bool CheckShapeType(std::string s) override;

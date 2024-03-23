@@ -87,7 +87,7 @@ void Viewport::SaveScene()
 		{
 			obj.insert("Type", (*iter)->Type().c_str());
 			obj.insert("Num", numFace);
-			obj.insert("Vertices", dynamic_cast<Face*>(*iter)->saveFace());
+			obj.insert("Vertices", dynamic_cast<Face*>(*iter)->SaveFace());
 			content.insert(name.c_str(), obj);
 			numFace++;
 			numShape++;
