@@ -18,11 +18,19 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(QPen(Qt::black, 10, Qt::DashDotLine, Qt::RoundCap));
+	painter.setPen(QPen(Qt::black, 5, Qt::DashDotLine, Qt::RoundCap));
 
 	if (x | y)
 	{
-		painter.drawLine(x, y, x + offset, y + offset);
+		painter.drawLine(x, y, x + this->xOffset, y + this->yOffset);
+		painter.drawText
+		(
+			this->point.x() + 10,
+			this->point.y(),
+			QString("x: %1, y: %2")
+			.arg(this->point.x())
+			.arg(this->point.y())
+		);
 	}
 	painter.end();
 
@@ -33,18 +41,19 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "\n" << "Mouse Press";
+	qDebug() << "Mouse Press";
 	this->point = event->pos();
+	this->start = event->pos();
 	update();
 }
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	qDebug() << "Mouse Move: " << count;
-	count += 1;
+	xOffset = event->pos().x() - this->start.x();
+	yOffset = event->pos().y() - this->start.y();
 }
 
 void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 {
-	qDebug() << "\n" << "Mouse Release";
+	qDebug() << "Mouse Release";
 }
