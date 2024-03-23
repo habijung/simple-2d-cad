@@ -13,7 +13,7 @@ Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera, StateM
 	machine = mainMachine;
 	component* comp = new component;
 	this->state = new SelectPointState("NULL", comp);
-	this->pValue = 60.0;
+	this->pValue = 80.0;
 	this->zValue = 60.0;
 	this->setMouseTracking(true);
 }
