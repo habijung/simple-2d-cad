@@ -4,12 +4,14 @@
 
 Vertex::Vertex(float x, float y)
 {
-	qDebug() << "Create vertex shape";
 	this->x = x;
 	this->y = y;
 }
 
 void Vertex::render(QPainter* painter)
 {
-	qDebug() << "Draw vertex shape";
+	QPoint p = QPoint(this->x, this->y);
+	QPen pen(Qt::blue, 10);
+	painter->setPen(pen);
+	painter->drawPoint(p);
 }
