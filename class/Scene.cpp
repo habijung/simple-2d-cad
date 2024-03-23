@@ -47,6 +47,11 @@ void Scene::resize(QSize* screenSize)
 	this->height = screenSize->height();
 }
 
+void Scene::updateShapes(list<Shape*> newShapes)
+{
+	mShapes = newShapes;
+}
+
 
 // Render method
 void Scene::renderScreenCoordinate(QPainter* painter)

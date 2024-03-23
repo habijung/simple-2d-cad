@@ -15,10 +15,7 @@ class Scene : public QWidget
 public:
 	Scene(QWidget* parent = nullptr, Camera* camera = nullptr);
 	void resize(QSize* screenSize);
-	void updateShapes(list<Shape*> newShapes)
-	{
-		mShapes = newShapes;
-	}
+	void updateShapes(list<Shape*> newShapes);
 
 	// Render method
 	void renderScreenCoordinate(QPainter* painter);

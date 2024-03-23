@@ -122,7 +122,6 @@ Scene* Viewport::loadScene(Scene* oldScene)
 		dirPath,
 		tr("JSON (*.json);; Image (*.png *jpg);; Text (*.txt);; XML (*.xml)")
 	);
-
 	QFile file(filePath);
 
 	if (file.open(QIODevice::ReadOnly))
@@ -141,13 +140,14 @@ Scene* Viewport::loadScene(Scene* oldScene)
 
 		if (document.isObject())
 		{
-			QJsonObject jsonScene = document.object(); // .json file
-			QJsonObject::iterator iter = jsonScene.begin();
+			QJsonObject jsonScene = document.object(); // Scene.json file
+			QJsonObject::iterator is = jsonScene.begin();
 			mScene = createNewScene(oldScene);
+			list<Shape*> shapes = mScene->retShapes();
 
-			for (iter; iter != jsonScene.end(); iter++)
+			for (is; is != jsonScene.end(); is++)
 			{
-				QJsonObject jsonShape = (*iter).toObject();
+				QJsonObject jsonShape = (*is).toObject();
 				QStringList keys = jsonShape.keys();
 				QStringList::iterator key = keys.begin();
 
@@ -157,34 +157,27 @@ Scene* Viewport::loadScene(Scene* oldScene)
 
 					if (value.isString())
 					{
-						QString type = value.toString(); // Shape Type
-
-						if (!type.compare("Line"))
+						if (!value.toString().compare("Line")) // Shape Type
 						{
-							key++; // Vertices
-							list<Shape*> shapes = mScene->retShapes();
+							key++; // value: Vertices
 							QJsonObject vertices = jsonShape.take(*key).toObject();
-							QJsonObject::iterator iterv = vertices.begin();
-
+							QJsonObject::iterator iv = vertices.begin();
+							vector<Vertex*> vecShapes;
 
 							// Regular Expression
 							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt
-							//for (auto v : vertices)
-							vector<Vertex*> vv;
-							for (iterv; iterv != vertices.end(); iterv++)
+							for (iv; iv != vertices.end(); iv++)
 							{
 								QRegularExpression separator("[,\\s]+");
-								QStringList list = (*iterv).toString().trimmed().split(separator);
-								Vertex* vert = new Vertex(QPointF(list[0].toFloat(), list[1].toFloat()));
-								qDebug() << vert->retVertex();
-								shapes.push_back(vert);
-								vv.push_back(vert);
+								QStringList vData = (*iv).toString().trimmed().split(separator);
+								Vertex* v = new Vertex(QPointF(vData.front().toFloat(), vData.back().toFloat()));
+								shapes.push_back(v);
+								vecShapes.push_back(v);
 							}
 
-							Line* newLine = new Line(vv.front(), vv.back());
-							shapes.push_back(newLine);
+							Line* l = new Line(vecShapes.front(), vecShapes.back());
+							shapes.push_back(l);
 							mScene->updateShapes(shapes);
-							key--;
 						}
 					}
 				}
