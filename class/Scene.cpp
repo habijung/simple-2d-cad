@@ -7,7 +7,45 @@ Scene::Scene(QWidget* parent) : QWidget(parent)
 	this->height = parent->height();
 }
 
-void Scene::render(QPainter* painter)
+void Scene::resize(QSize* screenSize)
+{
+	this->width = screenSize->width();
+	this->height = screenSize->height();
+}
+
+// TODO: Move to Class Camera
+void Scene::setScreenToWindow(QPoint pScreen, float dx, float dy, float scale)
+{
+	this->dx = dx;
+	this->dy = dy;
+	this->scale = scale;
+
+	// Function:
+	// { x, y } = { (x - dx) / scale, (y - dy) / scale }
+	QPointF pWindow =
+	{
+		(pScreen.x() - dx) / scale,
+		(pScreen.y() - dy) / scale * -1
+	};
+	this->vert.push_back(pWindow);
+	qDebug() << "Window:" << pWindow;
+	qDebug() << "Screen:" << this->setWindowToScreen(this->vert[this->vert.size() - 1]);
+}
+
+// TODO: Move to Class Camera
+QPoint Scene::setWindowToScreen(QPointF pWindow)
+{
+	QPoint pScreen =
+	{
+		static_cast<int>(pWindow.x() * this->scale + this->dx),
+		static_cast<int>(pWindow.y() * this->scale * -1 + this->dy)
+	};
+	return pScreen;
+}
+
+
+// Render method
+void Scene::renderOrigin(QPainter* painter)
 {
 	painter->drawText
 	(
@@ -17,31 +55,7 @@ void Scene::render(QPainter* painter)
 	);
 }
 
-void Scene::resize(QSize* screenSize)
-{
-	this->width = screenSize->width();
-	this->height = screenSize->height();
-}
-
-void Scene::setScreenToWindow(QPoint pScreen, float dx, float dy, float scale)
-{
-	// Function:
-	// { x, y } = { (x - dx) / scale, (y - dy) / scale }
-	QPointF pWindow =
-	{
-		(pScreen.x() - dx) / scale,
-		(pScreen.y() - dy) / scale
-	};
-	this->vert.push_back(pWindow);
-	qDebug() << "Window: (" << pWindow.x() << "," << pWindow.y() << ")";
-}
-
-QPoint Scene::setWindowToScreen(QPoint p)
-{
-	return QPoint(p.x() - dx, p.y() - dy);
-}
-
-void Scene::renderScreenPoint(QPainter* painter)
+void Scene::renderScenePoint(QPainter* painter)
 {
 	vector<QPointF>::iterator iter = this->vert.begin();
 	QPen pen(Qt::black, 5);
@@ -49,18 +63,6 @@ void Scene::renderScreenPoint(QPainter* painter)
 
 	for (iter; iter != this->vert.end(); iter++)
 	{
-		// Change with setWindowToScreen()
-		painter->drawPoint(*iter);
-	}
-}
-
-void Scene::renderWindow(QPainter* painter)
-{
-	QPen pen(Qt::red, 5);
-	painter->setPen(pen);
-
-	for (int i = 0; i < this->vert.size(); i++)
-	{
-		painter->drawPoint(this->vert[i]);
+		painter->drawPoint(this->setWindowToScreen(*iter));
 	}
 }

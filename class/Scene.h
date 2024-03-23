@@ -11,18 +11,18 @@ class Scene : public QWidget
 {
 public:
 	Scene(QWidget* parent = nullptr);
-	void render(QPainter* painter);
 	void resize(QSize* screenSize);
 
+	// Coordinate conversion
 	void setScreenToWindow(QPoint pScreen, float dx, float dy, float scale);
-	void renderScreenPoint(QPainter* painter);
+	QPoint setWindowToScreen(QPointF pWindow);
 
-	// Not ready
-	QPoint setWindowToScreen(QPoint p);
-	void renderWindow(QPainter* painter);
+	// Render method
+	void renderOrigin(QPainter* painter);
+	void renderScenePoint(QPainter* painter);
 
 private:
 	int width, height;
-	int dx, dy;
+	float dx, dy, scale;
 	vector<QPointF> vert;
 };

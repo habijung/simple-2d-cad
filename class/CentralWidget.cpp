@@ -22,12 +22,13 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 	//this->selectLine(this->pStart);
 
 	// Class Scene test
-	//QPainter* scenePainter = new QPainter(this);
-	//scene->render(scenePainter);
-	//scenePainter->end();
-	QPainter* sPainter = new QPainter(this);
-	scene->renderScreenPoint(sPainter);
-	sPainter->end();
+	QPainter* painter1 = new QPainter(this);
+	scene->renderOrigin(painter1);
+	painter1->end();
+
+	QPainter* painter2 = new QPainter(this);
+	scene->renderScenePoint(painter2);
+	painter2->end();
 
 	//QPainter* wPainter = new QPainter(this);
 	//scene->renderWindow(wPainter);
@@ -48,6 +49,7 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 
 	if (this->button == Qt::LeftButton)
 	{
+		qDebug() << "Point:" << this->pStart;
 		scene->setScreenToWindow
 		(
 			this->pStart,
