@@ -91,6 +91,7 @@ private:
 	int mButton;
 
 	// For select point
+	list<Shape*> mShapes;
 	Vertex* mVertex;
 	QPolygonF mPolygon;
 	bool mHit;
