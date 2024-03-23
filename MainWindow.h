@@ -3,7 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QPainter>
 #include "ui_MainWindow.h"
-#include "class/CentralWidget.h"
+#include "class/Viewport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };

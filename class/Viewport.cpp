@@ -1,9 +1,9 @@
 #include <QPainter>
 #include <QMouseEvent>
-#include "CentralWidget.h"
+#include "Viewport.h"
 
 
-CentralWidget::CentralWidget(QWidget* parent)
+Viewport::Viewport(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
@@ -11,7 +11,7 @@ CentralWidget::CentralWidget(QWidget* parent)
 	camera = new Camera(this, QSize(600, 600), 100.0);
 }
 
-void CentralWidget::paintEvent(QPaintEvent* event)
+void Viewport::paintEvent(QPaintEvent* event)
 {
 	// Draw line with mouse event
 	//this->drawLine();
@@ -32,7 +32,7 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 	painter2->end();
 }
 
-void CentralWidget::mousePressEvent(QMouseEvent* event)
+void Viewport::mousePressEvent(QMouseEvent* event)
 {
 	this->pStart = event->pos();
 	this->button = event->button();
@@ -55,7 +55,7 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 	}
 }
 
-void CentralWidget::mouseMoveEvent(QMouseEvent* event)
+void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
 	this->xOffset = event->pos().x() - this->pStart.x();
 	this->yOffset = event->pos().y() - this->pStart.y();
@@ -68,7 +68,7 @@ void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 	}
 }
 
-void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
+void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
 	this->pEnd = event->pos();
 
@@ -81,14 +81,14 @@ void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 	}
 }
 
-void CentralWidget::resizeEvent(QResizeEvent* event)
+void Viewport::resizeEvent(QResizeEvent* event)
 {
 	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
 	QSize* screenSize = new QSize(width(), height());
 	scene->resize(screenSize);
 }
 
-void CentralWidget::drawLine()
+void Viewport::drawLine()
 {
 	// TODO: Add attribute with Qt::WA_OpaquePaintEvent
 	int xStart = this->pStart.x();
@@ -122,7 +122,7 @@ void CentralWidget::drawLine()
 	painter.end();
 }
 
-void CentralWidget::renderAll()
+void Viewport::renderAll()
 {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
@@ -139,7 +139,7 @@ void CentralWidget::renderAll()
 	painter.end();
 }
 
-void CentralWidget::selectLine(QPoint mPoint)
+void Viewport::selectLine(QPoint mPoint)
 {
 	int offset = 10; // Line bounding box width offset
 	QPainter painter(this);
@@ -196,7 +196,7 @@ void CentralWidget::selectLine(QPoint mPoint)
 	painter.end();
 }
 
-bool CentralWidget::checkSelection(QPoint mPoint, QPolygonF polygon)
+bool Viewport::checkSelection(QPoint mPoint, QPolygonF polygon)
 {
 	int count = 0;
 

@@ -10,7 +10,7 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setMenuBar();
 	this->setToolbar();
 
-	CentralWidget* widget = new CentralWidget(this);
+	Viewport* widget = new Viewport(this);
 	setCentralWidget(widget);
 }
 

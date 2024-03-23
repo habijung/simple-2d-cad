@@ -46,7 +46,7 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\CentralWidget.cpp">
+    <ClCompile Include="class\Viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="class\Scene.cpp">
@@ -57,7 +57,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\CentralWidget.h">
+    <ClInclude Include="class\Viewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="class\Scene.h">

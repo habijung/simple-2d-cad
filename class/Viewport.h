@@ -7,11 +7,11 @@
 using namespace std;
 
 
-class CentralWidget :
+class Viewport :
 	public QWidget
 {
 public:
-	CentralWidget(QWidget* parent = nullptr);
+	Viewport(QWidget* parent = nullptr);
 
 private:
 	void paintEvent(QPaintEvent* event) override;
