@@ -12,3 +12,15 @@ string State::getStateName()
 {
 	return this->mName;
 }
+
+DrawLineState::DrawLineState(string name)
+	: State(name)
+{
+	qDebug() << "Create DrawLineState:" << name;
+	this->mName = name;
+}
+
+void DrawLineState::mousePressEvent()
+{
+	qDebug() << "DrawLineState::mousePressEvent()";
+}

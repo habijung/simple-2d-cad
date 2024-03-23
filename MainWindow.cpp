@@ -21,6 +21,7 @@ MainWindow::MainWindow(QWidget* parent)
 	// Define State Machine and States
 	machine = new StateMachine();
 	State* sIDLE = new State("IDLE");
+	DrawLineState* sDLS = new DrawLineState("DRAW_LINE");
 	this->machine->addState("IDLE");
 	this->machine->addState("DRAW_LINE");
 	this->machine->addState("DRAW_FACE");

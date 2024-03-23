@@ -17,3 +17,16 @@ public:
 private:
 	string mName;
 };
+
+class DrawLineState : public State
+{
+public:
+	DrawLineState(string name);
+
+	virtual void mousePressEvent();
+	virtual void mouseMoveEvent() {}
+	virtual void mouseReleaseEvent() {}
+
+private:
+	string mName;
+};
