@@ -8,7 +8,7 @@ SelectLineState::SelectLineState(const std::string& name, SelectUtils::ViewportD
 	mViewport = data->viewport;
 	mScene = data->scene;
 	mCamera = data->camera;
-	mLine = new Line(QPointF(INFINITY, INFINITY), QPointF(INFINITY, INFINITY));
+	mLine = new Line;
 }
 
 void SelectLineState::UpdateScene(Scene* scene)

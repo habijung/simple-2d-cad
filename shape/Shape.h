@@ -4,7 +4,6 @@
 #include <QJsonObject>
 #include "../viewport/Camera.h"
 
-
 class Shape
 {
 public:
@@ -19,6 +18,7 @@ class Vertex : public Shape
 public:
 	Vertex(float x = 0, float y = 0);
 	Vertex(const QPointF& p);
+
 	QPointF GetVertex();
 	void UpdateVertex(const QPointF& p);
 
@@ -35,8 +35,8 @@ class Line : public Shape
 {
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
-	Line(const QPointF& p1, const QPointF& p2);
 	Line(std::list<Vertex*> vertices);
+
 	std::vector<Vertex> GetVertices();
 	QLineF GetLine(Camera* cam);
 	void UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex>& vertices);
@@ -57,6 +57,7 @@ class Face : public Shape
 public:
 	Face(std::list<Vertex*> vertices = {});
 	Face(Vertex* v);
+
 	std::vector<Vertex> GetVertices();
 	QPolygonF GetFace(Camera* cam);
 	void UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex>& vertices);

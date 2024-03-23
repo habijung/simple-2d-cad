@@ -1,18 +1,10 @@
 #include "Shape.h"
 
-
 Line::Line(Vertex* v1, Vertex* v2)
 {
 	mType = "Line";
 	mV1 = v1;
 	mV2 = v2;
-}
-
-Line::Line(const QPointF& p1, const QPointF& p2)
-{
-	mType = "Line";
-	mV1 = new Vertex(p1);
-	mV2 = new Vertex(p2);
 }
 
 Line::Line(std::list<Vertex*> vertices)
@@ -33,10 +25,13 @@ std::vector<Vertex> Line::GetVertices()
 
 QLineF Line::GetLine(Camera* cam)
 {
-	QPointF p1 = cam->SetScreenCoordinate(mV1->GetVertex());
-	QPointF p2 = cam->SetScreenCoordinate(mV2->GetVertex());
+	if (mV1 && mV2)
+	{
+		QPointF p1 = cam->SetScreenCoordinate(mV1->GetVertex());
+		QPointF p2 = cam->SetScreenCoordinate(mV2->GetVertex());
 
-	return QLineF(p1, p2);
+		return QLineF(p1, p2);
+	}
 }
 
 void Line::UpdateLine(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::vector<Vertex>& vertices)

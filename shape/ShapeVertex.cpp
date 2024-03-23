@@ -1,6 +1,5 @@
 #include "Shape.h"
 
-
 Vertex::Vertex(float x, float y)
 {
 	mType = "Point";
