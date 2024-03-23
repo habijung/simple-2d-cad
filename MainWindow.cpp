@@ -101,19 +101,14 @@ void MainWindow::setMenuBar()
 
 void MainWindow::setToolbar()
 {
-	/* Menu Icon */
-	QPixmap newpix("img/new.png");
-	QPixmap openpix("img/open.png");
-	QPixmap quitpix("img/quit.png");
-
-
 	/* Toolbar */
 	QToolBar* toolbar = addToolBar("main toolbar");
-	QAction* newa = toolbar->addAction(QIcon(newpix), "New File");
-	toolbar->addAction(QIcon(openpix), "Open File");
+	QAction* newa = toolbar->addAction(QIcon(QPixmap("img/new.png")), "New File");
+	QAction* open = toolbar->addAction(QIcon(QPixmap("img/open.png")), "Open File");
+	QAction* save = toolbar->addAction(QIcon(QPixmap("img/save.png")), "Save File");
 	toolbar->addSeparator();
 
-	QAction* quit = toolbar->addAction(QIcon(quitpix), "Quit Application");
+	QAction* quit = toolbar->addAction(QIcon(QPixmap("img/quit.png")), "Quit Application");
 
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 	connect(newa, &QAction::triggered, qApp, [this]()
