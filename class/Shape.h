@@ -37,6 +37,7 @@ class Line : public Shape
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
 	Line(QPointF p1, QPointF p2);
+	Line(list<Vertex*> vertices);
 	vector<Vertex> retVertices();
 	QLineF retLine(Camera* cam);
 	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart);

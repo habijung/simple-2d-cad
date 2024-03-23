@@ -157,46 +157,38 @@ Scene* Viewport::loadScene(Scene* oldScene)
 
 					if (value.isString())
 					{
-						if (!value.toString().compare("Line")) // Shape Type
-						{
-							key++; // value: Vertices
-							QJsonObject vertices = jsonShape.take(*key).toObject();
-							QJsonObject::iterator iv = vertices.begin();
-							vector<Vertex*> vecShapes;
+						QString shapeType = value.toString();
 
-							// Regular Expression
-							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt
-							for (iv; iv != vertices.end(); iv++)
-							{
-								QRegularExpression separator("[,\\s]+");
-								QStringList vData = (*iv).toString().trimmed().split(separator);
-								Vertex* v = new Vertex(QPointF(vData.front().toFloat(), vData.back().toFloat()));
-								shapes.push_back(v);
-								vecShapes.push_back(v);
-							}
-
-							Line* l = new Line(vecShapes.front(), vecShapes.back());
-							shapes.push_back(l);
-							mScene->updateShapes(shapes);
-						}
-						else if (!value.toString().compare("Face"))
+						if (!shapeType.compare("Line") || !shapeType.compare("Face"))
 						{
 							key++;
 							QJsonObject vertices = jsonShape.take(*key).toObject();
-							QJsonObject::iterator iv = vertices.begin();
-							list<Vertex*> listShapes;
+							QJsonObject::iterator vertex = vertices.begin();
+							list<Vertex*> lVertices;
 
-							for (iv; iv != vertices.end(); iv++)
+							// Separate and Trim JSON Vertex data
+							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt
+							QRegularExpression separator("[,\\s]+");
+
+							for (vertex; vertex != vertices.end(); vertex++)
 							{
-								QRegularExpression separator("[,\\s]+");
-								QStringList vData = (*iv).toString().trimmed().split(separator);
+								QStringList vData = (*vertex).toString().trimmed().split(separator);
 								Vertex* v = new Vertex(QPointF(vData.front().toFloat(), vData.back().toFloat()));
 								shapes.push_back(v);
-								listShapes.push_back(v);
+								lVertices.push_back(v);
 							}
 
-							Face* f = new Face(listShapes);
-							shapes.push_back(f);
+							if (!shapeType.compare("Line"))
+							{
+								Line* l = new Line(lVertices);
+								shapes.push_back(l);
+							}
+							else
+							{
+								Face* f = new Face(lVertices);
+								shapes.push_back(f);
+							}
+
 							mScene->updateShapes(shapes);
 						}
 					}
