@@ -27,11 +27,12 @@ MainWindow::MainWindow(QWidget* parent)
 
 	component* comp = new component;
 	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
-	mDrawFaceState = new DrawPolygonState("DRAW_POLY", mData);
+	mDrawPolygonState = new DrawPolygonState("DRAW_POLY", mData);
 	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
 	mSelectLineState = new SelectLineState("SELECT_LINE", mData);
 
 	machine->addState(mDrawLineState);
+	machine->addState(mDrawPolygonState);
 	machine->addState(mSelectPointState);
 	machine->addState(mSelectLineState);
 	machine->setState(mSelectPointState);
@@ -133,7 +134,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Draw Poly Clicked";
-			this->machine->transition(mDrawFaceState);
+			this->machine->transition(mDrawPolygonState);
 			this->widget->updateState
 			(
 				this->machine->getCurrentState()

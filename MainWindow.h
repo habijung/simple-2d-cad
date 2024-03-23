@@ -35,7 +35,7 @@ private:
 	// State Machine
 	StateMachine* machine;
 	DrawLineState* mDrawLineState;
-	DrawPolygonState* mDrawFaceState;
+	DrawPolygonState* mDrawPolygonState;
 	SelectPointState* mSelectPointState;
 	SelectLineState* mSelectLineState;
 
