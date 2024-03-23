@@ -17,10 +17,16 @@ MainWindow::~MainWindow()
 
 void MainWindow::setMenuBar()
 {
+	/* Menu Icon */
+	QPixmap newpix("img/new.png");
+	QPixmap openpix("img/open.png");
+	QPixmap quitpix("img/quit.png");
+
+
 	/* File */
-	QAction* newa = new QAction("&New", this);
-	QAction* open = new QAction("&Open", this);
-	QAction* quit = new QAction("&Quit", this);
+	QAction* newa = new QAction(newpix, "&New", this);
+	QAction* open = new QAction(openpix, "&Open", this);
+	QAction* quit = new QAction(quitpix, "&Quit", this);
 	quit->setShortcut(tr("CTRL+Q"));
 
 	QMenu* file = menuBar()->addMenu("&File");
@@ -61,12 +67,19 @@ void MainWindow::setMenuBar()
 
 void MainWindow::setToolbar()
 {
+	/* Menu Icon */
+	QPixmap newpix("img/new.png");
+	QPixmap openpix("img/open.png");
+	QPixmap quitpix("img/quit.png");
+
+
+	/* Toolbar */
 	QToolBar* toolbar = addToolBar("main toolbar");
-	toolbar->addAction("New File");
-	toolbar->addAction("Open File");
+	toolbar->addAction(QIcon(newpix), "New File");
+	toolbar->addAction(QIcon(openpix), "Open File");
 	toolbar->addSeparator();
 
-	QAction* quit = toolbar->addAction("Quit Application");
+	QAction* quit = toolbar->addAction(QIcon(quitpix), "Quit Application");
 
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 }
