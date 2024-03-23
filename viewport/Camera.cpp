@@ -5,15 +5,12 @@ constexpr QSize MIN_SIZE = { 400, 300 };
 constexpr float TOLERANCE[2] = { -20.0, 21.0 };
 constexpr float SCREEN_LIMIT = 15.5;
 
-
-Camera::Camera(QWidget* parent, QSize size, float scale)
-	: QWidget(parent)
+Camera::Camera(QSize size, float scale)
 {
 	mX = size.width() / 2.0 + TOLERANCE[0];
 	mY = size.height() / 2.0 + TOLERANCE[1];
 	mScale = scale;
 }
-
 
 // Coordinate conversion
 QPointF Camera::setWindow(QPoint pScreen)
@@ -36,7 +33,6 @@ QPoint Camera::setScreen(QPointF pWindow)
 	};
 	return pScreen;
 }
-
 
 // Camera action
 void Camera::zoom(float scale)
@@ -95,6 +91,7 @@ void Camera::reset(const QSize& size)
 	mScale = 80.0;
 }
 
+// Camera event
 void Camera::resizeEvent(QResizeEvent* event)
 {
 	if ((event->size().width() >= MIN_SIZE.width()) && (event->size().height() >= MIN_SIZE.height()))

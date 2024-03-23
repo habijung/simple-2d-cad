@@ -18,7 +18,7 @@ Viewport::Viewport(QWidget* parent)
 
 	// Initialization
 	mButton = Qt::NoButton;
-	mCamera = new Camera(this, parent->size(), 80.0);
+	mCamera = new Camera(parent->size(), 80.0);
 	mScene = new Scene(mCamera);
 	mScene->createSampleShapes();
 

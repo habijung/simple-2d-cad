@@ -8,8 +8,7 @@
 #include "Camera.h"
 #include "../shape/Shape.h"
 
-
-class Scene : public QWidget
+class Scene
 {
 public:
 	Scene(Camera* camera = nullptr);
