@@ -28,7 +28,6 @@ private:
 	void resizeEvent(QResizeEvent* event) override;
 
 	int button;
-	float pValue, zValue;
 	QPointF mPos;
 
 	// Viewport components

@@ -1,6 +1,6 @@
 #include "Scene.h"
 
-constexpr int INF = 15;
+constexpr int SCREEN_LIMIT = 15;
 
 
 Scene::Scene(Camera* camera)
@@ -53,9 +53,9 @@ void Scene::createSampleShapes()
 // Render method
 void Scene::renderCoordinate(QPainter* painter)
 {
-	for (int i = -INF; i <= INF; i++)
+	for (int i = -SCREEN_LIMIT; i <= SCREEN_LIMIT; i++)
 	{
-		for (int j = -INF; j <= INF; j++)
+		for (int j = -SCREEN_LIMIT; j <= SCREEN_LIMIT; j++)
 		{
 			QLine xAxis = QLine(mCamera->setScreen(QPoint(i, j)), mCamera->setScreen(QPoint(-i, j)));
 			QLine yAxis = QLine(mCamera->setScreen(QPoint(i, -j)), mCamera->setScreen(QPoint(i, j)));

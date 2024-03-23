@@ -15,11 +15,10 @@ public:
 	// Camera action
 	void zoom(float scale);
 	void pan(float dx, float dy);
-	void reset(const QSize &size);
+	void reset(const QSize& size);
 
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
 	float mX, mY, mScale;
-	int maxWidth, maxHeight;
 };

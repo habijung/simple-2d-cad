@@ -13,8 +13,6 @@ Viewport::Viewport(QWidget* parent)
 {
 	mCamera = new Camera(this, parent->size(), 100.0);
 	mScene = new Scene(mCamera);
-	pValue = 80.0;
-	zValue = 60.0;
 	setMouseTracking(true);
 
 	// Define States
@@ -229,7 +227,8 @@ void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
 	if ((button == Qt::RightButton) && (event->button() == Qt::NoButton))
 	{
-		QPointF offset = event->pos() - mPos;
+		float scale = 100.0;
+		QPointF offset = (event->pos() - mPos) / scale;
 		mCamera->pan(-offset.x(), offset.y());
 		mPos = event->pos();
 	}
@@ -251,25 +250,28 @@ void Viewport::wheelEvent(QWheelEvent* event)
 
 void Viewport::keyPressEvent(QKeyEvent* event)
 {
+	float interval = 1.0;
+	float scale = 50.0;
+
 	switch (event->key())
 	{
 	case Qt::Key_E: // Zoom In
-		mCamera->zoom(zValue);
+		mCamera->zoom(scale);
 		break;
 	case Qt::Key_Q: // Zoom Out
-		mCamera->zoom(-zValue);
+		mCamera->zoom(-scale);
 		break;
 	case Qt::Key_W: // Move Up
-		mCamera->pan(0.0, pValue);
+		mCamera->pan(0, interval);
 		break;
 	case Qt::Key_S: // Move Down
-		mCamera->pan(0.0, -pValue);
+		mCamera->pan(0, -interval);
 		break;
 	case Qt::Key_D: // Move Right
-		mCamera->pan(pValue, 0.0);
+		mCamera->pan(interval, 0);
 		break;
 	case Qt::Key_A: // Move Left
-		mCamera->pan(-pValue, 0.0);
+		mCamera->pan(-interval, 0);
 		break;
 	case Qt::Key_QuoteLeft:
 		updateState("SELECT_POINT");

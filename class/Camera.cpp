@@ -2,7 +2,8 @@
 
 // Except title, toolbar
 constexpr QSize MIN_SIZE = { 400, 300 };
-constexpr float TOLERANCE[2] = {-20.0, 21.0};
+constexpr float TOLERANCE[2] = { -20.0, 21.0 };
+constexpr float SCREEN_LIMIT = 15.5;
 
 
 Camera::Camera(QWidget* parent, QSize size, float scale)
@@ -11,8 +12,6 @@ Camera::Camera(QWidget* parent, QSize size, float scale)
 	mX = size.width() / 2.0 + TOLERANCE[0];
 	mY = size.height() / 2.0 + TOLERANCE[1];
 	mScale = scale;
-	maxWidth = size.width();
-	maxHeight = size.height();
 }
 
 
@@ -56,32 +55,35 @@ void Camera::zoom(float scale)
 
 void Camera::pan(float dx, float dy)
 {
-	// 초기 dx, dy 값이 있기 때문에 반대 방향으로 움직일 때는
-	// 그만큼 움직일 거리를 더 줘야함
+	float camX = -mX / mScale + dx;
+	float camY = mY / mScale + dy;
+	float scrLength = 6.0 * 100 / mScale;
 
-	// About dx
-	mX -= dx;
+	// Calculate x-axis
+	// camX 값은 Window의 좌측
+	if (camX + scrLength >= SCREEN_LIMIT)
+	{
+		camX = SCREEN_LIMIT - scrLength;
+	}
+	else if (camX <= -SCREEN_LIMIT)
+	{
+		camX = -SCREEN_LIMIT;
+	}
 
-	if (mX >= maxWidth * 2)
+	mX = -camX * mScale;
+
+	// Calculate y-axis
+	// y-axis는 아래의 footer 때문에 값을 조정함
+	if (camY >= SCREEN_LIMIT)
 	{
-		mX = maxWidth * 2;
+		camY = SCREEN_LIMIT;
 	}
-	else if (mX <= -maxWidth)
+	else if (camY - scrLength <= -(SCREEN_LIMIT + 1.0))
 	{
-		mX = -maxWidth;
+		camY = -(SCREEN_LIMIT + 1.0) + scrLength;
 	}
 
-	// About dy
-	mY += dy;
-
-	if (mY >= maxHeight * 2)
-	{
-		mY = maxHeight * 2;
-	}
-	else if (mY <= -maxHeight)
-	{
-		mY = -maxHeight;
-	}
+	mY = camY * mScale;
 }
 
 void Camera::reset(const QSize& size)
