@@ -93,11 +93,11 @@ void Viewport::saveScene()
 	QJsonDocument document;
 	document.setObject(content);
 
-	QString fileName = QString(getenv("USERPROFILE")) + "/Desktop/Scene";
+	QString dirPath = QString(getenv("USERPROFILE")) + "/Desktop/Scene";
 	QString filePath = QFileDialog::getSaveFileName(
 		this,
 		tr("Save Scene"),
-		fileName,
+		dirPath,
 		tr("JSON (*.json);; Image (*.png *jpg);; Text (*.txt);; XML (*.xml)")
 	);
 
@@ -107,6 +107,40 @@ void Viewport::saveScene()
 	{
 		file.write(document.toJson(QJsonDocument::Indented));
 		file.close();
+	}
+}
+
+void Viewport::loadScene()
+{
+	QString dirPath = QString(getenv("USERPROFILE")) + "/Desktop/";
+	QString filePath = QFileDialog::getOpenFileName(
+		this,
+		tr("Open Scene"),
+		dirPath,
+		tr("JSON (*.json);; Image (*.png *jpg);; Text (*.txt);; XML (*.xml)")
+	);
+
+	QFile file(filePath);
+
+	if (file.open(QIODevice::ReadOnly))
+	{
+		QByteArray bytes = file.readAll();
+		file.close();
+
+		QJsonParseError jsonError;
+		QJsonDocument document = QJsonDocument::fromJson(bytes, &jsonError);
+
+		if (jsonError.error != QJsonParseError::NoError)
+		{
+			qDebug() << "fromJson failed: " << jsonError.errorString().toStdString();
+			return;
+		}
+
+		if (document.isObject())
+		{
+			QJsonObject obj = document.object();
+			qDebug() << filePath;
+		}
 	}
 }
 

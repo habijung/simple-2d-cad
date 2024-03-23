@@ -118,16 +118,7 @@ void MainWindow::setToolbar()
 		});
 	connect(open, &QAction::triggered, qApp, [this]()
 		{
-			QFileDialog* fd = new QFileDialog;
-			fd->setFileMode(QFileDialog::AnyFile);
-			fd->setOptions(QFileDialog::ShowDirsOnly);
-			fd->setViewMode(QFileDialog::Detail);
-			int result = fd->exec();
-			if (result)
-			{
-				QString filePath = fd->selectedFiles()[0];
-				//ui->filePathEdit->setText(filePath);
-			}
+			widget->loadScene();
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
