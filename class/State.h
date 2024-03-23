@@ -49,10 +49,10 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 
-	vector<QPointF> mPoints; // Line 구성을 위한 임시 points vector
 	QPointF mPos;
-	bool mDrawLine;
+	vector<QPointF> mPoints; // Line 구성을 위한 임시 points vector
 	int mButton;
+	bool mDrawLine;
 };
 
 class DrawPolygonState : public State
@@ -72,6 +72,8 @@ private:
 	Camera* mCamera;
 
 	QPointF mPos;
+	QPolygonF mPolygon;
+	vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points vector
 	int mButton;
 	bool mDrawPolygon;
 };

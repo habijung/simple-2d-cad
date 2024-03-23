@@ -110,6 +110,7 @@ DrawPolygonState::DrawPolygonState(string name, component* comp)
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
+	mPoints = {};
 	mDrawPolygon = false;
 }
 
@@ -121,13 +122,26 @@ void DrawPolygonState::mousePressEvent(QMouseEvent* event)
 void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
+	mViewport->update();
 }
 
 void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
-{}
+{
+	if (mButton == Qt::LeftButton)
+	{
+		mPoints.push_back(mPos);
+		mPolygon << mPos;
+	}
+
+	mViewport->update();
+}
 
 void DrawPolygonState::paintEvent(QPainter* painter)
-{}
+{
+	// Draw polygon
+	painter->setPen(QPen(Qt::darkGray, 3));
+	painter->drawPolygon(mPolygon);
+}
 
 SelectPointState::SelectPointState(string name, component* comp)
 	: State(name, comp)
