@@ -31,6 +31,7 @@ private:
 	StateMachine* machine;
 	State* sIDLE;
 	DrawLineState* sDLS, * sDLS1, * sDLS2;
+	DrawFaceState* sDFS;
 	Scene* mScene;
 	Camera* mCamera;
 	metadata* mData;

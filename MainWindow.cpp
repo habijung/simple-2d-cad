@@ -29,6 +29,7 @@ MainWindow::MainWindow(QWidget* parent)
 	sDLS = new DrawLineState("DRAW_LINE", mData);
 	sDLS1 = new DrawLineState("DRAW_LINE", mData);
 	sDLS2 = new DrawLineState("DRAW_LINE2", mData);
+	sDFS = new DrawFaceState("DRAW_FACE", mData);
 
 	this->machine->addState(sIDLE);
 	this->machine->addState(sDLS);
@@ -121,7 +122,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Line Clicked";
+			qDebug() << "Draw Line Clicked";
 			this->machine->transition(sDLS);
 			this->widget->updateState
 			(
@@ -130,7 +131,12 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Face Clicked";
+			qDebug() << "Draw Face Clicked";
+			this->machine->transition(sDFS);
+			this->widget->updateState
+			(
+				this->machine->getCurrentState()
+			);
 		});
 
 	QVBoxLayout* vBox = new QVBoxLayout(wSidebar);

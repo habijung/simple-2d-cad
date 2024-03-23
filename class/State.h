@@ -45,3 +45,20 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 };
+
+class DrawFaceState : public State
+{
+public:
+	DrawFaceState(string name, metadata* data);
+
+	virtual void mousePressEvent(QPoint p);
+	virtual void mouseMoveEvent() {}
+	virtual void mouseReleaseEvent() {}
+	virtual void paintEvent(QPainter* painter);
+
+private:
+	string mName;
+	Viewport* mViewport;
+	Scene* mScene;
+	Camera* mCamera;
+};
