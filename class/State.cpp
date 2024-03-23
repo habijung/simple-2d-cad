@@ -128,3 +128,23 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mScene = comp->scene;
 	mCamera = comp->camera;
 }
+
+void SelectPointState::mousePressEvent(QMouseEvent* event)
+{
+	mPos = event->pos();
+	mButton = event->button();
+	mViewport->update();
+}
+
+void SelectPointState::mouseMoveEvent(QMouseEvent* event)
+{
+	// TODO: 점 이동
+	// TODO: 마우스 오버 효과 내기
+	mPos = event->pos();
+}
+
+void SelectPointState::mouseReleaseEvent(QMouseEvent* event) {}
+
+void SelectPointState::paintEvent(QPainter* painter)
+{
+}

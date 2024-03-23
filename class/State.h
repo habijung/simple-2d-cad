@@ -76,14 +76,17 @@ class SelectPointState : public State
 public:
 	SelectPointState(string name, component* comp);
 
-	virtual void mousePressEvent(QMouseEvent* event) override {}
-	virtual void mouseMoveEvent(QMouseEvent* event) override {}
-	virtual void mouseReleaseEvent(QMouseEvent* event) override {}
-	virtual void paintEvent(QPainter* painter) override {}
+	virtual void mousePressEvent(QMouseEvent* event) override;
+	virtual void mouseMoveEvent(QMouseEvent* event) override;
+	virtual void mouseReleaseEvent(QMouseEvent* event) override;
+	virtual void paintEvent(QPainter* painter) override;
 
 private:
 	string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
+
+	QPointF mPos;
+	int mButton;
 };

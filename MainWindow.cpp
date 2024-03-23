@@ -34,6 +34,9 @@ MainWindow::MainWindow(QWidget* parent)
 	machine->addState(mSelectPointState);
 	machine->setState(mSelectPointState);
 	machine->getCurrentState();
+
+	// TODO: 이 부분이 없으면 State에서 nullptr로 들어가는 이유 확인하고 중복되는 곳 병합하기
+	widget->updateState(machine->getCurrentState());
 }
 
 MainWindow::~MainWindow()
@@ -152,6 +155,8 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 	connect(btnPoint, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Point Clicked";
+			machine->transition(mSelectPointState);
+			this->widget->updateState(machine->getCurrentState());
 		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
