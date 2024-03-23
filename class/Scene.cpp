@@ -17,26 +17,27 @@ Scene::Scene(QWidget* parent, Camera* camera) : QWidget(parent)
 
 	// Sample Shape
 	{
-		Vertex* v1 = new Vertex(150, 150);
-		Vertex* v2 = new Vertex(350, 350);
-		Vertex* v3 = new Vertex(300, 200);
-		mShapes.push_back(v1);
-		mShapes.push_back(v2);
-		mShapes.push_back(v3);
+		Vertex* v1 = new Vertex(0, 1);
+		Vertex* v2 = new Vertex(-1, 2);
+		Vertex* v3 = new Vertex(-2, 0);
+		Vertex* v4 = new Vertex(1, 2);
+		Vertex* v5 = new Vertex(2, -2);
 
 		list<Vertex*> vertices;
 		vertices.push_back(v1);
 		vertices.push_back(v2);
 		vertices.push_back(v3);
-		Face* f1 = new Face(vertices);
-		mShapes.push_back(f1);
 
-		Vertex* v4 = new Vertex(1, 2);
-		Vertex* v5 = new Vertex(2, -2);
-		Line* l1 = new Line(v4, v5);
+		// Add Face
+		mShapes.push_back(v1);
+		mShapes.push_back(v2);
+		mShapes.push_back(v3);
+		mShapes.push_back(new Face(vertices));
+
+		// Add Line
 		mShapes.push_back(v4);
 		mShapes.push_back(v5);
-		mShapes.push_back(l1);
+		mShapes.push_back(new Line(v4, v5));
 	}
 }
 
