@@ -109,13 +109,21 @@ void MainWindow::setToolbar()
 
 	/* Toolbar */
 	QToolBar* toolbar = addToolBar("main toolbar");
-	toolbar->addAction(QIcon(newpix), "New File");
+	QAction* newa = toolbar->addAction(QIcon(newpix), "New File");
 	toolbar->addAction(QIcon(openpix), "Open File");
 	toolbar->addSeparator();
 
 	QAction* quit = toolbar->addAction(QIcon(quitpix), "Quit Application");
 
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
+	connect(newa, &QAction::triggered, qApp, [this]()
+		{
+			delete mScene;
+			mScene = new Scene(this, mCamera);
+			widget->resetScene(mScene);
+			mDrawLineState->resetScene(mScene);
+			update();
+		});
 }
 
 void MainWindow::setSidebarWidget(QWidget* widget)

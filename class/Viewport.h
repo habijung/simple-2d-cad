@@ -21,6 +21,10 @@ public:
 	);
 	void getKeyEvent(QKeyEvent* event);
 	void updateState(State* state);
+	void resetScene(Scene* s)
+	{
+		scene = s;
+	}
 
 private:
 	void paintEvent(QPaintEvent* event) override;

@@ -37,6 +37,10 @@ class DrawLineState : public State
 {
 public:
 	DrawLineState(string name, component* comp);
+	void resetScene(Scene* s)
+	{
+		mScene = s;
+	}
 
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
