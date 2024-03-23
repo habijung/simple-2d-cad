@@ -51,7 +51,7 @@ void StateMachine::transition(State* state)
 State* StateMachine::getCurrentState()
 {
 	string name = this->mState->getStateName();
-	qDebug() << "Current State:" << name;
+	//qDebug() << "Current State:" << name;
 
 	return this->mState;
 }
