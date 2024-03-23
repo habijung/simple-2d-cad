@@ -79,16 +79,26 @@ void Viewport::paintEvent(QPaintEvent* event)
 
 void Viewport::mousePressEvent(QMouseEvent* event)
 {
+	mPos = event->pos();
+	button = event->button();
 	state->mousePressEvent(event);
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
+	if ((button == Qt::RightButton) && (event->button() == Qt::NoButton))
+	{
+		QPointF offset = event->pos() - mPos;
+		this->camera->pan(-offset.x(), offset.y());
+		mPos = event->pos();
+	}
+
 	state->mouseMoveEvent(event);
 }
 
 void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
+	button = Qt::NoButton;
 	state->mouseReleaseEvent(event);
 }
 

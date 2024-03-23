@@ -37,6 +37,7 @@ private:
 	int xOffset, yOffset;
 	int button;
 	float pValue, zValue;
+	QPointF mPos;
 	QPoint pStart, pEnd;
 	vector<pair<QPoint, QPoint>> vert;
 
