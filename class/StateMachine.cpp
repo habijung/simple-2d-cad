@@ -50,9 +50,25 @@ void StateMachine::addState(string name)
 	}
 }
 
+void StateMachine::setState(string name)
+{
+	list<State*>::iterator iter = this->mStates.begin();
+
+	for (iter; iter != this->mStates.end(); iter++)
+	{
+		if (!(*iter)->getStateName().compare(name))
+		{
+			this->mState = *iter;
+			break;
+		}
+	}
+}
+
 string StateMachine::getCurrentState()
 {
-	return this->mState->getStateName();
+	string name = this->mState->getStateName();
+	qDebug() << "Current State:" << name;
+	return name;
 }
 
 void StateMachine::printAllStates()

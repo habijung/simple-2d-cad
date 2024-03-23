@@ -18,12 +18,14 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setSidebarWidget(this->widget);
 	this->setUnderbarWidget(this->widget);
 
-	// State Machine Test
-	stateMachine = new StateMachine();
-	this->stateMachine->addState("s1");
-	this->stateMachine->addState("s2");
-	this->stateMachine->addState("s2");
-	this->stateMachine->printAllStates();
+	// Define State Machine and States
+	machine = new StateMachine();
+	this->machine->addState("IDLE");
+	this->machine->addState("DRAW_LINE");
+	this->machine->addState("DRAW_FACE");
+	this->machine->printAllStates();
+	this->machine->setState("IDLE");
+	this->machine->getCurrentState();
 }
 
 MainWindow::~MainWindow()

@@ -20,7 +20,7 @@ class StateMachine
 public:
 	StateMachine();
 	void addState(string name);
-	void setInitialState(State* state);
+	void setState(string name);
 	void transitionState(State* state);
 	string getCurrentState();
 

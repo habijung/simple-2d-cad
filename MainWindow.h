@@ -27,7 +27,7 @@ public:
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* widget;
-	StateMachine* stateMachine;
+	StateMachine* machine;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);
