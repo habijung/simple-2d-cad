@@ -113,7 +113,7 @@ void CentralWidget::renderAll()
 
 void CentralWidget::selectLine(QPoint mPoint)
 {
-	int offset = 20; // Line bounding box width offset
+	int offset = 10; // Line bounding box width offset
 	QPainter painter(this);
 	QPointF p1, p2;
 	QLineF line;
@@ -144,6 +144,10 @@ void CentralWidget::selectLine(QPoint mPoint)
 
 		if (this->checkSelection(mPoint, polygon))
 		{
+			QPen pen;
+			pen.setWidth(2);
+			pen.setColor(Qt::blue);
+			painter.setPen(pen);
 			painter.drawPolygon(polygon);
 			break;
 		}
@@ -153,6 +157,7 @@ void CentralWidget::selectLine(QPoint mPoint)
 	QPen pen;
 	pen.setWidth(5);
 	pen.setCapStyle(Qt::FlatCap);
+	pen.setColor(Qt::red);
 	painter.setPen(pen);
 
 	if (mPoint != QPoint(0, 0))
