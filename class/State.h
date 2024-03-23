@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <utility>
 #include <QWidget>
 #include <QMouseEvent>
 #include "Scene.h"
@@ -47,8 +48,9 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 
-	QPoint mP1, mP2;
-	Vertex* mV1, * mV2;
+	QPointF mPos;
+	vector<QPointF> mPoints;
+	bool mDrawLine;
 	int mButton;
 };
 

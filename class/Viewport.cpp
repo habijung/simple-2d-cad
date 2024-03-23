@@ -15,6 +15,7 @@ Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera, StateM
 	this->state = new State("NULL", comp);
 	this->pValue = 60.0;
 	this->zValue = 60.0;
+	this->setMouseTracking(true);
 }
 
 void Viewport::getKeyEvent(QKeyEvent* event)

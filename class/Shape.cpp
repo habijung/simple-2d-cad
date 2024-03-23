@@ -5,39 +5,46 @@
 Vertex::Vertex(float x, float y)
 {
 	mType = "Point";
-	this->x = x;
-	this->y = y;
+	mX = x;
+	mY = y;
+}
+
+Vertex::Vertex(QPointF p)
+{
+	mType = "Point";
+	mX = p.x();
+	mY = p.y();
 }
 
 void Vertex::render(QPainter* painter, Camera* camera)
 {
-	QPoint p = camera->setWindowToScreen(QPointF(this->x, this->y));
-	QPen pen(Qt::blue, 10);
-	painter->setPen(pen);
+	QPoint p = camera->setWindowToScreen(QPointF(mX, mY));
+	painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(p);
 }
 
 QPointF Vertex::retVertex()
 {
-	return QPointF(this->x, this->y);
+	return QPointF(mX, mY);
 }
 
-Line::Line(Vertex* p1, Vertex* p2)
+Line::Line(Vertex* v1, Vertex* v2)
 {
 	mType = "Line";
-	this->p1 = p1;
-	this->p2 = p2;
+	mV1 = v1;
+	mV2 = v2;
 }
 
 void Line::render(QPainter* painter, Camera* camera)
 {
-	QPointF p1 = camera->setWindowToScreen(this->p1->retVertex());
-	QPointF p2 = camera->setWindowToScreen(this->p2->retVertex());
+	QPointF p1 = camera->setWindowToScreen(mV1->retVertex());
+	QPointF p2 = camera->setWindowToScreen(mV2->retVertex());
 	QLineF line = QLineF(p1, p2);
-
-	QPen pen(Qt::cyan, 6);
-	painter->setPen(pen);
+	painter->setPen(QPen(Qt::darkGray, 3, Qt::SolidLine, Qt::RoundCap));
 	painter->drawLine(line);
+	painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
+	painter->drawPoint(p1);
+	painter->drawPoint(p2);
 }
 
 Face::Face(list<Vertex*> vertices)

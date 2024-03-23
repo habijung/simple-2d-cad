@@ -16,24 +16,25 @@ class Vertex : public Shape
 {
 public:
 	Vertex(float x = 0, float y = 0);
+	Vertex(QPointF p);
 	virtual void render(QPainter* painter, Camera* camera);
 	QPointF retVertex();
 
 private:
 	string mType;
-	float x, y;
+	float mX, mY;
 };
 
 class Line : public Shape
 {
 public:
-	Line(Vertex* p1 = nullptr, Vertex* p2 = nullptr);
+	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
 	virtual void render(QPainter* painter, Camera* camera);
 
 private:
 	string mType;
-	Vertex* p1;
-	Vertex* p2;
+	Vertex* mV1;
+	Vertex* mV2;
 };
 
 class Face : public Shape
