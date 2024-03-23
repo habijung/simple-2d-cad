@@ -13,35 +13,47 @@ Scene::Scene(Camera* camera)
 		}
 	}
 
-	// Sample Shape
-	{
-		//Vertex* v1 = new Vertex(0, 1);
-		//Vertex* v2 = new Vertex(-1, 2);
-		//Vertex* v3 = new Vertex(-2, 0);
-		//Vertex* v4 = new Vertex(1, 2);
-		//Vertex* v5 = new Vertex(2, -2);
+	createSampleShapes();
+}
 
-		//list<Vertex*> vertices;
-		//vertices.push_back(v1);
-		//vertices.push_back(v2);
-		//vertices.push_back(v3);
+list<Shape*> Scene::retShapes()
+{
+	return mShapes;
+}
 
-		//// Add Face
-		//mShapes.push_back(v1);
-		//mShapes.push_back(v2);
-		//mShapes.push_back(v3);
-		//mShapes.push_back(new Face(vertices));
-
-		//// Add Line
-		//mShapes.push_back(v4);
-		//mShapes.push_back(v5);
-		//mShapes.push_back(new Line(v4, v5));
-	}
+void Scene::addShape(Shape* s)
+{
+	mShapes.push_back(s);
 }
 
 void Scene::updateShapes(list<Shape*> newShapes)
 {
 	mShapes = newShapes;
+}
+
+void Scene::createSampleShapes()
+{
+	Vertex* v1 = new Vertex(0, 1);
+	Vertex* v2 = new Vertex(-1, 2);
+	Vertex* v3 = new Vertex(-2, 0);
+	Vertex* v4 = new Vertex(1, 2);
+	Vertex* v5 = new Vertex(2, -2);
+
+	// Add Face
+	list<Vertex*> vertices;
+	vertices.push_back(v1);
+	vertices.push_back(v2);
+	vertices.push_back(v3);
+
+	mShapes.push_back(v1);
+	mShapes.push_back(v2);
+	mShapes.push_back(v3);
+	mShapes.push_back(new Face(vertices));
+
+	// Add Line
+	mShapes.push_back(v4);
+	mShapes.push_back(v5);
+	mShapes.push_back(new Line(v4, v5));
 }
 
 
@@ -80,18 +92,4 @@ void Scene::renderShape(QPainter* painter)
 	{
 		(*iter)->render(painter, mCamera);
 	}
-}
-
-
-// Add data method
-void Scene::addShape(Shape* s)
-{
-	mShapes.push_back(s);
-}
-
-
-// Utility method
-list<Shape*> Scene::retShapes()
-{
-	return mShapes;
 }

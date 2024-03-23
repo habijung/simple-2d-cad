@@ -14,17 +14,15 @@ class Scene : public QWidget
 {
 public:
 	Scene(Camera* camera = nullptr);
+
+	list<Shape*> retShapes();
+	void addShape(Shape* s);
 	void updateShapes(list<Shape*> newShapes);
+	void createSampleShapes();
 
 	// Render method
 	void renderScreenCoordinate(QPainter* painter);
 	void renderShape(QPainter* painter);
-
-	// Add data method
-	void addShape(Shape* s);
-
-	// Utility method
-	list<Shape*> retShapes();
 
 private:
 	vector<QPointF> vertScreen;
