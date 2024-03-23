@@ -135,6 +135,18 @@ void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
 		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // 편의를 위해서 box를 크게 만들기
 		mHit = hitTestingPoint(mPos, mPolygon);
+
+		if (mHit && (mPoints.size() > 1))
+		{
+			mGuidePolygon = QPolygonF();
+
+			for (int i = 0; i < mPoints.size(); i++)
+			{
+				mGuidePolygon << mPoints[i];
+			}
+
+			mGuidePolygon << mPos;
+		}
 	}
 
 	mViewport->update();
@@ -150,13 +162,12 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 		// Draw finish and Initialization
 		if (mHit && (mPoints.size() > 2))
 		{
-			if (mPoints.size() == 3)
-			{
-				qDebug() << "No polygon";
-			}
+			// TODO: Polygon을 Scene에 저장하기
+			if (mPoints.size() != 3) {}
 
 			mPoints = {};
 			mDrawPolygon = false;
+			mGuidePolygon = QPolygonF();
 		}
 	}
 
@@ -191,9 +202,25 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 
 		if (mHit && (mPoints.size() > 1))
 		{
+			// Draw guide polygon
+			painter->setPen(QPen(Qt::darkGray, 3));
+			painter->setBrush(QBrush(Qt::lightGray));
+			painter->drawPolygon(mGuidePolygon, Qt::OddEvenFill);
+
+			// Draw polygon points again for priority
+			for (int i = 0; i < mPoints.size(); i++)
+			{
+				// Draw polygon points
+				painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
+				painter->drawPoint(mPoints[i]);
+				painter->drawPoint(mPos);
+			}
+
 			// Draw mouse hover points
 			painter->setPen(QPen(Qt::red, 10, Qt::SolidLine, Qt::RoundCap));
+			painter->setBrush(QBrush());
 			painter->drawPoint(mPoints[0]);
+			painter->drawPoint(mPos);
 
 			// Draw bounding box with start point
 			painter->setPen(QPen(Qt::blue, 2));

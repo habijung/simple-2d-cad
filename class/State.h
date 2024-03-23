@@ -75,6 +75,7 @@ private:
 	int mButton;
 
 	QPolygonF mPolygon;
+	QPolygonF mGuidePolygon;
 	QLineF mLine;
 	Vertex* mVertex;
 	vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points vector
