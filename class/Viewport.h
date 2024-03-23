@@ -22,7 +22,7 @@ public:
 	void getKeyEvent(QKeyEvent* event);
 	void updateState(State* state, Scene* newScene);
 	void saveScene();
-	void loadScene();
+	Scene* loadScene(Scene* oldScene);
 	Scene* createNewScene(Scene* oldScene);
 
 private:

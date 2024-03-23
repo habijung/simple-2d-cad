@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <QRegularExpression>
 #include "Viewport.h"
 
 
@@ -112,7 +113,7 @@ void Viewport::saveScene()
 	}
 }
 
-void Viewport::loadScene()
+Scene* Viewport::loadScene(Scene* oldScene)
 {
 	QString dirPath = QString(getenv("USERPROFILE")) + "/Desktop/";
 	QString filePath = QFileDialog::getOpenFileName(
@@ -140,10 +141,58 @@ void Viewport::loadScene()
 
 		if (document.isObject())
 		{
-			QJsonObject obj = document.object();
-			qDebug() << filePath;
+			QJsonObject jsonScene = document.object(); // .json file
+			QJsonObject::iterator iter = jsonScene.begin();
+			mScene = createNewScene(oldScene);
+
+			for (iter; iter != jsonScene.end(); iter++)
+			{
+				QJsonObject jsonShape = (*iter).toObject();
+				QStringList keys = jsonShape.keys();
+				QStringList::iterator key = keys.begin();
+
+				for (key; key != keys.end(); key++)
+				{
+					QJsonValue value = jsonShape.take(*key);
+
+					if (value.isString())
+					{
+						QString type = value.toString(); // Shape Type
+
+						if (!type.compare("Line"))
+						{
+							key++; // Vertices
+							list<Shape*> shapes = mScene->retShapes();
+							QJsonObject vertices = jsonShape.take(*key).toObject();
+							QJsonObject::iterator iterv = vertices.begin();
+
+
+							// Regular Expression
+							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt
+							//for (auto v : vertices)
+							vector<Vertex*> vv;
+							for (iterv; iterv != vertices.end(); iterv++)
+							{
+								QRegularExpression separator("[,\\s]+");
+								QStringList list = (*iterv).toString().trimmed().split(separator);
+								Vertex* vert = new Vertex(QPointF(list[0].toFloat(), list[1].toFloat()));
+								qDebug() << vert->retVertex();
+								shapes.push_back(vert);
+								vv.push_back(vert);
+							}
+
+							Line* newLine = new Line(vv.front(), vv.back());
+							shapes.push_back(newLine);
+							mScene->updateShapes(shapes);
+							key--;
+						}
+					}
+				}
+			}
 		}
 	}
+
+	return mScene;
 }
 
 Scene* Viewport::createNewScene(Scene* oldScene)
