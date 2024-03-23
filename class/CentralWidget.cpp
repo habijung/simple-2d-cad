@@ -12,10 +12,10 @@ CentralWidget::CentralWidget(QWidget* parent)
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
 	// Draw line with mouse event
-	//this->drawLine();
+	this->drawLine();
 
 	// Render method test
-	//this->renderAll();
+	this->renderAll();
 
 	// Selection test
 	this->selectLine(this->pStart);
@@ -106,33 +106,40 @@ void CentralWidget::renderAll()
 
 void CentralWidget::selectLine(QPoint mPoint)
 {
-	QPointF v1 = { 200, 200 };
-	QPointF v2 = { 300, 300 };
-	int offset = 20;
-
-	QLineF line(v1, v2);
-	qreal rad = line.angle() * acos(-1) / 180; // pi = acos(-1)
-	qreal dx = offset * sin(rad);
-	qreal dy = offset * cos(rad);
-	QPointF delta[2] = { QPointF(dx, dy), QPointF(-dx, -dy) };
-	QPointF pOffset[4] =
-	{
-		line.p1() + delta[0],
-		line.p1() + delta[1],
-		line.p2() + delta[0],
-		line.p2() + delta[1]
-	};
-
-	QPolygonF polygon;
-	polygon << pOffset[0] << pOffset[1] << pOffset[3] << pOffset[2]; // Clockwise
-
+	int offset = 20; // Line bounding box width offset
 	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
+	QPointF p1, p2;
+	QLineF line;
+	vector<pair<QPoint, QPoint>>::reverse_iterator vrIter;
 
-	if (this->checkSelection(mPoint, polygon))
+	for (vrIter = this->vert.rbegin(); vrIter != this->vert.rend(); vrIter++)
 	{
-		painter.drawPolygon(polygon);
+		p1 = (*vrIter).first;
+		p2 = (*vrIter).second;
+		line = QLineF(p1, p2);
+		qreal rad = line.angle() * acos(-1) / 180; // pi = acos(-1)
+		qreal dx = offset * sin(rad);
+		qreal dy = offset * cos(rad);
+		QPointF delta[2] = { QPointF(dx, dy), QPointF(-dx, -dy) };
+		QPointF pOffset[4] =
+		{
+			line.p1() + delta[0],
+			line.p1() + delta[1],
+			line.p2() + delta[0],
+			line.p2() + delta[1]
+		};
+
+		QPolygonF polygon;
+		polygon << pOffset[0] << pOffset[1] << pOffset[3] << pOffset[2]; // Clockwise
+
+		painter.setRenderHint(QPainter::Antialiasing);
+		painter.drawLine(p1.x(), p1.y(), p2.x(), p2.y());
+
+		if (this->checkSelection(mPoint, polygon))
+		{
+			painter.drawPolygon(polygon);
+			break;
+		}
 	}
 
 	// Draw mouse click point
@@ -140,7 +147,12 @@ void CentralWidget::selectLine(QPoint mPoint)
 	pen.setWidth(5);
 	pen.setCapStyle(Qt::FlatCap);
 	painter.setPen(pen);
-	painter.drawPoint(mPoint);
+
+	if (mPoint != QPoint(0, 0))
+	{
+		painter.drawPoint(mPoint);
+	}
+
 	painter.end();
 }
 
