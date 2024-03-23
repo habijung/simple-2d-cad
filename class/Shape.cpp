@@ -70,13 +70,13 @@ QLineF Line::retLine(Camera* cam)
 	return QLineF(p1, p2);
 }
 
-void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec, float dx, float dy, float scale)
+void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec)
 {
 	QPointF offset = pEnd - pStart;
 	QPointF p1 = offset + cam->setWindowToScreen(vec.front().retVertex());
 	QPointF p2 = offset + cam->setWindowToScreen(vec.back().retVertex());
-	mV1->updateVertex(cam->setScreenToWindow(p1.toPoint(), dx, dy, scale));
-	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint(), dx, dy, scale));
+	mV1->updateVertex(cam->setScreenToWindow(p1.toPoint()));
+	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint()));
 }
 
 string Line::retType()
@@ -135,7 +135,7 @@ QPolygonF Face::retFace(Camera* cam)
 	return poly;
 }
 
-void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices, float dx, float dy, float scale)
+void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices)
 {
 	QPointF offset = pEnd - pStart;
 	list<Shape*>::iterator iter = shapes.begin();
@@ -154,7 +154,7 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> sh
 				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
 				Vertex* v = dynamic_cast<Vertex*>(*iter);
 				QPointF p = offset + cam->setWindowToScreen(vertices[fSize - count].retVertex());
-				v->updateVertex(cam->setScreenToWindow(p.toPoint(), dx, dy, scale));
+				v->updateVertex(cam->setScreenToWindow(p.toPoint()));
 			}
 
 			break;

@@ -8,7 +8,7 @@ public:
 	Camera(QWidget* parent = nullptr, QSize size = QSize(600, 600), float scale = 100.0);
 
 	// Coordinate conversion
-	QPointF setScreenToWindow(QPoint pScreen, float dx, float dy, float scale);
+	QPointF setScreenToWindow(QPoint pScreen);
 	QPoint  setWindowToScreen(QPointF pWindow);
 
 	// Camera action

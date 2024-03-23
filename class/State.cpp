@@ -54,12 +54,8 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 
 		if (mPoints.size() == 2)
 		{
-			float dx = mViewport->width() / 2.0;
-			float dy = mViewport->height() / 2.0;
-			float scale = 100.0;
-
-			Vertex* v1 = new Vertex(mCamera->setScreenToWindow(mPoints.front().toPoint(), dx, dy, scale));
-			Vertex* v2 = new Vertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+			Vertex* v1 = new Vertex(mCamera->setScreenToWindow(mPoints.front().toPoint()));
+			Vertex* v2 = new Vertex(mCamera->setScreenToWindow(mPos.toPoint()));
 			Line* line = new Line(v1, v2);
 			mScene->addShape(v1);
 			mScene->addShape(v2);
@@ -89,17 +85,13 @@ void DrawLineState::paintEvent(QPainter* painter)
 		painter->drawPoint(mPos);
 	}
 
-	float dx = mViewport->width() / 2.0;
-	float dy = mViewport->height() / 2.0;
-	float scale = 100.0;
-
 	painter->setPen(QPen(Qt::black));
 	painter->drawText(
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).x(), 0, 'f', 2)
-		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).y(), 0, 'f', 2)
+		.arg(mCamera->setScreenToWindow(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->setScreenToWindow(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }
 
@@ -127,12 +119,8 @@ void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 	if (mPoints.size() && ((mButton != Qt::LeftButton) || (mButton == Qt::LeftButton)))
 	{
 		// Create bounding box and hit testing by start point.
-		float dx = mViewport->width() / 2.0;
-		float dy = mViewport->height() / 2.0;
-		float scale = 100.0;
-
 		mLine = QLineF(mPoints.back(), mPos);
-		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
+		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint()));
 		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
 		mHit = hitTestingPoint(mPos, mPolygon);
 
@@ -165,10 +153,6 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 			// TODO: Polygon을 Scene에 저장하기
 			if (mPoints.size() != 3)
 			{
-				float dx = mViewport->width() / 2.0;
-				float dy = mViewport->height() / 2.0;
-				float scale = 100.0;
-
 				Vertex* v;
 				list<Vertex*> vertices;
 
@@ -176,7 +160,7 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 				// 마지막 점은 polygon 구성에서 빼기
 				for (int i = 0; i < mPoints.size() - 1; i++)
 				{
-					v = new Vertex(mCamera->setScreenToWindow(mPoints[i].toPoint(), dx, dy, scale));
+					v = new Vertex(mCamera->setScreenToWindow(mPoints[i].toPoint()));
 					vertices.push_back(v);
 					mScene->addShape(v);
 				}
@@ -246,17 +230,13 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 		}
 	}
 
-	float dx = mViewport->width() / 2.0;
-	float dy = mViewport->height() / 2.0;
-	float scale = 100.0;
-
 	painter->setPen(QPen(Qt::black));
 	painter->drawText(
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).x(), 0, 'f', 2)
-		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).y(), 0, 'f', 2)
+		.arg(mCamera->setScreenToWindow(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->setScreenToWindow(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }
 
@@ -304,11 +284,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 	if (getMouseLeftPressed(mHit, mButton, event))
 	{
-		float dx = this->mViewport->width() / 2.0;
-		float dy = this->mViewport->height() / 2.0;
-		float scale = 100.0;
-
-		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint()));
 
 		// Check snapping
 		list<Shape*>::iterator iter = mShapes.begin();
@@ -404,11 +380,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 
 	if (getMouseLeftPressed(mHit, mButton, event))
 	{
-		float dx = this->mViewport->width() / 2.0;
-		float dy = this->mViewport->height() / 2.0;
-		float scale = 100.0;
-
-		mLine->updateLine(mCamera, mPosStart, mPos, mLineVertices, dx, dy, scale);
+		mLine->updateLine(mCamera, mPosStart, mPos, mLineVertices);
 		mPolygon = createLineBoundingBox(mCamera, mLine, 10);
 	}
 
@@ -486,11 +458,7 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 
 	if (getMouseLeftPressed(mHit, mButton, event))
 	{
-		float dx = this->mViewport->width() / 2.0;
-		float dy = this->mViewport->height() / 2.0;
-		float scale = 100.0;
-
-		mFace->updateFace(mCamera, mPosStart, mPos, mScene->retShapes(), mFaceVertices, dx, dy, scale);
+		mFace->updateFace(mCamera, mPosStart, mPos, mScene->retShapes(), mFaceVertices);
 		mPolygon = mFace->retFace(mCamera);
 	}
 

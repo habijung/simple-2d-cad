@@ -36,7 +36,7 @@ public:
 	Line(QPointF p1, QPointF p2);
 	vector<Vertex> retVertices();
 	QLineF retLine(Camera* cam);
-	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart, float dx, float dy, float scale);
+	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart);
 
 	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
@@ -54,7 +54,7 @@ public:
 	Face(Vertex* v);
 	vector<Vertex> retVertices();
 	QPolygonF retFace(Camera* cam);
-	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices, float dx, float dy, float scale);
+	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices);
 
 	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
