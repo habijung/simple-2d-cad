@@ -26,8 +26,8 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 {
-	xOffset = event->pos().x() - this->pStart.x();
-	yOffset = event->pos().y() - this->pStart.y();
+	this->xOffset = event->pos().x() - this->pStart.x();
+	this->yOffset = event->pos().y() - this->pStart.y();
 
 	// Draw only mouse left button
 	if ((this->button == Qt::LeftButton) &&
@@ -45,10 +45,8 @@ void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 	if (this->button == Qt::LeftButton)
 	{
 		// Add vertex
-		vector<QPoint> vec;
-		vec.push_back(this->pStart);
-		vec.push_back(this->pEnd);
-		this->vert.push_back(vec);
+		pair<QPoint, QPoint> p = { this->pStart, this->pEnd };
+		this->vert.push_back(p);
 	}
 }
 
@@ -91,12 +89,12 @@ void CentralWidget::renderAll()
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 
-	vector<vector<QPoint>>::iterator vIter;
+	vector<pair<QPoint, QPoint>>::iterator vIter;
 
 	for (vIter = this->vert.begin(); vIter != this->vert.end(); vIter++)
 	{
-		QPoint v1 = (*vIter)[0];
-		QPoint v2 = (*vIter)[1];
+		QPoint v1 = (*vIter).first;
+		QPoint v2 = (*vIter).second;
 		painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
 	}
 

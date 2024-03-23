@@ -1,6 +1,7 @@
 #pragma once
 #include <QWidget>
 #include <vector>
+#include <utility>
 using namespace std;
 
 
@@ -22,5 +23,5 @@ private:
 	int xOffset, yOffset;
 	int button;
 	QPoint pStart, pEnd;
-	vector<vector<QPoint>> vert;
+	vector<pair<QPoint, QPoint>> vert;
 };
