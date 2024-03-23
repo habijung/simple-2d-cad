@@ -62,3 +62,15 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 };
+
+class SelectPointState : public State
+{
+public:
+	SelectPointState(string name, metadata* data);
+
+private:
+	string mName;
+	Viewport* mViewport;
+	Scene* mScene;
+	Camera* mCamera;
+};

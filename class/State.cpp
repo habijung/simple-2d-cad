@@ -64,3 +64,13 @@ void DrawFaceState::paintEvent(QPainter* painter)
 	QPen pen(Qt::red, 10);
 	painter->setPen(pen);
 }
+
+SelectPointState::SelectPointState(string name, metadata* data)
+	: State(name)
+{
+	qDebug() << "Create SelectPointState:" << name;
+	this->mName = name;
+	this->mViewport = data->viewport;
+	this->mScene = data->scene;
+	this->mCamera = data->camera;
+}

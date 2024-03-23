@@ -30,13 +30,16 @@ MainWindow::MainWindow(QWidget* parent)
 	sDLS1 = new DrawLineState("DRAW_LINE", mData);
 	sDLS2 = new DrawLineState("DRAW_LINE2", mData);
 	sDFS = new DrawFaceState("DRAW_FACE", mData);
+	sSPS = new SelectPointState("SELECT_POINT", mData);
 
 	this->machine->addState(sIDLE);
 	this->machine->addState(sDLS);
 	this->machine->addState(sDLS1);
 	this->machine->addState(sDLS2);
+	this->machine->addState(sSPS);
 	this->machine->printAllStates();
 	this->machine->setState(sIDLE);
+	this->machine->setState(sSPS);
 	this->machine->getCurrentState();
 }
 
@@ -149,9 +152,14 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 void MainWindow::setUnderbarWidget(QWidget* widget)
 {
 	QWidget* wUnderbar = new QWidget(widget);
+	QPushButton* btnPoint = new QPushButton("Point", wUnderbar);
 	QPushButton* btnLine = new QPushButton("Line", wUnderbar);
 	QPushButton* btnFace = new QPushButton("Face", wUnderbar);
 
+	connect(btnPoint, &QPushButton::clicked, [this]()
+		{
+			qDebug() << "Point Clicked";
+		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Line Clicked";
@@ -162,6 +170,8 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 		});
 
 	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
+	hBox->addWidget(btnPoint);
+	hBox->addStretch();
 	hBox->addWidget(btnLine);
 	hBox->addStretch();
 	hBox->addWidget(btnFace);
