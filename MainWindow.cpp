@@ -22,6 +22,7 @@ MainWindow::MainWindow(QWidget* parent)
 	stateMachine = new StateMachine();
 	this->stateMachine->addState("s1");
 	this->stateMachine->addState("s2");
+	this->stateMachine->addState("s2");
 	this->stateMachine->printAllStates();
 }
 
