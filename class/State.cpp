@@ -427,6 +427,8 @@ SelectPolygonState::SelectPolygonState(string name, component* comp)
 void SelectPolygonState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
+	mPosStart = event->pos();
+	mFaceVertices = mFace->retVertices();
 	mButton = event->button();
 }
 
@@ -454,6 +456,16 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 				}
 			}
 		}
+	}
+
+	if (getMouseLeftPressed(mHit, mButton, event))
+	{
+		float dx = this->mViewport->width() / 2.0;
+		float dy = this->mViewport->height() / 2.0;
+		float scale = 100.0;
+
+		mFace->updateFace(mCamera, mPosStart, mPos, mFaceVertices, dx, dy, scale);
+		mPolygon = mFace->retFace(mCamera);
 	}
 
 	mViewport->update();

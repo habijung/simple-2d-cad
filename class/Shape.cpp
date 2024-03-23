@@ -108,6 +108,19 @@ Face::Face(Vertex* v)
 	mVertices.push_back(v);
 }
 
+vector<Vertex> Face::retVertices()
+{
+	vector<Vertex> vertices;
+	list<Vertex*>::iterator iter = mVertices.begin();
+
+	for (iter; iter != mVertices.end(); iter++)
+	{
+		vertices.push_back((*iter)->retVertex());
+	}
+
+	return vertices;
+}
+
 QPolygonF Face::retFace(Camera* cam)
 {
 	QPolygonF poly;
@@ -120,6 +133,22 @@ QPolygonF Face::retFace(Camera* cam)
 	}
 
 	return poly;
+}
+
+void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec, float dx, float dy, float scale)
+{
+	list<Vertex*> newVertices;
+	QPointF offset = pEnd - pStart;
+	vector<Vertex>::iterator iter = vec.begin();
+
+	for (iter; iter != vec.end(); iter++)
+	{
+		QPointF p = offset + cam->setWindowToScreen((*iter).retVertex());
+		Vertex* v = new Vertex(cam->setScreenToWindow(p.toPoint(), dx, dy, scale));
+		newVertices.push_back(v);
+	}
+
+	mVertices = newVertices;
 }
 
 string Face::retType()

@@ -154,6 +154,8 @@ private:
 	Camera* mCamera;
 
 	QPointF mPos;
+	QPointF mPosStart;
+	vector<Vertex> mFaceVertices;
 	int mButton;
 
 	// For select line

@@ -52,7 +52,9 @@ class Face : public Shape
 public:
 	Face(list<Vertex*> vertices = {});
 	Face(Vertex* v);
+	vector<Vertex> retVertices();
 	QPolygonF retFace(Camera* cam);
+	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec, float dx, float dy, float scale);
 
 	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
