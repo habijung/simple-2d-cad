@@ -480,10 +480,9 @@ void SelectPolygonState::paintEvent(QPainter* painter)
 {
 	if (mHit)
 	{
-		// TODO: Line highlight
-
-		// Face highlight
+		// Face line highlight
 		painter->setPen(QPen(Qt::red, 3));
+		painter->setBrush(QBrush(Qt::cyan));
 		painter->drawPolygon(mPolygon);
 
 		// Draw polygon points again for priority
@@ -498,6 +497,7 @@ void SelectPolygonState::paintEvent(QPainter* painter)
 		mPolygon = QPolygonF();
 		mPolygon = createFaceSelectionBox(mCamera, mFace);
 		painter->setPen(QPen(Qt::green, 3));
+		painter->setBrush(QBrush());
 		painter->drawPolygon(mPolygon);
 	}
 }
