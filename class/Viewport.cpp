@@ -101,15 +101,16 @@ void Viewport::saveScene()
 		dirPath,
 		tr("JSON (*.json);; Image (*.png *jpg);; Text (*.txt);; XML (*.xml)")
 	);
-
-	// TODO: 에러 처리
-	// https://www.weiy.city/2020/08/how-to-write-and-read-json-file-by-qt/
 	QFile file(filePath);
 
 	if (file.open(QIODevice::WriteOnly))
 	{
 		file.write(document.toJson(QJsonDocument::Indented));
 		file.close();
+	}
+	else
+	{
+		qDebug() << "QFile open failed: " << filePath.toStdString();
 	}
 }
 
