@@ -89,8 +89,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="class\Camera.cpp" />
-    <ClCompile Include="class\Scene.cpp" />
+    <ClCompile Include="viewport\Camera.cpp" />
+    <ClCompile Include="viewport\Scene.cpp" />
     <ClCompile Include="shape\Face.cpp" />
     <ClCompile Include="shape\Line.cpp" />
     <ClCompile Include="shape\Vertex.cpp" />
@@ -105,7 +105,7 @@
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
-    <ClCompile Include="class\Viewport.cpp" />
+    <ClCompile Include="viewport\Viewport.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
     <None Include=".editorconfig" />
@@ -113,9 +113,9 @@
     <ResourceCompile Include="simple-2d-cad.rc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\Camera.h" />
-    <ClInclude Include="class\Viewport.h" />
-    <ClInclude Include="class\Scene.h" />
+    <ClInclude Include="viewport\Camera.h" />
+    <ClInclude Include="viewport\Viewport.h" />
+    <ClInclude Include="viewport\Scene.h" />
     <ClInclude Include="shape\Shape.h" />
     <ClInclude Include="state\StateMachine.h" />
     <ClInclude Include="state\State.h" />

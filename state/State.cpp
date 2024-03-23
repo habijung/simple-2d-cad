@@ -1,5 +1,5 @@
 #include "State.h"
-#include "../class/Viewport.h"
+#include "../viewport/Viewport.h"
 
 
 State::State(string name, component* comp)

@@ -1,5 +1,5 @@
 #include "State.h"
-#include "../class/Viewport.h"
+#include "../viewport/Viewport.h"
 
 
 DrawLineState::DrawLineState(string name, component* comp)

@@ -1,5 +1,5 @@
 #include "State.h"
-#include "../class/Viewport.h"
+#include "../viewport/Viewport.h"
 
 
 SelectFaceState::SelectFaceState(string name, component* comp)

@@ -1,7 +1,7 @@
 #include "utils.h"
-#include "../class/Viewport.h"
-#include "../class/Scene.h"
-#include "../class/Camera.h"
+#include "../viewport/Viewport.h"
+#include "../viewport/Scene.h"
+#include "../viewport/Camera.h"
 
 
 QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)

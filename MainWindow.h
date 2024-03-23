@@ -6,7 +6,7 @@
 #include <QFileDialog>
 #include <QResizeEvent>
 #include "ui_MainWindow.h"
-#include "class/Viewport.h"
+#include "viewport/Viewport.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };
