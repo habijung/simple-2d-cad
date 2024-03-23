@@ -112,6 +112,7 @@ DrawPolygonState::DrawPolygonState(string name, component* comp)
 	mCamera = comp->camera;
 	mPoints = {};
 	mDrawPolygon = false;
+	mVertex = new Vertex(QPoint(INFINITY, INFINITY));
 }
 
 void DrawPolygonState::mousePressEvent(QMouseEvent* event)
@@ -122,6 +123,20 @@ void DrawPolygonState::mousePressEvent(QMouseEvent* event)
 void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
+
+	if ((mButton != Qt::LeftButton) && mPoints.size())
+	{
+		// Create bounding box and hit testing by start point.
+		float dx = mViewport->width() / 2.0;
+		float dy = mViewport->height() / 2.0;
+		float scale = 100.0;
+
+		mLine = QLineF(mPoints.back(), mPos);
+		mVertex = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
+		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // 편의를 위해서 box를 크게 만들기
+		mHit = hitTestingPoint(mPos, mPolygon);
+	}
+
 	mViewport->update();
 }
 
@@ -132,20 +147,9 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 		mPoints.push_back(mPos);
 		mDrawPolygon = true;
 
-		// Create bounding box and hit testing by start point.
-		float dx = mViewport->width() / 2.0;
-		float dy = mViewport->height() / 2.0;
-		float scale = 100.0;
-
-		Vertex* v0 = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
-		mPolygon = createPointBoundingBox(mCamera, v0, 15); // 편의를 위해서 box를 크게 만들기
-		mHit = hitTestingPoint(mPos, mPolygon);
-
-		if (mHit && (mPoints.size() != 1))
+		// Draw finish and Initialization
+		if (mHit && (mPoints.size() > 1))
 		{
-			qDebug() << "Hit";
-
-			// Initialization
 			mPoints = {};
 			mDrawPolygon = false;
 		}
@@ -159,6 +163,9 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 {
 	if (mDrawPolygon)
 	{
+		painter->setPen(QPen(Qt::darkGray, 3));
+		painter->drawLine(mLine);
+
 		for (int i = 0; i < mPoints.size(); i++)
 		{
 			// Draw polygon lines
@@ -166,13 +173,13 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 
 			if (j > 0)
 			{
-				QLineF line = QLineF(mPoints[i], mPoints[j]);
+				mLine = QLineF(mPoints[i], mPoints[j]);
 				painter->setPen(QPen(Qt::darkGray, 3));
-				painter->drawLine(line);
+				painter->drawLine(mLine);
 			}
 
 			// Draw polygon points
-			painter->setPen(QPen(Qt::blue, 10));
+			painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 			painter->drawPoint(mPoints[i]);
 		}
 

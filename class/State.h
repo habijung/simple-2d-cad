@@ -75,6 +75,8 @@ private:
 	int mButton;
 
 	QPolygonF mPolygon;
+	QLineF mLine;
+	Vertex* mVertex;
 	vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points vector
 	bool mDrawPolygon;
 	bool mHit;
