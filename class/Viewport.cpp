@@ -27,14 +27,17 @@ void Viewport::getKeyEvent(QKeyEvent* event)
 
 void Viewport::paintEvent(QPaintEvent* event)
 {
-	// Draw line with mouse event
-	//this->drawLine();
+	// Activate this when State Machine finished.  
+	{
+		// Draw line with mouse event
+		//this->drawLine();
 
-	// Render method test
-	//this->renderAll();
+		// Render method test
+		//this->renderAll();
 
-	// Selection test
-	//this->selectLine(this->pStart);
+		// Selection test
+		//this->selectLine(this->pStart);
+	}
 
 	// Class Scene test
 	QPainter* painter1 = new QPainter(this);
