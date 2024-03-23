@@ -33,8 +33,19 @@ void Scene::renderScreenCoordinate(QPainter* painter, Camera* camera)
 	{
 		QPointF pWindow = *iter;
 		QPoint  pScreen = camera->setWindowToScreen(pWindow);
-		painter->drawText(pScreen, QString("%1, %2").arg(pWindow.x()).arg(pWindow.y()));
 		painter->drawPoint(pScreen);
+
+		if (pWindow.x() == 0 || pWindow.y() == 0)
+		{
+			if (pWindow.x() == 0)
+			{
+				painter->drawText(pScreen, QString("%1").arg(pWindow.y()));
+			}
+			else
+			{
+				painter->drawText(pScreen, QString("%1").arg(pWindow.x()));
+			}
+		}
 	}
 }
 
