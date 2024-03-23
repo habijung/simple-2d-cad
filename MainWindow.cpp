@@ -131,7 +131,7 @@ void MainWindow::SetUnderbarWidget(QWidget* widget)
 	QHBoxLayout* hBox = new QHBoxLayout(mUnderbar);
 	QPushButton* btnPoint = new QPushButton("Point", mUnderbar);
 	QPushButton* btnLine = new QPushButton("Line", mUnderbar);
-	QPushButton* btnFace = new QPushButton("Poly", mUnderbar);
+	QPushButton* btnFace = new QPushButton("Face", mUnderbar);
 
 	hBox->addWidget(btnPoint);
 	hBox->addWidget(btnLine);
