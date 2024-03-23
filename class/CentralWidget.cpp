@@ -21,24 +21,35 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 void CentralWidget::mousePressEvent(QMouseEvent* event)
 {
 	this->pStart = event->pos();
+	this->button = event->button();
 }
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	xOffset = event->pos().x() - this->pStart.x();
 	yOffset = event->pos().y() - this->pStart.y();
-	update();
+
+	// Draw only mouse left button
+	if ((this->button == Qt::LeftButton) &&
+		(event->button() == Qt::NoButton))
+	{
+		update();
+	}
 }
 
 void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	this->pEnd = event->pos();
 
-	// Add vertex
-	vector<QPoint> vec;
-	vec.push_back(this->pStart);
-	vec.push_back(this->pEnd);
-	this->vert.push_back(vec);
+	// Draw only mouse left button
+	if (this->button == Qt::LeftButton)
+	{
+		// Add vertex
+		vector<QPoint> vec;
+		vec.push_back(this->pStart);
+		vec.push_back(this->pEnd);
+		this->vert.push_back(vec);
+	}
 }
 
 void CentralWidget::drawLine()

@@ -19,7 +19,8 @@ private:
 	void drawLine();
 	void renderAll();
 
-	QPoint pStart, pEnd;
 	int xOffset, yOffset;
+	int button;
+	QPoint pStart, pEnd;
 	vector<vector<QPoint>> vert;
 };
