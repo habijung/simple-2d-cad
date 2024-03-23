@@ -1,18 +1,9 @@
 #pragma once
+
 #include <list>
 #include <string>
+#include "State.h"
 using namespace std;
-
-
-class State
-{
-public:
-	State(string name);
-	string getStateName();
-
-private:
-	string mName;
-};
 
 
 class StateMachine

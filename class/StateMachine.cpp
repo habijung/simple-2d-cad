@@ -2,19 +2,6 @@
 #include "StateMachine.h"
 
 
-// State 
-State::State(string name)
-{
-	this->mName = name;
-}
-
-string State::getStateName()
-{
-	return this->mName;
-}
-
-
-// StateMachine
 StateMachine::StateMachine()
 {
 	this->mState = nullptr;

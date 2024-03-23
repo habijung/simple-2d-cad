@@ -93,6 +93,7 @@
     <ClCompile Include="class\Scene.cpp" />
     <ClCompile Include="class\Shape.cpp" />
     <ClCompile Include="class\StateMachine.cpp" />
+    <ClCompile Include="class\State.cpp" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
@@ -108,6 +109,7 @@
     <ClInclude Include="class\Scene.h" />
     <ClInclude Include="class\Shape.h" />
     <ClInclude Include="class\StateMachine.h" />
+    <ClInclude Include="class\State.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
