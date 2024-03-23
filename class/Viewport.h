@@ -4,6 +4,7 @@
 #include <utility>
 #include "Scene.h"
 #include "Camera.h"
+#include "StateMachine.h"
 using namespace std;
 
 
@@ -13,6 +14,7 @@ class Viewport :
 public:
 	Viewport(QWidget* parent = nullptr);
 	void getKeyEvent(QKeyEvent* event);
+	void updateState(State* state);
 
 private:
 	void paintEvent(QPaintEvent* event) override;
@@ -35,4 +37,5 @@ private:
 	// Class instances
 	Scene* scene;
 	Camera* camera;
+	State* state;
 };

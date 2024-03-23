@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <QPoint>
 using namespace std;
 
 class State
@@ -10,7 +11,7 @@ public:
 	string getStateName();
 
 	virtual ~State() {}
-	virtual void mousePressEvent() {}
+	virtual void mousePressEvent(QPoint p) {}
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
 
@@ -23,7 +24,7 @@ class DrawLineState : public State
 public:
 	DrawLineState(string name);
 
-	virtual void mousePressEvent();
+	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
 

@@ -20,7 +20,10 @@ DrawLineState::DrawLineState(string name)
 	this->mName = name;
 }
 
-void DrawLineState::mousePressEvent()
+void DrawLineState::mousePressEvent(QPoint p)
 {
-	qDebug() << "DrawLineState::mousePressEvent()";
+	qDebug()
+		<< "DrawLineState::mousePressEvent()"
+		<< p.x()
+		<< p.y();
 }

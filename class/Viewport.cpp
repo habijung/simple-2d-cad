@@ -10,6 +10,7 @@ Viewport::Viewport(QWidget* parent)
 	qDebug() << "\n Central Widget \n";
 	scene = new Scene(this);
 	camera = new Camera(this, QSize(600, 600), 100.0);
+	this->state = new State("NULL");
 	this->pValue = 60.0;
 	this->zValue = 60.0;
 }
@@ -38,6 +39,11 @@ void Viewport::getKeyEvent(QKeyEvent* event)
 		break;
 	}
 	repaint();
+}
+
+void Viewport::updateState(State* state)
+{
+	this->state = state;
 }
 
 void Viewport::paintEvent(QPaintEvent* event)
@@ -88,6 +94,9 @@ void Viewport::mousePressEvent(QMouseEvent* event)
 		float scale = 100.0;
 		scene->addVertex(camera->setScreenToWindow(this->pStart, dx, dy, scale));
 		repaint();
+
+		// Get state and state mouse event test
+		this->state->mousePressEvent(this->pStart);
 	}
 }
 

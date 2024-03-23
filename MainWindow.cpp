@@ -3,6 +3,7 @@
 #include "MainWindow.h"
 
 
+// TODO: Global to Member variables
 State* sIDLE = new State("IDLE");
 DrawLineState* sDLS = new DrawLineState("DRAW_LINE");
 DrawLineState* sDLS1 = new DrawLineState("DRAW_LINE");
@@ -118,7 +119,10 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 		{
 			qDebug() << "Line Clicked";
 			this->machine->transition(sDLS);
-			this->machine->getCurrentState();
+			this->widget->updateState
+			(
+				this->machine->getCurrentState()
+			);
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
