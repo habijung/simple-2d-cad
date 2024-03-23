@@ -27,7 +27,7 @@ public:
 
 private:
 	Ui::MainWindowClass* ui;
-	Viewport* widget;
+	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
 	component* mData;

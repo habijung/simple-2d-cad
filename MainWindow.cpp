@@ -9,9 +9,8 @@ MainWindow::MainWindow(QWidget* parent)
 	, ui(new Ui::MainWindowClass())
 {
 	ui->setupUi(this);
-
-	this->setMenuBar();
-	this->setToolbar();
+	setMenuBar();
+	setToolbar();
 
 	// Define State Machine and States
 	machine = new StateMachine();
@@ -19,12 +18,12 @@ MainWindow::MainWindow(QWidget* parent)
 	// Create main scene, camera, viewport
 	mCamera = new Camera(this, QSize(600, 600), 100.0);
 	mScene = new Scene(this, mCamera);
-	this->widget = new Viewport(this, mScene, mCamera, machine);
-	mData = new component{ this->widget, mScene, mCamera };
-	setCentralWidget(this->widget);
+	mViewport = new Viewport(this, mScene, mCamera, machine);
+	mData = new component{ mViewport, mScene, mCamera };
+	setCentralWidget(mViewport);
 
-	this->setSidebarWidget(this->widget);
-	this->setUnderbarWidget(this->widget);
+	setSidebarWidget(mViewport);
+	setUnderbarWidget(mViewport);
 
 	component* comp = new component;
 	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
@@ -42,7 +41,7 @@ MainWindow::MainWindow(QWidget* parent)
 	machine->getCurrentState();
 
 	// TODO: 이 부분이 없으면 State에서 nullptr로 들어가는 이유 확인하고 중복되는 곳 병합하기
-	widget->updateState(machine->getCurrentState(), mScene);
+	mViewport->updateState(machine->getCurrentState(), mScene);
 }
 
 MainWindow::~MainWindow()
@@ -114,15 +113,15 @@ void MainWindow::setToolbar()
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 	connect(newa, &QAction::triggered, qApp, [this]()
 		{
-			mScene = widget->createNewScene(mScene);
+			mScene = mViewport->createNewScene(mScene);
 		});
 	connect(open, &QAction::triggered, qApp, [this]()
 		{
-			mScene = widget->loadScene(mScene);
+			mScene = mViewport->loadScene(mScene);
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
-			widget->saveScene();
+			mViewport->saveScene();
 		});
 }
 
@@ -135,14 +134,14 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Draw Line Clicked";
-			this->machine->transition(mDrawLineState);
-			this->widget->updateState(machine->getCurrentState(), mScene);
+			machine->transition(mDrawLineState);
+			mViewport->updateState(machine->getCurrentState(), mScene);
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Draw Poly Clicked";
-			this->machine->transition(mDrawPolygonState);
-			this->widget->updateState(machine->getCurrentState(), mScene);
+			machine->transition(mDrawPolygonState);
+			mViewport->updateState(machine->getCurrentState(), mScene);
 		});
 
 	QVBoxLayout* vBox = new QVBoxLayout(wSidebar);
@@ -163,19 +162,19 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 		{
 			qDebug() << "Select Point Clicked";
 			machine->transition(mSelectPointState);
-			this->widget->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState(machine->getCurrentState(), mScene);
 		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Select Line Clicked";
 			machine->transition(mSelectLineState);
-			this->widget->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState(machine->getCurrentState(), mScene);
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Select Poly Clicked";
 			machine->transition(mSelectPolygonState);
-			this->widget->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState(machine->getCurrentState(), mScene);
 		});
 
 	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
@@ -194,7 +193,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 	{
 	case Qt::Key_QuoteLeft:
 		machine->setState(mSelectPointState);
-		this->widget->updateState(this->machine->getCurrentState(), mScene);
+		mViewport->updateState(machine->getCurrentState(), mScene);
 
 		// TODO: State refacroting 하면서 자동으로 초기화가 되도록 만들기
 		mDrawLineState = new DrawLineState("DRAW_LINE", mData);
@@ -202,5 +201,5 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 		break;
 	}
 
-	this->widget->getKeyEvent(event);
+	mViewport->getKeyEvent(event);
 }
