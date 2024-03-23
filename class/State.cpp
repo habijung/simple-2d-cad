@@ -163,7 +163,26 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 		if (mHit && (mPoints.size() > 2))
 		{
 			// TODO: Polygon을 Scene에 저장하기
-			if (mPoints.size() != 3) {}
+			if (mPoints.size() != 3)
+			{
+				float dx = mViewport->width() / 2.0;
+				float dy = mViewport->height() / 2.0;
+				float scale = 100.0;
+
+				Vertex* v;
+				list<Vertex*> vertices;
+
+				// Add vertices to Scene
+				// 마지막 점은 polygon 구성에서 빼기
+				for (int i = 0; i < mPoints.size() - 1; i++)
+				{
+					v = new Vertex(mCamera->setScreenToWindow(mPoints[i].toPoint(), dx, dy, scale));
+					vertices.push_back(v);
+					mScene->addShape(v);
+				}
+
+				mScene->addShape(new Face(vertices));
+			}
 
 			mPoints = {};
 			mDrawPolygon = false;

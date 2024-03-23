@@ -114,7 +114,7 @@ void Face::render(QPainter* painter, Camera* camera)
 
 	for (iter; iter != this->vertices.end(); iter++)
 	{
-		polygon << (*iter)->retVertex();
+		polygon << camera->setWindowToScreen((*iter)->retVertex());
 	}
 
 	QPen pen(Qt::black, 3);
