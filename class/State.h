@@ -91,9 +91,8 @@ private:
 	int mButton;
 
 	// Test
-	Vertex* v;
+	Vertex* v; // Selected Vertex*
 	QPointF p;
 	QPolygonF pol;
 	bool hit;
-	Vertex* vs; // Selected Vertex*
 };

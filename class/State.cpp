@@ -1,3 +1,4 @@
+#include <cmath>
 #include <QDebug>
 #include <QWidget>
 #include "State.h"
@@ -129,19 +130,13 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mCamera = comp->camera;
 
 	// Test
-	v = new Vertex(QPointF(1, 1));
-	vs = new Vertex(QPointF(0, 0));
+	v = new Vertex(QPointF(INFINITY, INFINITY));
 }
 
 void SelectPointState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mButton = event->button();
-
-	pol = QPolygonF();
-	pol = createPointBoundingBox(mCamera, v, 25);
-	hit = hitTestingPoint(mPos, pol);
-	qDebug() << hit;
 
 	// TODO: Scene의 point select
 	list<Shape*> shapes = mScene->retShapes();
@@ -152,18 +147,21 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	{
 		if (!(*iter)->retType().compare("Point"))
 		{
-			vs = static_cast<Vertex*>(*iter);
-			pol = createPointBoundingBox(mCamera, vs, 25);
-			hit = hitTestingPoint(mPos, pol);
+			v = static_cast<Vertex*>(*iter);
+			hit = hitTestingPoint(mPos, createPointBoundingBox(mCamera, v, 20));
+
+			if (hit)
+			{
+				break;
+			}
 		}
 	}
 
-	mViewport->update();
+	//mViewport->update();
 }
 
 void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 {
-	// TODO: 마우스 오버 효과 내기
 	mPos = event->pos();
 
 	if (hit && mButton == Qt::LeftButton && event->button() == Qt::NoButton)
@@ -173,15 +171,12 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		float scale = 100.0;
 
 		v->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
-		pol = createPointBoundingBox(mCamera, v, 25);
-
-		vs->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
-		pol = createPointBoundingBox(mCamera, v, 25);
+		pol = createPointBoundingBox(mCamera, v, 20);
 
 		mViewport->update();
 	}
 
-	pol = createPointBoundingBox(mCamera, vs, 25);
+	pol = createPointBoundingBox(mCamera, v, 25);
 	hit = hitTestingPoint(mPos, pol);
 	mViewport->update();
 }
