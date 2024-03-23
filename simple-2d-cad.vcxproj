@@ -92,8 +92,8 @@
     <ClCompile Include="class\Camera.cpp" />
     <ClCompile Include="class\Scene.cpp" />
     <ClCompile Include="class\Shape.cpp" />
-    <ClCompile Include="class\StateMachine.cpp" />
-    <ClCompile Include="class\State.cpp" />
+    <ClCompile Include="state\StateMachine.cpp" />
+    <ClCompile Include="state\State.cpp" />
     <ClCompile Include="utils\utils.cpp" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
@@ -110,8 +110,8 @@
     <ClInclude Include="class\Viewport.h" />
     <ClInclude Include="class\Scene.h" />
     <ClInclude Include="class\Shape.h" />
-    <ClInclude Include="class\StateMachine.h" />
-    <ClInclude Include="class\State.h" />
+    <ClInclude Include="state\StateMachine.h" />
+    <ClInclude Include="state\State.h" />
     <ClInclude Include="utils\utils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

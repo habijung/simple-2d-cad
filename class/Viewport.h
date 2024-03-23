@@ -4,7 +4,7 @@
 #include <utility>
 #include "Scene.h"
 #include "Camera.h"
-#include "StateMachine.h"
+#include "../state/StateMachine.h"
 using namespace std;
 
 

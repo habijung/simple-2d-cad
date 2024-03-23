@@ -2,7 +2,7 @@
 #include <QDebug>
 #include <QWidget>
 #include "State.h"
-#include "Viewport.h"
+#include "../class/Viewport.h"
 
 
 State::State(string name, component* comp)

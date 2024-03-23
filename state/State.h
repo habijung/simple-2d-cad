@@ -4,9 +4,9 @@
 #include <utility>
 #include <QWidget>
 #include <QMouseEvent>
-#include "Scene.h"
-#include "Camera.h"
-#include "Shape.h"
+#include "../class/Scene.h"
+#include "../class/Camera.h"
+#include "../class/Shape.h"
 #include "../utils/utils.h"
 using namespace std;
 
