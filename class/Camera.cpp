@@ -1,14 +1,15 @@
 #include "Camera.h"
 
-// Except title, taskbar
+// Except title, toolbar
 constexpr QSize MIN_SIZE = { 400, 300 };
+constexpr float TOLERANCE[2] = {-20.0, 21.0};
 
 
 Camera::Camera(QWidget* parent, QSize size, float scale)
 	: QWidget(parent)
 {
-	mX = size.width() / 2.0;
-	mY = size.height() / 2.0;
+	mX = size.width() / 2.0 + TOLERANCE[0];
+	mY = size.height() / 2.0 + TOLERANCE[1];
 	mScale = scale;
 	maxWidth = size.width();
 	maxHeight = size.height();
