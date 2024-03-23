@@ -95,4 +95,5 @@ private:
 	QPointF p;
 	QPolygonF pol;
 	bool hit;
+	Vertex* vs; // Selected Vertex*
 };

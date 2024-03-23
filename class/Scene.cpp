@@ -84,8 +84,16 @@ void Scene::renderShape(QPainter* painter)
 	}
 }
 
+
 // Add data method
 void Scene::addShape(Shape* s)
 {
 	mShapes.push_back(s);
+}
+
+
+// Utility method
+list<Shape*> Scene::retShapes()
+{
+	return mShapes;
 }

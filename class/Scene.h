@@ -23,6 +23,9 @@ public:
 	// Add data method
 	void addShape(Shape* s);
 
+	// Utility method
+	list<Shape*> retShapes();
+
 private:
 	int width, height;
 	vector<QPointF> vertScreen;

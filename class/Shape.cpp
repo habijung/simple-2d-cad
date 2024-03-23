@@ -27,6 +27,11 @@ void Vertex::updateVertex(QPointF p)
 	mY = p.y();
 }
 
+string Vertex::retType()
+{
+	return mType;
+}
+
 void Vertex::render(QPainter* painter, Camera* camera)
 {
 	QPoint p = camera->setWindowToScreen(QPointF(mX, mY));
@@ -39,6 +44,11 @@ Line::Line(Vertex* v1, Vertex* v2)
 	mType = "Line";
 	mV1 = v1;
 	mV2 = v2;
+}
+
+string Line::retType()
+{
+	return mType;
 }
 
 void Line::render(QPainter* painter, Camera* camera)
@@ -57,6 +67,11 @@ Face::Face(list<Vertex*> vertices)
 {
 	mType = "Face";
 	this->vertices = vertices;
+}
+
+string Face::retType()
+{
+	return mType;
 }
 
 void Face::render(QPainter* painter, Camera* camera)

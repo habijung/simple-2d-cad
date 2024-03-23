@@ -9,6 +9,7 @@ class Shape
 {
 public:
 	virtual ~Shape() {}
+	virtual string retType() = 0;
 	virtual void render(QPainter* painter, Camera* camera) {}
 };
 
@@ -20,6 +21,7 @@ public:
 	QPointF retVertex();
 	void updateVertex(QPointF p);
 
+	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
 
 private:
@@ -31,6 +33,8 @@ class Line : public Shape
 {
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
+
+	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
 
 private:
@@ -43,6 +47,8 @@ class Face : public Shape
 {
 public:
 	Face(list<Vertex*> vertices = {});
+
+	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);
 
 private:

@@ -130,6 +130,7 @@ SelectPointState::SelectPointState(string name, component* comp)
 
 	// Test
 	v = new Vertex(QPointF(1, 1));
+	vs = new Vertex(QPointF(0, 0));
 }
 
 void SelectPointState::mousePressEvent(QMouseEvent* event)
@@ -141,6 +142,21 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	pol = createPointBoundingBox(mCamera, v, 25);
 	hit = hitTestingPoint(mPos, pol);
 	qDebug() << hit;
+
+	// TODO: Scene의 point select
+	list<Shape*> shapes = mScene->retShapes();
+	list<Shape*>::iterator iter = shapes.begin();
+
+	// TODO: Reverse iterator로 상위 shape 순서 맞추기
+	for (iter; iter != shapes.end(); iter++)
+	{
+		if (!(*iter)->retType().compare("Point"))
+		{
+			vs = static_cast<Vertex*>(*iter);
+			pol = createPointBoundingBox(mCamera, vs, 25);
+			hit = hitTestingPoint(mPos, pol);
+		}
+	}
 
 	mViewport->update();
 }
@@ -158,8 +174,16 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 		v->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
 		pol = createPointBoundingBox(mCamera, v, 25);
+
+		vs->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
+		pol = createPointBoundingBox(mCamera, v, 25);
+
 		mViewport->update();
 	}
+
+	pol = createPointBoundingBox(mCamera, vs, 25);
+	hit = hitTestingPoint(mPos, pol);
+	mViewport->update();
 }
 
 void SelectPointState::mouseReleaseEvent(QMouseEvent* event)
@@ -174,6 +198,10 @@ void SelectPointState::paintEvent(QPainter* painter)
 		painter->setPen(QPen(Qt::red, 10));
 		painter->drawPoint(mCamera->setWindowToScreen(v->retVertex()));
 	}
-	painter->setPen(QPen(Qt::blue, 3));
-	painter->drawPolygon(pol);
+
+	if (hit)
+	{
+		painter->setPen(QPen(Qt::blue, 3));
+		painter->drawPolygon(pol);
+	}
 }
