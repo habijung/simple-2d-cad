@@ -5,9 +5,6 @@ Scene::Scene(QWidget* parent) : QWidget(parent)
 {
 	this->width = parent->width();
 	this->height = parent->height();
-
-	pair<QPoint, QPoint> p = { QPoint(100, 100), QPoint(200, 200) };
-	this->vert.push_back(p);
 }
 
 void Scene::render(QPainter* painter)
@@ -16,17 +13,21 @@ void Scene::render(QPainter* painter)
 	(
 		this->width / 2,
 		this->height / 2,
-		QString("%1, %2")
-		.arg(this->width / 2)
-		.arg(this->height / 2)
+		QString("(0, 0)")
 	);
-
-	QLineF line = QLineF(this->vert[0].first, this->vert[0].second);
-	painter->drawLine(line);
 }
 
 void Scene::resize(QSize* screenSize)
 {
 	this->width = screenSize->width();
 	this->height = screenSize->height();
+}
+
+void Scene::setScreenToWindow(QPoint p, int dx, int dy)
+{
+	QPoint pp = { p.x() + dx, p.y() + dy};
+	
+	this->vert.push_back(pp);
+
+	qDebug() << pp << ", " << vert.size();
 }

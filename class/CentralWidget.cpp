@@ -70,6 +70,9 @@ void CentralWidget::resizeEvent(QResizeEvent* event)
 {
 	QSize* screenSize = new QSize(width(), height());
 	scene->resize(screenSize);
+
+	QPoint p = { 0, 0 };
+	scene->setScreenToWindow(p, width() / 2, height() / 2);
 }
 
 void CentralWidget::drawLine()
