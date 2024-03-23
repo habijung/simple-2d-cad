@@ -19,6 +19,7 @@ private:
 
 	void drawLine();
 	void renderAll();
+	void selectLine();
 
 	int xOffset, yOffset;
 	int button;

@@ -12,10 +12,13 @@ CentralWidget::CentralWidget(QWidget* parent)
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
 	// Draw line with mouse event
-	this->drawLine();
+	//this->drawLine();
 
 	// Render method test
-	this->renderAll();
+	//this->renderAll();
+
+	// Selection test
+	this->selectLine();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -97,6 +100,72 @@ void CentralWidget::renderAll()
 		QPoint v2 = (*vIter).second;
 		painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
 	}
+
+	painter.end();
+}
+
+void CentralWidget::selectLine()
+{
+	QPointF v1 = { 200, 200 };
+	QPointF v2 = { 300, 300 };
+	int offset = 20;
+
+	QLineF line(v1, v2);
+	qreal rad = line.angle() * acos(-1) / 180; // pi = acos(-1)
+	qreal dx = offset * sin(rad);
+	qreal dy = offset * cos(rad);
+	QPointF delta[2] = { QPointF(dx, dy), QPointF(-dx, -dy) };
+	QPointF vo[4] =
+	{
+		line.p1() + delta[0],
+		line.p1() + delta[1],
+		line.p2() + delta[0],
+		line.p2() + delta[1]
+	};
+
+	QPolygonF p;
+	p << vo[0] << vo[1] << vo[3] << vo[2]; // Clockwise
+
+	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
+	painter.drawPolygon(p);
+
+	QPointF v = { 185.858, 214.142 };
+	QPen pen;
+	pen.setWidth(5);
+	pen.setCapStyle(Qt::FlatCap);
+	painter.setPen(pen);
+	painter.drawPoint(v);
+
+	int count = 0;
+
+	for (int i = 0; i < p.size(); i++)
+	{
+		int j = (i + 1) % static_cast<int>(p.size());
+
+		struct Point
+		{
+			qreal x, y;
+		};
+		Point curr = { p[i].x(), p[i].y() };
+		Point next = { p[j].x(), p[j].y() };
+
+		// Or, solve it using mixmax() function.
+		if (curr.y < v.y() != next.y < v.y())
+		{
+			// Relation: (x - curr.x) : (v.y() - curr.y) = (next.x - curr.x) : (next.y - curr.y)
+			qreal x = (next.x - curr.x) / (next.y - curr.y) * (v.y() - curr.y) + curr.x;
+
+			if (v.x() < x)
+			{
+				count += 1;
+			}
+		}
+	}
+
+	// Odd: In | Even: Out
+	qDebug() << (count % 2 != 0);
 
 	painter.end();
 }
