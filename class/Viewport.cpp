@@ -89,12 +89,8 @@ void Viewport::mousePressEvent(QMouseEvent* event)
 		repaint();
 	}
 
-	if (this->button == Qt::LeftButton)
-	{
-		// Get state and state mouse event test
-		this->state->mousePressEvent(this->pStart);
-		repaint();
-	}
+	state->mousePressEvent(event);
+	repaint();
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)

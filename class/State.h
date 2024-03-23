@@ -2,6 +2,7 @@
 
 #include <string>
 #include <QWidget>
+#include <QMouseEvent>
 #include "Scene.h"
 #include "Camera.h"
 #include "../utils/utils.h"
@@ -17,7 +18,7 @@ public:
 	string getStateName();
 
 	virtual ~State() {}
-	virtual void mousePressEvent(QPoint p) {}
+	virtual void mousePressEvent(QMouseEvent* event) {}
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
 	virtual void paintEvent(QPainter* painter) {}
@@ -34,7 +35,7 @@ class DrawLineState : public State
 public:
 	DrawLineState(string name, component* comp);
 
-	virtual void mousePressEvent(QPoint p);
+	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent() {}
 	virtual void mouseReleaseEvent() {}
 	virtual void paintEvent(QPainter* painter);

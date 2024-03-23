@@ -26,13 +26,15 @@ DrawLineState::DrawLineState(string name, component* comp)
 	mCamera = comp->camera;
 }
 
-void DrawLineState::mousePressEvent(QPoint p)
+void DrawLineState::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "DrawLineState::mousePressEvent()";
-	float dx = this->mViewport->width() / 2.0;
-	float dy = this->mViewport->height() / 2.0;
-	float scale = 100.0;
-	this->mScene->addVertex(this->mCamera->setScreenToWindow(p, dx, dy, scale));
+	if (event->button() == Qt::LeftButton)
+	{
+		float dx = mViewport->width() / 2.0;
+		float dy = mViewport->height() / 2.0;
+		float scale = 100.0;
+		mScene->addVertex(mCamera->setScreenToWindow(event->pos(), dx, dy, scale));
+	}
 }
 
 void DrawLineState::paintEvent(QPainter* painter)
