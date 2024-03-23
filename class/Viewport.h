@@ -33,21 +33,13 @@ private:
 	void wheelEvent(QWheelEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
 
-	void drawLine();
-	void renderAll();
-	void selectLine(QPoint mPoint);
-	bool checkSelection(QPoint mPoint, QPolygonF polygon);
-
-	int xOffset, yOffset;
 	int button;
 	float pValue, zValue;
 	QPointF mPos;
-	QPoint pStart, pEnd;
-	vector<pair<QPoint, QPoint>> vert;
 
 	// Class instances
 	Scene* mScene;
-	Camera* camera;
-	State* state;
-	StateMachine* machine;
+	Camera* mCamera;
+	StateMachine* mMachine;
+	State* mState;
 };

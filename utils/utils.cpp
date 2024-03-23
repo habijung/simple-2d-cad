@@ -117,6 +117,7 @@ bool hitTestingPoint(QPointF pos, QPolygonF poly)
 
 		if (p1.y < pos.y() != p2.y < pos.y())
 		{
+			// Relation: (x - curr.x) : (v.y() - curr.y) = (next.x - curr.x) : (next.y - curr.y)
 			qreal x = (p2.x - p1.x) / (p2.y - p1.y) * (pos.y() - p1.y) + p1.x;
 
 			if (pos.x() < x)
@@ -126,5 +127,6 @@ bool hitTestingPoint(QPointF pos, QPolygonF poly)
 		}
 	}
 
+	// Odd: In | Even: Out
 	return (count % 2 == 1 ? true : false);
 }
