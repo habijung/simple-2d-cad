@@ -464,7 +464,31 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 		float dy = this->mViewport->height() / 2.0;
 		float scale = 100.0;
 
-		mFace->updateFace(mCamera, mPosStart, mPos, mFaceVertices, dx, dy, scale);
+		QPointF offset = mPos - mPosStart;
+		list<Shape*> shapes = mScene->retShapes();
+		list<Shape*>::iterator iter = shapes.begin();
+
+		// 현재 Face*를 먼저 찾은 다음 iteration을 반대로 가면서 Face*의 Vertices를 offset만큼 업데이트
+		for (iter; iter != shapes.end(); iter++)
+		{
+			if ((*iter) == mFace)
+			{
+				int count = 0;
+				int faceSize = mFaceVertices.size();
+
+				while (count < faceSize)
+				{
+					count++;
+					iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
+					Vertex* v = dynamic_cast<Vertex*>(*iter);
+					QPointF p = offset + mCamera->setWindowToScreen(mFaceVertices[faceSize - count].retVertex());
+					v->updateVertex(mCamera->setScreenToWindow(p.toPoint(), dx, dy, scale));
+				}
+
+				break;
+			}
+		}
+
 		mPolygon = mFace->retFace(mCamera);
 	}
 
