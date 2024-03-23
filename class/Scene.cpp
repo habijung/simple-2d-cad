@@ -63,13 +63,28 @@ void Scene::renderScenePoint(QPainter* painter, Camera* camera)
 
 void Scene::renderShape(QPainter* painter)
 {
-	// mShapes insert text
+	// Vertex test
 	Vertex* v1 = new Vertex(150, 150);
 	Vertex* v2 = new Vertex(350, 350);
+	Vertex* v3 = new Vertex(300, 200);
 	this->mShapes.push_back(v1);
 	this->mShapes.push_back(v2);
+	this->mShapes.push_back(v3);
 
-	Line* l1 = new Line(v1, v2);
+	// Face test
+	list<Vertex*> vertices;
+	vertices.push_back(v1);
+	vertices.push_back(v2);
+	vertices.push_back(v3);
+	Face* f1 = new Face(vertices);
+	this->mShapes.push_back(f1);
+
+	// Line test
+	Vertex* v4 = new Vertex(400, 150);
+	Vertex* v5 = new Vertex(370, 200);
+	Line* l1 = new Line(v4, v5);
+	this->mShapes.push_back(v4);
+	this->mShapes.push_back(v5);
 	this->mShapes.push_back(l1);
 
 	list<Shape*>::iterator iter;

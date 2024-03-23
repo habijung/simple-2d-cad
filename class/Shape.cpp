@@ -33,8 +33,30 @@ void Line::render(QPainter* painter)
 	QPointF p2 = this->p2->retVertex();
 	QLineF line = QLineF(p1, p2);
 
-	QPen pen(Qt::red, 6);
+	QPen pen(Qt::red, 3);
 	pen.setCapStyle(Qt::FlatCap);
 	painter->setPen(pen);
 	painter->drawLine(line);
+}
+
+Face::Face(list<Vertex*> vertices)
+{
+	this->vertices = vertices;
+}
+
+void Face::render(QPainter* painter)
+{
+	QPolygonF polygon;
+	list<Vertex*>::iterator iter = this->vertices.begin();
+
+	for (iter; iter != this->vertices.end(); iter++)
+	{
+		polygon << (*iter)->retVertex();
+	}
+
+	QPen pen(Qt::black, 3);
+	QBrush brush(Qt::green, Qt::SolidPattern);
+	painter->setPen(pen);
+	painter->setBrush(brush);
+	painter->drawPolygon(polygon);
 }

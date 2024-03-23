@@ -1,5 +1,7 @@
 #pragma once
+#include <list>
 #include <QPainter>
+using namespace std;
 
 
 class Shape
@@ -34,6 +36,9 @@ private:
 class Face : public Shape
 {
 public:
-	Face();
+	Face(list<Vertex*> vertices = {});
 	virtual void render(QPainter* painter);
+
+private:
+	list<Vertex*> vertices;
 };
