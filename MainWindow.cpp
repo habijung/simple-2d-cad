@@ -188,5 +188,17 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 
 void MainWindow::keyPressEvent(QKeyEvent* event)
 {
+	switch (event->key())
+	{
+	case Qt::Key_QuoteLeft:
+		machine->setState(mSelectPointState);
+		this->widget->updateState(this->machine->getCurrentState());
+
+		// TODO: State refacroting 하면서 자동으로 초기화가 되도록 만들기
+		mDrawLineState = new DrawLineState("DRAW_LINE", mData);
+		mDrawPolygonState = new DrawPolygonState("DRAW_POLY", mData);
+		break;
+	}
+
 	this->widget->getKeyEvent(event);
 }
