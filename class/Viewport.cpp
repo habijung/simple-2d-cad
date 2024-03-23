@@ -11,9 +11,14 @@
 Viewport::Viewport(QWidget* parent)
 	: QWidget(parent)
 {
+	// Set Viewport options
+	setAutoFillBackground(true);
+	setPalette(QPalette(QPalette::Window, Qt::white));
+	setMouseTracking(true);
+
+	// Define Camera, Scene
 	mCamera = new Camera(this, parent->size(), 80.0);
 	mScene = new Scene(mCamera);
-	setMouseTracking(true);
 
 	// Define States
 	mComp = new component{ this, mScene, mCamera };
