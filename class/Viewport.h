@@ -27,7 +27,7 @@ private:
 	void keyPressEvent(QKeyEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
 
-	int button;
+	int mButton;
 	QPointF mPos;
 
 	// Viewport components

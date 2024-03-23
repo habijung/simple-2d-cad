@@ -16,9 +16,10 @@ Viewport::Viewport(QWidget* parent)
 	setPalette(QPalette(QPalette::Window, Qt::white));
 	setMouseTracking(true);
 
-	// Define Camera, Scene
+	// Initialization
 	mCamera = new Camera(this, parent->size(), 80.0);
 	mScene = new Scene(mCamera);
+	mButton = Qt::NoButton;
 
 	// Define States
 	mComp = new component{ this, mScene, mCamera };
@@ -224,13 +225,13 @@ void Viewport::paintEvent(QPaintEvent* event)
 void Viewport::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
-	button = event->button();
+	mButton = event->button();
 	mMachine->state()->mousePressEvent(event);
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
-	if ((button == Qt::RightButton) && (event->button() == Qt::NoButton))
+	if ((mButton == Qt::RightButton) && (event->button() == Qt::NoButton))
 	{
 		float sensitivity = 80.0;
 		QPointF offset = (event->pos() - mPos) / sensitivity;
@@ -243,7 +244,7 @@ void Viewport::mouseMoveEvent(QMouseEvent* event)
 
 void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
-	button = Qt::NoButton;
+	mButton = Qt::NoButton;
 	mMachine->state()->mouseReleaseEvent(event);
 }
 
