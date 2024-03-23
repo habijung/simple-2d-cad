@@ -3,9 +3,14 @@
 
 
 class CentralWidget :
-    public QWidget
+	public QWidget
 {
 public:
-    CentralWidget(QWidget* parent = nullptr);
-    void paintEvent(QPaintEvent* event) override;
+	CentralWidget(QWidget* parent = nullptr);
+
+private:
+	void paintEvent(QPaintEvent* event) override;
+	void mousePressEvent(QMouseEvent* event) override;
+
+	QPoint point;
 };
