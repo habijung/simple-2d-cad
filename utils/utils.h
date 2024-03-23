@@ -6,7 +6,7 @@ class Viewport;
 class Scene;
 class Camera;
 
-struct metadata
+struct component
 {
 	Viewport* viewport;
 	Scene* scene;

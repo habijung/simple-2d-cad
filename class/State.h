@@ -32,7 +32,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(string name, metadata* data);
+	DrawLineState(string name, component* data);
 
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
@@ -49,7 +49,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(string name, metadata* data);
+	DrawFaceState(string name, component* data);
 
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
@@ -66,7 +66,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(string name, metadata* data);
+	SelectPointState(string name, component* data);
 
 private:
 	string mName;

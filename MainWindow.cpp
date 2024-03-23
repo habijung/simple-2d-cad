@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget* parent)
 	mScene = new Scene(this);
 	mCamera = new Camera(this, QSize(600, 600), 100.0);
 	this->widget = new Viewport(this, mScene, mCamera, machine);
-	mData = new metadata{ this->widget, mScene, mCamera };
+	mData = new component{ this->widget, mScene, mCamera };
 	setCentralWidget(this->widget);
 
 	this->setSidebarWidget(this->widget);

@@ -15,7 +15,7 @@ string State::getStateName()
 	return this->mName;
 }
 
-DrawLineState::DrawLineState(string name, metadata* data)
+DrawLineState::DrawLineState(string name, component* data)
 	: State(name)
 {
 	qDebug() << "Create DrawLineState:" << name;
@@ -40,7 +40,7 @@ void DrawLineState::paintEvent(QPainter* painter)
 	painter->setPen(pen);
 }
 
-DrawFaceState::DrawFaceState(string name, metadata* data)
+DrawFaceState::DrawFaceState(string name, component* data)
 	: State(name)
 {
 	qDebug() << "Create DrawFaceState:" << name;
@@ -65,7 +65,7 @@ void DrawFaceState::paintEvent(QPainter* painter)
 	painter->setPen(pen);
 }
 
-SelectPointState::SelectPointState(string name, metadata* data)
+SelectPointState::SelectPointState(string name, component* data)
 	: State(name)
 {
 	qDebug() << "Create SelectPointState:" << name;

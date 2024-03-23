@@ -35,7 +35,7 @@ private:
 	SelectPointState* sSPS;
 	Scene* mScene;
 	Camera* mCamera;
-	metadata* mData;
+	component* mData;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);
