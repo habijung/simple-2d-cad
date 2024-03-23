@@ -29,9 +29,11 @@ MainWindow::MainWindow(QWidget* parent)
 	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
 	mDrawFaceState = new DrawFaceState("DRAW_FACE", mData);
 	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
+	mSelectLineState = new SelectLineState("SELECT_LINE", mData);
 
 	machine->addState(mDrawLineState);
 	machine->addState(mSelectPointState);
+	machine->addState(mSelectLineState);
 	machine->setState(mSelectPointState);
 	machine->getCurrentState();
 
@@ -161,6 +163,8 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Line Clicked";
+			machine->transition(mSelectLineState);
+			this->widget->updateState(machine->getCurrentState());
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{

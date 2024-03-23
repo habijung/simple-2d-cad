@@ -196,3 +196,32 @@ void SelectPointState::paintEvent(QPainter* painter)
 		painter->drawPolygon(mPolygon);
 	}
 }
+
+SelectLineState::SelectLineState(string name, component* comp)
+	: State(name, comp)
+{
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
+}
+
+void SelectLineState::mousePressEvent(QMouseEvent* event)
+{
+	qDebug() << "mouse press event";
+}
+
+void SelectLineState::mouseMoveEvent(QMouseEvent* event)
+{
+	qDebug() << "mouse move event";
+}
+
+void SelectLineState::mouseReleaseEvent(QMouseEvent* event)
+{
+	qDebug() << "mouse release event";
+}
+
+void SelectLineState::paintEvent(QPainter* painter)
+{
+	qDebug() << "paint event";
+}

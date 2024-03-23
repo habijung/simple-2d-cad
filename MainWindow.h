@@ -37,6 +37,7 @@ private:
 	DrawLineState* mDrawLineState;
 	DrawFaceState* mDrawFaceState;
 	SelectPointState* mSelectPointState;
+	SelectLineState* mSelectLineState;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);
