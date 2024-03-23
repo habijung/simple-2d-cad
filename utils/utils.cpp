@@ -51,6 +51,20 @@ QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d)
 	return poly;
 }
 
+QPolygonF createLineSelectionBox(Camera* cam, Line* l, int d)
+{
+	QPolygonF poly = QPolygonF();
+	QLineF line = l->retLine(cam);
+
+	// No need to consider polygon direction
+	poly << line.p1()
+		<< QPointF(line.p1().x(), line.p2().y())
+		<< line.p2()
+		<< QPointF(line.p2().x(), line.p1().y());
+
+	return poly;
+}
+
 bool hitTestingPoint(QPointF pos, QPolygonF poly)
 {
 	int count = 0;

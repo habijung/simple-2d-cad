@@ -254,7 +254,8 @@ void SelectLineState::paintEvent(QPainter* painter)
 		painter->setPen(QPen(Qt::red, 3, Qt::SolidLine, Qt::RoundCap));
 		painter->drawLine(mLine->retLine(mCamera));
 
-		// Draw bounding box
+		// Draw selection box
+		mPolygon = createLineSelectionBox(mCamera, mLine, 15);
 		painter->setPen(QPen(Qt::green, 5));
 		painter->drawPolygon(mPolygon);
 	}
