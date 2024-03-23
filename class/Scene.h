@@ -21,7 +21,7 @@ public:
 	void renderShape(QPainter* painter);
 
 	// Add data method
-	void addVertex(QPointF v);
+	void addShape(Shape* s);
 
 private:
 	int width, height;

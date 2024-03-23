@@ -28,7 +28,7 @@ DrawLineState::DrawLineState(string name, component* comp)
 
 void DrawLineState::mousePressEvent(QMouseEvent* event)
 {
-	mStartPoint = event->pos();
+	mP1 = event->pos();
 	mButton = event->button();
 
 	if (mButton == Qt::LeftButton)
@@ -36,15 +36,18 @@ void DrawLineState::mousePressEvent(QMouseEvent* event)
 		float dx = mViewport->width() / 2.0;
 		float dy = mViewport->height() / 2.0;
 		float scale = 100.0;
-		mScene->addVertex(mCamera->setScreenToWindow(mStartPoint, dx, dy, scale));
+		mV1 = new Vertex(
+			mCamera->setScreenToWindow(mP1, dx, dy, scale).x(),
+			mCamera->setScreenToWindow(mP1, dx, dy, scale).y()
+		);
+		mScene->addShape(mV1);
 	}
 }
 
 void DrawLineState::mouseMoveEvent(QMouseEvent* event)
 {
-	mXOffset = event->pos().x() - mStartPoint.x();
-	mYOffset = event->pos().y() - mStartPoint.y();
-
+	mOffsetX = event->pos().x() - mP1.x();
+	mOffsetY = event->pos().y() - mP2.y();
 	//if ((mButton == Qt::LeftButton) && (event->button() == Qt::NoButton))
 	//{
 	//	mViewport->update();
@@ -53,14 +56,25 @@ void DrawLineState::mouseMoveEvent(QMouseEvent* event)
 
 void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 {
-	mEndPoint = event->pos();
+	mP2 = event->pos();
 
 	if (mButton == Qt::LeftButton)
 	{
 		float dx = mViewport->width() / 2.0;
 		float dy = mViewport->height() / 2.0;
 		float scale = 100.0;
-		mScene->addVertex(mCamera->setScreenToWindow(mEndPoint, dx, dy, scale));
+		mV2 = new Vertex(
+			mCamera->setScreenToWindow(mP2, dx, dy, scale).x(),
+			mCamera->setScreenToWindow(mP2, dx, dy, scale).y()
+		);
+		mScene->addShape(mV2);
+
+		Line* l = new Line(mV1, mV2);
+		mScene->addShape(l);
+
+		mOffsetX = 0;
+		mOffsetY = 0;
+		mButton = Qt::NoButton;
 	}
 }
 
@@ -69,12 +83,17 @@ void DrawLineState::paintEvent(QPainter* painter)
 	QPen pen(Qt::green, 10);
 	painter->setPen(pen);
 
-	Point start = { mStartPoint.x(), mStartPoint.y() };
-	Point end = { mEndPoint.x(), mEndPoint.y() };
+	Point start = { mP1.x(), mP1.y() };
+	Point end = { mP2.x(), mP2.y() };
 
 	if (start.x | start.y)
 	{
+		QPen penLine(Qt::red, 2);
+		painter->setPen(penLine);
 		painter->drawLine(start.x, start.y, end.x, end.y);
+
+		QPen penText(Qt::darkGray, 3);
+		painter->setPen(penText);
 		painter->drawText(
 			start.x + 10,
 			start.y,
@@ -103,7 +122,9 @@ void DrawFaceState::mousePressEvent(QPoint p)
 	float dx = this->mViewport->width() / 2.0;
 	float dy = this->mViewport->height() / 2.0;
 	float scale = 100.0;
-	this->mScene->addVertex(this->mCamera->setScreenToWindow(p, dx, dy, scale));
+
+	// TODO: Modify addVertex parameter
+	//this->mScene->addVertex(this->mCamera->setScreenToWindow(p, dx, dy, scale));
 }
 
 void DrawFaceState::paintEvent(QPainter* painter)

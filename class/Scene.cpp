@@ -85,8 +85,7 @@ void Scene::renderShape(QPainter* painter)
 }
 
 // Add data method
-void Scene::addVertex(QPointF v)
+void Scene::addShape(Shape* s)
 {
-	Vertex* vertex = new Vertex(v.x(), v.y());
-	mShapes.push_back(vertex);
+	mShapes.push_back(s);
 }

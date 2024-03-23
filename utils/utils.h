@@ -12,3 +12,9 @@ struct component
 	Scene* scene;
 	Camera* camera;
 };
+
+struct Point
+{
+	int x;
+	int y;
+};

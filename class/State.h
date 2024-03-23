@@ -5,15 +5,10 @@
 #include <QMouseEvent>
 #include "Scene.h"
 #include "Camera.h"
+#include "Shape.h"
 #include "../utils/utils.h"
 using namespace std;
 
-
-struct Point
-{
-	int x;
-	int y;
-};
 
 class Viewport; // Circular Dependency
 
@@ -44,16 +39,18 @@ public:
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
-	virtual void paintEvent(QPainter* painter);
+	virtual void paintEvent(QPainter* painter) override;
 
 private:
 	string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
-	QPoint mStartPoint, mEndPoint;
+
+	QPoint mP1, mP2;
+	Vertex* mV1, * mV2;
+	int mOffsetX, mOffsetY;
 	int mButton;
-	int mXOffset, mYOffset;
 };
 
 class DrawFaceState : public State

@@ -31,12 +31,11 @@ Line::Line(Vertex* p1, Vertex* p2)
 
 void Line::render(QPainter* painter, Camera* camera)
 {
-	QPointF p1 = this->p1->retVertex();
-	QPointF p2 = this->p2->retVertex();
+	QPointF p1 = camera->setWindowToScreen(this->p1->retVertex());
+	QPointF p2 = camera->setWindowToScreen(this->p2->retVertex());
 	QLineF line = QLineF(p1, p2);
 
-	QPen pen(Qt::red, 3);
-	pen.setCapStyle(Qt::FlatCap);
+	QPen pen(Qt::cyan, 6);
 	painter->setPen(pen);
 	painter->drawLine(line);
 }
