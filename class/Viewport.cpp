@@ -44,9 +44,20 @@ void Viewport::getKeyEvent(QKeyEvent* event)
 	repaint();
 }
 
-void Viewport::updateState(State* state)
+void Viewport::updateState(State* state, Scene* newScene)
 {
 	this->state = state;
+	this->state->updateScene(newScene);
+}
+
+Scene* Viewport::createNewScene(Scene* oldScene)
+{
+	delete oldScene;
+	scene = new Scene(this, camera);
+	machine->getCurrentState()->updateScene(scene);
+	update();
+
+	return scene;
 }
 
 void Viewport::paintEvent(QPaintEvent* event)

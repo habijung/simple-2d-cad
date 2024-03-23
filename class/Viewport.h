@@ -20,11 +20,8 @@ public:
 		StateMachine* mainMachine = nullptr
 	);
 	void getKeyEvent(QKeyEvent* event);
-	void updateState(State* state);
-	void resetScene(Scene* s)
-	{
-		scene = s;
-	}
+	void updateState(State* state, Scene* newScene);
+	Scene* createNewScene(Scene* oldScene);
 
 private:
 	void paintEvent(QPaintEvent* event) override;

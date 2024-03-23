@@ -34,6 +34,11 @@ DrawLineState::DrawLineState(string name, component* comp)
 	mDrawLine = false;
 }
 
+void DrawLineState::updateScene(Scene* scene)
+{
+	mScene = scene;
+}
+
 void DrawLineState::mousePressEvent(QMouseEvent* event)
 {
 	mButton = event->button();
@@ -105,6 +110,11 @@ DrawPolygonState::DrawPolygonState(string name, component* comp)
 	mPoints = {};
 	mDrawPolygon = false;
 	mVertex = new Vertex(QPoint(INFINITY, INFINITY));
+}
+
+void DrawPolygonState::updateScene(Scene* scene)
+{
+	mScene = scene;
 }
 
 void DrawPolygonState::mousePressEvent(QMouseEvent* event)
@@ -251,6 +261,11 @@ SelectPointState::SelectPointState(string name, component* comp)
 	mSnap = false;
 }
 
+void SelectPointState::updateScene(Scene* scene)
+{
+	mScene = scene;
+}
+
 void SelectPointState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
@@ -345,6 +360,11 @@ SelectLineState::SelectLineState(string name, component* comp)
 	mLine = new Line(QPointF(INFINITY, INFINITY), QPointF(INFINITY, INFINITY));
 }
 
+void SelectLineState::updateScene(Scene* scene)
+{
+	mScene = scene;
+}
+
 void SelectLineState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
@@ -420,6 +440,11 @@ SelectPolygonState::SelectPolygonState(string name, component* comp)
 	mScene = comp->scene;
 	mCamera = comp->camera;
 	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
+}
+
+void SelectPolygonState::updateScene(Scene* scene)
+{
+	mScene = scene;
 }
 
 void SelectPolygonState::mousePressEvent(QMouseEvent* event)

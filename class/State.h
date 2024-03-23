@@ -21,6 +21,7 @@ public:
 	bool getMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
 	virtual ~State() {}
+	virtual void updateScene(Scene* scene) = 0;
 	virtual void mousePressEvent(QMouseEvent* event) = 0;
 	virtual void mouseMoveEvent(QMouseEvent* event) = 0;
 	virtual void mouseReleaseEvent(QMouseEvent* event) = 0;
@@ -37,11 +38,8 @@ class DrawLineState : public State
 {
 public:
 	DrawLineState(string name, component* comp);
-	void resetScene(Scene* s)
-	{
-		mScene = s;
-	}
 
+	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
@@ -64,6 +62,7 @@ class DrawPolygonState : public State
 public:
 	DrawPolygonState(string name, component* comp);
 
+	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
@@ -92,6 +91,7 @@ class SelectPointState : public State
 public:
 	SelectPointState(string name, component* comp);
 
+	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
@@ -124,6 +124,7 @@ class SelectLineState : public State
 public:
 	SelectLineState(string name, component* comp);
 
+	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
@@ -152,6 +153,7 @@ class SelectPolygonState : public State
 public:
 	SelectPolygonState(string name, component* comp);
 
+	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
 	virtual void mouseMoveEvent(QMouseEvent* event) override;
 	virtual void mouseReleaseEvent(QMouseEvent* event) override;
