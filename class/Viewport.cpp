@@ -14,13 +14,14 @@ Viewport::Viewport(QWidget* parent)
 
 void Viewport::getKeyEvent(QKeyEvent* event)
 {
-	if (event->key() == Qt::Key_E)
+	switch (event->key())
 	{
+	case Qt::Key_E:
 		this->camera->zoomIn();
-	}
-	else if (event->key() == Qt::Key_Q)
-	{
+		break;
+	case Qt::Key_Q:
 		this->camera->zoomOut();
+		break;
 	}
 	repaint();
 }
