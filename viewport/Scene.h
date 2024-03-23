@@ -7,7 +7,6 @@
 #include <list>
 #include "Camera.h"
 #include "../shape/Shape.h"
-using namespace std;
 
 
 class Scene : public QWidget
@@ -15,9 +14,9 @@ class Scene : public QWidget
 public:
 	Scene(Camera* camera = nullptr);
 
-	list<Shape*> retShapes();
+	std::list<Shape*> retShapes();
 	void addShape(Shape* s);
-	void updateShapes(list<Shape*> newShapes);
+	void updateShapes(std::list<Shape*> newShapes);
 	void createSampleShapes();
 
 	// Render method
@@ -25,6 +24,6 @@ public:
 	void renderShape(QPainter* painter);
 
 private:
-	list<Shape*> mShapes;
+	std::list<Shape*> mShapes;
 	Camera* mCamera;
 };

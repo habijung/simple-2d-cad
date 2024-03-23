@@ -1,7 +1,7 @@
 #include "Shape.h"
 
 
-Face::Face(list<Vertex*> vertices)
+Face::Face(std::list<Vertex*> vertices)
 {
 	mType = "Face";
 	mVertices = vertices;
@@ -13,10 +13,10 @@ Face::Face(Vertex* v)
 	mVertices.push_back(v);
 }
 
-vector<Vertex> Face::retVertices()
+std::vector<Vertex> Face::retVertices()
 {
-	vector<Vertex> vertices;
-	list<Vertex*>::iterator iter = mVertices.begin();
+	std::vector<Vertex> vertices;
+	std::list<Vertex*>::iterator iter = mVertices.begin();
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
@@ -29,7 +29,7 @@ vector<Vertex> Face::retVertices()
 QPolygonF Face::retFace(Camera* cam)
 {
 	QPolygonF poly;
-	list<Vertex*>::iterator iter = mVertices.begin();
+	std::list<Vertex*>::iterator iter = mVertices.begin();
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
@@ -40,10 +40,10 @@ QPolygonF Face::retFace(Camera* cam)
 	return poly;
 }
 
-void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices)
+void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
 {
 	QPointF offset = pEnd - pStart;
-	list<Shape*>::iterator iter = shapes.begin();
+	std::list<Shape*>::iterator iter = shapes.begin();
 
 	// 현재 Face*를 먼저 찾은 다음 iteration을 반대로 가면서 Face*의 Vertices를 offset만큼 업데이트
 	for (iter; iter != shapes.end(); iter++)
@@ -70,11 +70,11 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> sh
 QJsonObject Face::saveFace()
 {
 	QVariantMap map;
-	vector<Vertex> vertices = retVertices();
+	std::vector<Vertex> vertices = retVertices();
 
 	for (int i = 0; i < vertices.size(); i++)
 	{
-		string numVertex = "v" + to_string(i + 1);
+		std::string numVertex = "v" + std::to_string(i + 1);
 		QPointF v = vertices[i].retVertex();
 		map[numVertex.c_str()] = QString("%1, %2").arg(v.x()).arg(v.y());
 	}
@@ -82,12 +82,12 @@ QJsonObject Face::saveFace()
 	return QJsonObject::fromVariantMap(map);
 }
 
-string Face::type()
+std::string Face::type()
 {
 	return mType;
 }
 
-bool Face::checkType(string s)
+bool Face::checkType(std::string s)
 {
 	return !mType.compare(s);
 }
@@ -95,8 +95,8 @@ bool Face::checkType(string s)
 void Face::render(QPainter* painter, Camera* camera)
 {
 	QPolygonF poly;
-	list<Vertex*>::iterator iter = mVertices.begin();
-	vector<QPoint> screenPoints;
+	std::list<Vertex*>::iterator iter = mVertices.begin();
+	std::vector<QPoint> screenPoints;
 
 	for (iter; iter != mVertices.end(); iter++)
 	{

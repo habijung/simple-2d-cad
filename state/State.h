@@ -1,6 +1,4 @@
 #pragma once
-
-#include <string>
 #include <utility>
 #include <QWidget>
 #include <QMouseEvent>
@@ -8,7 +6,6 @@
 #include "../viewport/Camera.h"
 #include "../shape/Shape.h"
 #include "../utils/utils.h"
-using namespace std;
 
 
 class Viewport; // Circular Dependency
@@ -16,8 +13,8 @@ class Viewport; // Circular Dependency
 class State
 {
 public:
-	State(string name, viewportData* data);
-	string getStateName();
+	State(std::string name, viewportData* data);
+	std::string getStateName();
 	bool getMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
 	virtual ~State() {}
@@ -28,7 +25,7 @@ public:
 	virtual void paintEvent(QPainter* painter) = 0;
 
 private:
-	string mName;
+	std::string mName;
 	QWidget* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
@@ -37,7 +34,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(string name, viewportData* data);
+	DrawLineState(std::string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -46,13 +43,13 @@ public:
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
-	string mName;
+	std::string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
 
 	QPointF mPos;
-	vector<QPointF> mPoints; // Line 구성을 위한 임시 points vector
+	std::vector<QPointF> mPoints; // Line 구성을 위한 임시 points std::vector
 	int mButton;
 	bool mDrawLine;
 };
@@ -60,7 +57,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(string name, viewportData* data);
+	DrawFaceState(std::string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -69,7 +66,7 @@ public:
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
-	string mName;
+	std::string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
@@ -81,7 +78,7 @@ private:
 	QPolygonF mGuidePolygon;
 	QLineF mLine;
 	Vertex* mVertex;
-	vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points vector
+	std::vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points std::vector
 	bool mDrawPolygon;
 	bool mHit;
 };
@@ -89,7 +86,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(string name, viewportData* data);
+	SelectPointState(std::string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -98,7 +95,7 @@ public:
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
-	string mName;
+	std::string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
@@ -107,7 +104,7 @@ private:
 	int mButton;
 
 	// For select point
-	list<Shape*> mShapes;
+	std::list<Shape*> mShapes;
 	Vertex* mVertex;
 	QPolygonF mPolygon;
 	bool mHit;
@@ -122,7 +119,7 @@ private:
 class SelectLineState : public State
 {
 public:
-	SelectLineState(string name, viewportData* data);
+	SelectLineState(std::string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -131,18 +128,18 @@ public:
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
-	string mName;
+	std::string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
 
 	QPointF mPos;
 	QPointF mPosStart;
-	vector<Vertex> mLineVertices;
+	std::vector<Vertex> mLineVertices;
 	int mButton;
 
 	// For select line
-	list<Shape*> mShapes;
+	std::list<Shape*> mShapes;
 	Line* mLine;
 	QPolygonF mPolygon;
 	bool mHit;
@@ -151,7 +148,7 @@ private:
 class SelectFaceState : public State
 {
 public:
-	SelectFaceState(string name, viewportData* data);
+	SelectFaceState(std::string name, viewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -160,18 +157,18 @@ public:
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
-	string mName;
+	std::string mName;
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
 
 	QPointF mPos;
 	QPointF mPosStart;
-	vector<Vertex> mFaceVertices;
+	std::vector<Vertex> mFaceVertices;
 	int mButton;
 
 	// For select line
-	list<Shape*> mShapes;
+	std::list<Shape*> mShapes;
 	Face* mFace;
 	QPolygonF mPolygon;
 	bool mHit;

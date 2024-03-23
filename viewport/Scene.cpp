@@ -8,7 +8,7 @@ Scene::Scene(Camera* camera)
 	mCamera = camera;
 }
 
-list<Shape*> Scene::retShapes()
+std::list<Shape*> Scene::retShapes()
 {
 	return mShapes;
 }
@@ -18,7 +18,7 @@ void Scene::addShape(Shape* s)
 	mShapes.push_back(s);
 }
 
-void Scene::updateShapes(list<Shape*> newShapes)
+void Scene::updateShapes(std::list<Shape*> newShapes)
 {
 	mShapes = newShapes;
 }
@@ -32,7 +32,7 @@ void Scene::createSampleShapes()
 	Vertex* v5 = new Vertex(2, -2);
 
 	// Add Face
-	list<Vertex*> vertices;
+	std::list<Vertex*> vertices;
 	vertices.push_back(v1);
 	vertices.push_back(v2);
 	vertices.push_back(v3);
@@ -94,7 +94,7 @@ void Scene::renderCoordinate(QPainter* painter)
 
 void Scene::renderShape(QPainter* painter)
 {
-	list<Shape*>::iterator iter;
+	std::list<Shape*>::iterator iter;
 
 	for (iter = this->mShapes.begin(); iter != this->mShapes.end(); iter++)
 	{

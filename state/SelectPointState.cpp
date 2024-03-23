@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-SelectPointState::SelectPointState(string name, viewportData* data)
+SelectPointState::SelectPointState(std::string name, viewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -31,7 +31,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 	if (mButton != Qt::LeftButton)
 	{
-		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
+		std::list<Shape*>::reverse_iterator iter = mShapes.rbegin();
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
@@ -54,7 +54,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		mVertex->updateVertex(mCamera->setWindow(mPos.toPoint()));
 
 		// Check snapping
-		list<Shape*>::iterator iter = mShapes.begin();
+		std::list<Shape*>::iterator iter = mShapes.begin();
 
 		for (iter; iter != mShapes.end(); iter++)
 		{

@@ -33,7 +33,7 @@ Viewport::Viewport(QWidget* parent)
 	mMachine->setState("SELECT_POINT");
 }
 
-void Viewport::updateState(string name)
+void Viewport::updateState(std::string name)
 {
 	if (!name.compare("DRAW_LINE"))
 	{
@@ -54,7 +54,7 @@ void Viewport::updateState(string name)
 void Viewport::saveScene()
 {
 	QJsonObject content;
-	list<Shape*> shapes = mScene->retShapes();
+	std::list<Shape*> shapes = mScene->retShapes();
 	int numShape = 0; // Check priority
 	int numLine = 0;
 	int numFace = 0;
@@ -62,9 +62,9 @@ void Viewport::saveScene()
 	for (auto iter = shapes.begin(); iter != shapes.end(); iter++)
 	{
 		size_t n = 3; // Max precision
-		string s = to_string(numShape);
-		int precision = n - min(n, s.size());
-		string name = "Shape-" + string(precision, '0').append(s);
+		std::string s = std::to_string(numShape);
+		int precision = n - std::min(n, s.size());
+		std::string name = "Shape-" + std::string(precision, '0').append(s);
 		QJsonObject obj;
 
 		if ((*iter)->checkType("Line"))
@@ -139,7 +139,7 @@ void Viewport::loadScene()
 		if (document.isObject())
 		{
 			createNewScene();
-			list<Shape*> shapes = mScene->retShapes();
+			std::list<Shape*> shapes = mScene->retShapes();
 			QJsonObject jsonScene = document.object(); // Scene.json file
 			QJsonObject::iterator is = jsonScene.begin();
 
@@ -162,7 +162,7 @@ void Viewport::loadScene()
 							key++;
 							QJsonObject vertices = jsonShape.take(*key).toObject();
 							QJsonObject::iterator vertex = vertices.begin();
-							list<Vertex*> lVertices;
+							std::list<Vertex*> lVertices;
 
 							// Separate and Trim JSON Vertex data
 							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt

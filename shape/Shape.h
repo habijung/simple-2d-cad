@@ -3,15 +3,14 @@
 #include <QPainter>
 #include <QJsonObject>
 #include "../viewport/Camera.h"
-using namespace std;
 
 
 class Shape
 {
 public:
 	virtual ~Shape() {}
-	virtual string type() = 0;
-	virtual bool checkType(string s) = 0;
+	virtual std::string type() = 0;
+	virtual bool checkType(std::string s) = 0;
 	virtual void render(QPainter* painter, Camera* camera) = 0;
 };
 
@@ -23,12 +22,12 @@ public:
 	QPointF retVertex();
 	void updateVertex(QPointF p);
 
-	virtual string type() override;
-	virtual bool checkType(string s) override;
+	virtual std::string type() override;
+	virtual bool checkType(std::string s) override;
 	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
-	string mType;
+	std::string mType;
 	float mX, mY;
 };
 
@@ -37,18 +36,18 @@ class Line : public Shape
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
 	Line(QPointF p1, QPointF p2);
-	Line(list<Vertex*> vertices);
-	vector<Vertex> retVertices();
+	Line(std::list<Vertex*> vertices);
+	std::vector<Vertex> retVertices();
 	QLineF retLine(Camera* cam);
-	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart);
+	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, std::vector<Vertex> vStart);
 	QJsonObject saveLine();
 
-	virtual string type() override;
-	virtual bool checkType(string s) override;
+	virtual std::string type() override;
+	virtual bool checkType(std::string s) override;
 	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
-	string mType;
+	std::string mType;
 	Vertex* mV1;
 	Vertex* mV2;
 };
@@ -56,18 +55,18 @@ private:
 class Face : public Shape
 {
 public:
-	Face(list<Vertex*> vertices = {});
+	Face(std::list<Vertex*> vertices = {});
 	Face(Vertex* v);
-	vector<Vertex> retVertices();
+	std::vector<Vertex> retVertices();
 	QPolygonF retFace(Camera* cam);
-	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices);
+	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices);
 	QJsonObject saveFace();
 
-	virtual string type() override;
-	virtual bool checkType(string s) override;
+	virtual std::string type() override;
+	virtual bool checkType(std::string s) override;
 	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
-	string mType;
-	list<Vertex*> mVertices;
+	std::string mType;
+	std::list<Vertex*> mVertices;
 };

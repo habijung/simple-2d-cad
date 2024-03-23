@@ -5,7 +5,6 @@
 #include "Scene.h"
 #include "Camera.h"
 #include "../state/StateMachine.h"
-using namespace std;
 
 
 class Viewport :
@@ -13,7 +12,7 @@ class Viewport :
 {
 public:
 	Viewport(QWidget* parent = nullptr);
-	void updateState(string name);
+	void updateState(std::string name);
 	void saveScene();
 	void loadScene();
 	void createNewScene();

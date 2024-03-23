@@ -2,8 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-
-SelectLineState::SelectLineState(string name, viewportData* data)
+SelectLineState::SelectLineState(std::string name, viewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -33,7 +32,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 
 	if (!(mButton == Qt::LeftButton))
 	{
-		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
+		std::list<Shape*>::reverse_iterator iter = mShapes.rbegin();
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{

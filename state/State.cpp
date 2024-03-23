@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-State::State(string name, viewportData* data)
+State::State(std::string name, viewportData* data)
 {
 	mName = name;
 	mViewport = data->viewport;
@@ -10,7 +10,7 @@ State::State(string name, viewportData* data)
 	mCamera = data->camera;
 }
 
-string State::getStateName()
+std::string State::getStateName()
 {
 	return this->mName;
 }

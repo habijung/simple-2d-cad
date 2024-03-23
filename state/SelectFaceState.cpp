@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-SelectFaceState::SelectFaceState(string name, viewportData* data)
+SelectFaceState::SelectFaceState(std::string name, viewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -32,7 +32,7 @@ void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 
 	if (mButton != Qt::LeftButton)
 	{
-		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
+		std::list<Shape*>::reverse_iterator iter = mShapes.rbegin();
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{

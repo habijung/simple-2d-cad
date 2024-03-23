@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-DrawFaceState::DrawFaceState(string name, viewportData* data)
+DrawFaceState::DrawFaceState(std::string name, viewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -66,7 +66,7 @@ void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 			if (mPoints.size() != 3)
 			{
 				Vertex* v;
-				list<Vertex*> vertices;
+				std::list<Vertex*> vertices;
 
 				// Add vertices to Scene
 				// 마지막 점은 polygon 구성에서 빼기

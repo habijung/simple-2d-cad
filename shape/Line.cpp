@@ -15,16 +15,16 @@ Line::Line(QPointF p1, QPointF p2)
 	mV2 = new Vertex(p2);
 }
 
-Line::Line(list<Vertex*> vertices)
+Line::Line(std::list<Vertex*> vertices)
 {
 	mType = "Line";
 	mV1 = vertices.front();
 	mV2 = vertices.back();
 }
 
-vector<Vertex> Line::retVertices()
+std::vector<Vertex> Line::retVertices()
 {
-	vector<Vertex> vertices;
+	std::vector<Vertex> vertices;
 	vertices.push_back(mV1->retVertex());
 	vertices.push_back(mV2->retVertex());
 
@@ -39,7 +39,7 @@ QLineF Line::retLine(Camera* cam)
 	return QLineF(p1, p2);
 }
 
-void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec)
+void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, std::vector<Vertex> vec)
 {
 	QPointF offset = pEnd - pStart;
 	QPointF p1 = offset + cam->setScreen(vec.front().retVertex());
@@ -59,12 +59,12 @@ QJsonObject Line::saveLine()
 	return QJsonObject::fromVariantMap(map);
 }
 
-string Line::type()
+std::string Line::type()
 {
 	return mType;
 }
 
-bool Line::checkType(string s)
+bool Line::checkType(std::string s)
 {
 	return !mType.compare(s);
 }

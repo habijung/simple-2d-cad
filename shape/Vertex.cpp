@@ -26,12 +26,12 @@ void Vertex::updateVertex(QPointF p)
 	mY = p.y();
 }
 
-string Vertex::type()
+std::string Vertex::type()
 {
 	return mType;
 }
 
-bool Vertex::checkType(string s)
+bool Vertex::checkType(std::string s)
 {
 	return !mType.compare(s);
 }

@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-DrawLineState::DrawLineState(string name, viewportData* data)
+DrawLineState::DrawLineState(std::string name, viewportData* data)
 	: State(name, data)
 {
 	mName = name;
