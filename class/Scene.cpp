@@ -61,6 +61,19 @@ void Scene::renderScenePoint(QPainter* painter, Camera* camera)
 	}
 }
 
+void Scene::renderShape(QPainter* painter)
+{
+	// mShapes insert text
+	Vertex* v = new Vertex(150, 150);
+	this->mShapes.push_back(v);
+
+	list<Shape*>::iterator iter;
+
+	for (iter = this->mShapes.begin(); iter != this->mShapes.end(); iter++)
+	{
+		(*iter)->render(painter);
+	}
+}
 
 // Add data method
 void Scene::addVertex(QPointF v)

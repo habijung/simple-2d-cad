@@ -62,6 +62,10 @@ void Viewport::paintEvent(QPaintEvent* event)
 	QPainter* painter2 = new QPainter(this);
 	scene->renderScenePoint(painter2, this->camera);
 	painter2->end();
+
+	QPainter* shapePainter = new QPainter(this);
+	scene->renderShape(shapePainter);
+	shapePainter->end();
 }
 
 void Viewport::mousePressEvent(QMouseEvent* event)

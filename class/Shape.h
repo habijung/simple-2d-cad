@@ -12,8 +12,11 @@ public:
 class Vertex : public Shape
 {
 public:
-	Vertex();
+	Vertex(float x = 0, float y = 0);
 	virtual void render(QPainter* painter);
+
+private:
+	float x, y;
 };
 
 class Line : public Shape
