@@ -8,6 +8,8 @@ SelectFaceState::SelectFaceState(const std::string& name, SelectUtils::ViewportD
 	mViewport = data->viewport;
 	mScene = data->scene;
 	mCamera = data->camera;
+
+	// TODO: Don't create Vertex pointer with face creation
 	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
 }
 
