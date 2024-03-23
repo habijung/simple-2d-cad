@@ -55,14 +55,14 @@ private:
 	int mButton;
 };
 
-class DrawFaceState : public State
+class DrawPolygonState : public State
 {
 public:
-	DrawFaceState(string name, component* comp);
+	DrawPolygonState(string name, component* comp);
 
 	virtual void mousePressEvent(QMouseEvent* event) override;
-	virtual void mouseMoveEvent(QMouseEvent* event) override {}
-	virtual void mouseReleaseEvent(QMouseEvent* event) override {}
+	virtual void mouseMoveEvent(QMouseEvent* event) override;
+	virtual void mouseReleaseEvent(QMouseEvent* event) override;
 	virtual void paintEvent(QPainter* painter) override;
 
 private:
@@ -70,6 +70,10 @@ private:
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
+
+	QPointF mPos;
+	int mButton;
+	bool mDrawPolygon;
 };
 
 class SelectPointState : public State

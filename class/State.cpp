@@ -103,31 +103,31 @@ void DrawLineState::paintEvent(QPainter* painter)
 	);
 }
 
-DrawFaceState::DrawFaceState(string name, component* comp)
+DrawPolygonState::DrawPolygonState(string name, component* comp)
 	: State(name, comp)
 {
 	mName = name;
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
+	mDrawPolygon = false;
 }
 
-void DrawFaceState::mousePressEvent(QMouseEvent* event)
+void DrawPolygonState::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "DrawFaceState::mousePressEvent()";
-	float dx = this->mViewport->width() / 2.0;
-	float dy = this->mViewport->height() / 2.0;
-	float scale = 100.0;
-
-	// TODO: Modify addVertex parameter
-	//this->mScene->addVertex(this->mCamera->setScreenToWindow(p, dx, dy, scale));
+	mButton = event->button();
 }
 
-void DrawFaceState::paintEvent(QPainter* painter)
+void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 {
-	QPen pen(Qt::red, 10);
-	painter->setPen(pen);
+	mPos = event->pos();
 }
+
+void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
+{}
+
+void DrawPolygonState::paintEvent(QPainter* painter)
+{}
 
 SelectPointState::SelectPointState(string name, component* comp)
 	: State(name, comp)

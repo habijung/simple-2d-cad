@@ -27,7 +27,7 @@ MainWindow::MainWindow(QWidget* parent)
 
 	component* comp = new component;
 	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
-	mDrawFaceState = new DrawFaceState("DRAW_FACE", mData);
+	mDrawFaceState = new DrawPolygonState("DRAW_POLY", mData);
 	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
 	mSelectLineState = new SelectLineState("SELECT_LINE", mData);
 
@@ -119,7 +119,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 {
 	QWidget* wSidebar = new QWidget(widget);
 	QPushButton* btnLine = new QPushButton("Line", wSidebar);
-	QPushButton* btnFace = new QPushButton("Face", wSidebar);
+	QPushButton* btnFace = new QPushButton("Poly", wSidebar);
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
@@ -132,7 +132,7 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Draw Face Clicked";
+			qDebug() << "Draw Poly Clicked";
 			this->machine->transition(mDrawFaceState);
 			this->widget->updateState
 			(
@@ -152,23 +152,23 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 	QWidget* wUnderbar = new QWidget(widget);
 	QPushButton* btnPoint = new QPushButton("Point", wUnderbar);
 	QPushButton* btnLine = new QPushButton("Line", wUnderbar);
-	QPushButton* btnFace = new QPushButton("Face", wUnderbar);
+	QPushButton* btnFace = new QPushButton("Poly", wUnderbar);
 
 	connect(btnPoint, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Point Clicked";
+			qDebug() << "Select Point Clicked";
 			machine->transition(mSelectPointState);
 			this->widget->updateState(machine->getCurrentState());
 		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Line Clicked";
+			qDebug() << "Select Line Clicked";
 			machine->transition(mSelectLineState);
 			this->widget->updateState(machine->getCurrentState());
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Face Clicked";
+			qDebug() << "Select Poly Clicked";
 		});
 
 	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
