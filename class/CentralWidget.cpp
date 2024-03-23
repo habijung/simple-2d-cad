@@ -7,18 +7,20 @@ CentralWidget::CentralWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
+	Scene* scene = new Scene();
+	scene->Render();
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
 	// Draw line with mouse event
-	this->drawLine();
+	//this->drawLine();
 
 	// Render method test
-	this->renderAll();
+	//this->renderAll();
 
 	// Selection test
-	this->selectLine(this->pStart);
+	//this->selectLine(this->pStart);
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)

@@ -2,6 +2,7 @@
 #include <QWidget>
 #include <vector>
 #include <utility>
+#include "Scene.h"
 using namespace std;
 
 

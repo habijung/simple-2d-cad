@@ -49,9 +49,15 @@
     <ClCompile Include="class\CentralWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="class\Scene.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="class\CentralWidget.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="class\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
