@@ -1,6 +1,10 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
+#include <QPushButton>
+#include <QBoxLayout>
+#include <QFileDialog>
+#include <QResizeEvent>
 #include "ui_MainWindow.h"
 #include "class/Viewport.h"
 
