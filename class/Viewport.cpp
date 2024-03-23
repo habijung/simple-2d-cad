@@ -11,8 +11,7 @@
 Viewport::Viewport(QWidget* parent)
 	: QWidget(parent)
 {
-	qDebug() << "\n Central Widget \n";
-	mCamera = new Camera(this, QSize(600, 600), 100.0);
+	mCamera = new Camera(this, parent->size(), 100.0);
 	mScene = new Scene(mCamera);
 	pValue = 80.0;
 	zValue = 60.0;
@@ -199,6 +198,7 @@ void Viewport::createNewScene()
 	mScene = new Scene(mCamera);
 	mComp->scene = mScene;
 	mMachine->state()->updateScene(mScene);
+	mCamera->reset(size());
 	update();
 }
 
@@ -281,6 +281,6 @@ void Viewport::keyPressEvent(QKeyEvent* event)
 
 void Viewport::resizeEvent(QResizeEvent* event)
 {
-	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
-	QSize* screenSize = new QSize(width(), height());
+	// TODO: Window 조절할 때 Camera Scale 조정하기
+	//mCamera->resizeEvent(event);
 }
