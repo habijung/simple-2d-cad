@@ -10,17 +10,30 @@ Viewport::Viewport(QWidget* parent)
 	qDebug() << "\n Central Widget \n";
 	scene = new Scene(this);
 	camera = new Camera(this, QSize(600, 600), 100.0);
+	this->panFactor = 60.0;
 }
 
 void Viewport::getKeyEvent(QKeyEvent* event)
 {
 	switch (event->key())
 	{
-	case Qt::Key_E:
+	case Qt::Key_E: // Zoom In
 		this->camera->zoomIn();
 		break;
-	case Qt::Key_Q:
+	case Qt::Key_Q: // Zoom Out
 		this->camera->zoomOut();
+		break;
+	case Qt::Key_W: // Move Up
+		this->camera->pan(0.0, this->panFactor);
+		break;
+	case Qt::Key_S: // Move Down
+		this->camera->pan(0.0, -this->panFactor);
+		break;
+	case Qt::Key_D: // Move Right
+		this->camera->pan(this->panFactor, 0.0);
+		break;
+	case Qt::Key_A: // Move Left
+		this->camera->pan(-this->panFactor, 0.0);
 		break;
 	}
 	repaint();

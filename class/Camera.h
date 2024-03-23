@@ -14,7 +14,9 @@ public:
 	// Camera action
 	void zoomIn();
 	void zoomOut();
+	void pan(float dx, float dy);
 
 private:
 	float dx, dy, scale;
+	int maxWidth, maxHeight;
 };
