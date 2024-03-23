@@ -33,6 +33,12 @@ void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
 {
 	this->pEnd = event->pos();
+
+	// Add vertex
+	vector<QPoint> vec;
+	vec.push_back(this->pStart);
+	vec.push_back(this->pEnd);
+	this->vert.push_back(vec);
 }
 
 void CentralWidget::drawLine()
@@ -73,6 +79,15 @@ void CentralWidget::renderAll()
 {
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.drawRect(100, 100, 100, 50);
+
+	vector<vector<QPoint>>::iterator vIter;
+
+	for (vIter = this->vert.begin(); vIter != this->vert.end(); vIter++)
+	{
+		QPoint v1 = (*vIter)[0];
+		QPoint v2 = (*vIter)[1];
+		painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
+	}
+
 	painter.end();
 }

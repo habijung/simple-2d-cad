@@ -1,5 +1,7 @@
 #pragma once
-#include <qwidget.h>
+#include <QWidget>
+#include <vector>
+using namespace std;
 
 
 class CentralWidget :
@@ -19,4 +21,5 @@ private:
 
 	QPoint pStart, pEnd;
 	int xOffset, yOffset;
+	vector<vector<QPoint>> vert;
 };
