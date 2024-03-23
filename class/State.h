@@ -13,7 +13,7 @@ class Viewport; // Circular Dependency
 class State
 {
 public:
-	State(string name);
+	State(string name, component* comp);
 	string getStateName();
 
 	virtual ~State() {}
@@ -32,7 +32,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(string name, component* data);
+	DrawLineState(string name, component* comp);
 
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
@@ -49,7 +49,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(string name, component* data);
+	DrawFaceState(string name, component* comp);
 
 	virtual void mousePressEvent(QPoint p);
 	virtual void mouseMoveEvent() {}
@@ -66,7 +66,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(string name, component* data);
+	SelectPointState(string name, component* comp);
 
 private:
 	string mName;

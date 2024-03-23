@@ -25,7 +25,8 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setSidebarWidget(this->widget);
 	this->setUnderbarWidget(this->widget);
 
-	sIDLE = new State("IDLE");
+	component* comp = new component;
+	sIDLE = new State("IDLE", comp);
 	sDLS = new DrawLineState("DRAW_LINE", mData);
 	sDLS1 = new DrawLineState("DRAW_LINE", mData);
 	sDLS2 = new DrawLineState("DRAW_LINE2", mData);

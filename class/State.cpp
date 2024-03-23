@@ -4,10 +4,12 @@
 #include "Viewport.h"
 
 
-State::State(string name)
+State::State(string name, component* comp)
 {
-	qDebug() << "Create State:" << name;
-	this->mName = name;
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
 }
 
 string State::getStateName()
@@ -15,14 +17,13 @@ string State::getStateName()
 	return this->mName;
 }
 
-DrawLineState::DrawLineState(string name, component* data)
-	: State(name)
+DrawLineState::DrawLineState(string name, component* comp)
+	: State(name, comp)
 {
-	qDebug() << "Create DrawLineState:" << name;
-	this->mName = name;
-	this->mViewport = data->viewport;
-	this->mScene = data->scene;
-	this->mCamera = data->camera;
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
 }
 
 void DrawLineState::mousePressEvent(QPoint p)
@@ -40,14 +41,13 @@ void DrawLineState::paintEvent(QPainter* painter)
 	painter->setPen(pen);
 }
 
-DrawFaceState::DrawFaceState(string name, component* data)
-	: State(name)
+DrawFaceState::DrawFaceState(string name, component* comp)
+	: State(name, comp)
 {
-	qDebug() << "Create DrawFaceState:" << name;
-	this->mName = name;
-	this->mViewport = data->viewport;
-	this->mScene = data->scene;
-	this->mCamera = data->camera;
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
 }
 
 void DrawFaceState::mousePressEvent(QPoint p)
@@ -65,12 +65,11 @@ void DrawFaceState::paintEvent(QPainter* painter)
 	painter->setPen(pen);
 }
 
-SelectPointState::SelectPointState(string name, component* data)
-	: State(name)
+SelectPointState::SelectPointState(string name, component* comp)
+	: State(name, comp)
 {
-	qDebug() << "Create SelectPointState:" << name;
-	this->mName = name;
-	this->mViewport = data->viewport;
-	this->mScene = data->scene;
-	this->mCamera = data->camera;
+	mName = name;
+	mViewport = comp->viewport;
+	mScene = comp->scene;
+	mCamera = comp->camera;
 }
