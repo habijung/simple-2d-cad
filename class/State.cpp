@@ -223,7 +223,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 	mPos = event->pos();
 	mShapes = mScene->retShapes();
 
-	if (!(mButton == Qt::LeftButton))
+	if (mButton != Qt::LeftButton)
 	{
 		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
 
