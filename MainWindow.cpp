@@ -139,6 +139,10 @@ void MainWindow::setToolbar()
 				tr("Scene (*.scn);; Image (*.png *jpg);; Text (*.txt);; Xml (*.xml)")
 			);
 			qDebug() << filePath;
+			QFile f(filePath);
+			f.open(QIODevice::WriteOnly);
+			f.write("Sample Text");
+			f.close();
 		});
 }
 
