@@ -180,6 +180,19 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 		painter->setPen(QPen(Qt::blue, 2));
 		painter->drawPolygon(mPolygon);
 	}
+
+	float dx = mViewport->width() / 2.0;
+	float dy = mViewport->height() / 2.0;
+	float scale = 100.0;
+
+	painter->setPen(QPen(Qt::black));
+	painter->drawText(
+		mPos.x() + 15,
+		mPos.y() - 15,
+		QString("x: %1, y: %2")
+		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).x(), 0, 'f', 2)
+		.arg(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale).y(), 0, 'f', 2)
+	);
 }
 
 SelectPointState::SelectPointState(string name, component* comp)
