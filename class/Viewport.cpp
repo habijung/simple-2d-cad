@@ -179,6 +179,26 @@ Scene* Viewport::loadScene(Scene* oldScene)
 							shapes.push_back(l);
 							mScene->updateShapes(shapes);
 						}
+						else if (!value.toString().compare("Face"))
+						{
+							key++;
+							QJsonObject vertices = jsonShape.take(*key).toObject();
+							QJsonObject::iterator iv = vertices.begin();
+							list<Vertex*> listShapes;
+
+							for (iv; iv != vertices.end(); iv++)
+							{
+								QRegularExpression separator("[,\\s]+");
+								QStringList vData = (*iv).toString().trimmed().split(separator);
+								Vertex* v = new Vertex(QPointF(vData.front().toFloat(), vData.back().toFloat()));
+								shapes.push_back(v);
+								listShapes.push_back(v);
+							}
+
+							Face* f = new Face(listShapes);
+							shapes.push_back(f);
+							mScene->updateShapes(shapes);
+						}
 					}
 				}
 			}
