@@ -7,6 +7,7 @@ CentralWidget::CentralWidget(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
+	count = 0;
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
@@ -32,6 +33,18 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
 {
+	qDebug() << "\n" << "Mouse Press";
 	this->point = event->pos();
 	update();
+}
+
+void CentralWidget::mouseMoveEvent(QMouseEvent* event)
+{
+	qDebug() << "Mouse Move: " << count;
+	count += 1;
+}
+
+void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+	qDebug() << "\n" << "Mouse Release";
 }
