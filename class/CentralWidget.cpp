@@ -25,6 +25,13 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 {
 	this->pStart = event->pos();
 	this->button = event->button();
+
+	if (this->button == Qt::RightButton)
+	{
+		this->xOffset = 0;
+		this->yOffset = 0;
+		repaint();
+	}
 }
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
