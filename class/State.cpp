@@ -148,8 +148,13 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 		mDrawPolygon = true;
 
 		// Draw finish and Initialization
-		if (mHit && (mPoints.size() > 1))
+		if (mHit && (mPoints.size() > 2))
 		{
+			if (mPoints.size() == 3)
+			{
+				qDebug() << "No polygon";
+			}
+
 			mPoints = {};
 			mDrawPolygon = false;
 		}
