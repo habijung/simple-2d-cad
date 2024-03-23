@@ -19,7 +19,8 @@ private:
 
 	void drawLine();
 	void renderAll();
-	void selectLine();
+	void selectLine(QPoint mPoint);
+	bool checkSelection(QPoint mPoint, QPolygonF polygon);
 
 	int xOffset, yOffset;
 	int button;

@@ -18,7 +18,7 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 	//this->renderAll();
 
 	// Selection test
-	this->selectLine();
+	this->selectLine(this->pStart);
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -104,7 +104,7 @@ void CentralWidget::renderAll()
 	painter.end();
 }
 
-void CentralWidget::selectLine()
+void CentralWidget::selectLine(QPoint mPoint)
 {
 	QPointF v1 = { 200, 200 };
 	QPointF v2 = { 300, 300 };
@@ -115,7 +115,7 @@ void CentralWidget::selectLine()
 	qreal dx = offset * sin(rad);
 	qreal dy = offset * cos(rad);
 	QPointF delta[2] = { QPointF(dx, dy), QPointF(-dx, -dy) };
-	QPointF vo[4] =
+	QPointF pOffset[4] =
 	{
 		line.p1() + delta[0],
 		line.p1() + delta[1],
@@ -123,41 +123,49 @@ void CentralWidget::selectLine()
 		line.p2() + delta[1]
 	};
 
-	QPolygonF p;
-	p << vo[0] << vo[1] << vo[3] << vo[2]; // Clockwise
+	QPolygonF polygon;
+	polygon << pOffset[0] << pOffset[1] << pOffset[3] << pOffset[2]; // Clockwise
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
 	painter.drawLine(v1.x(), v1.y(), v2.x(), v2.y());
-	painter.drawPolygon(p);
 
-	QPointF v = { 185.858, 214.142 };
+	if (this->checkSelection(mPoint, polygon))
+	{
+		painter.drawPolygon(polygon);
+	}
+
+	// Draw mouse click point
 	QPen pen;
 	pen.setWidth(5);
 	pen.setCapStyle(Qt::FlatCap);
 	painter.setPen(pen);
-	painter.drawPoint(v);
+	painter.drawPoint(mPoint);
+	painter.end();
+}
 
+bool CentralWidget::checkSelection(QPoint mPoint, QPolygonF polygon)
+{
 	int count = 0;
 
-	for (int i = 0; i < p.size(); i++)
+	for (int i = 0; i < polygon.size(); i++)
 	{
-		int j = (i + 1) % static_cast<int>(p.size());
+		int j = (i + 1) % static_cast<int>(polygon.size());
 
 		struct Point
 		{
 			qreal x, y;
 		};
-		Point curr = { p[i].x(), p[i].y() };
-		Point next = { p[j].x(), p[j].y() };
+		Point curr = { polygon[i].x(), polygon[i].y() };
+		Point next = { polygon[j].x(), polygon[j].y() };
 
 		// Or, solve it using mixmax() function.
-		if (curr.y < v.y() != next.y < v.y())
+		if (curr.y < mPoint.y() != next.y < mPoint.y())
 		{
 			// Relation: (x - curr.x) : (v.y() - curr.y) = (next.x - curr.x) : (next.y - curr.y)
-			qreal x = (next.x - curr.x) / (next.y - curr.y) * (v.y() - curr.y) + curr.x;
+			qreal x = (next.x - curr.x) / (next.y - curr.y) * (mPoint.y() - curr.y) + curr.x;
 
-			if (v.x() < x)
+			if (mPoint.x() < x)
 			{
 				count += 1;
 			}
@@ -165,7 +173,5 @@ void CentralWidget::selectLine()
 	}
 
 	// Odd: In | Even: Out
-	qDebug() << (count % 2 != 0);
-
-	painter.end();
+	return count % 2 != 0;
 }
