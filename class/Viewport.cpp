@@ -57,6 +57,7 @@ void Viewport::saveScene()
 {
 	QJsonObject content;
 	list<Shape*> shapes = scene->retShapes();
+	int numShape = 0; // Check priority
 	int numLine = 0;
 	int numFace = 0;
 
@@ -67,7 +68,7 @@ void Viewport::saveScene()
 		if ((*iter)->checkType("Line"))
 		{
 			string name = (*iter)->type() + "-" + to_string(numLine);
-			obj.insert("Num", numLine);
+			obj.insert("Num", numShape);
 			obj.insert("Type", (*iter)->type().c_str());
 			obj.insert("Vertices", dynamic_cast<Line*>(*iter)->saveLine());
 			content.insert(name.c_str(), obj);
@@ -76,8 +77,15 @@ void Viewport::saveScene()
 
 		if ((*iter)->checkType("Face"))
 		{
+			string name = (*iter)->type() + "-" + to_string(numFace);
+			obj.insert("Num", numShape);
+			obj.insert("Type", (*iter)->type().c_str());
+			obj.insert("Vertices", dynamic_cast<Face*>(*iter)->saveFace());
+			content.insert(name.c_str(), obj);
 			numFace++;
 		}
+
+		numShape++;
 	}
 
 	QJsonDocument document;

@@ -60,6 +60,7 @@ public:
 	vector<Vertex> retVertices();
 	QPolygonF retFace(Camera* cam);
 	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices);
+	QJsonObject saveFace();
 
 	virtual string type() override;
 	virtual bool checkType(string s) override;

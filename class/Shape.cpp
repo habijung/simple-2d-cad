@@ -87,8 +87,10 @@ void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> 
 QJsonObject Line::saveLine()
 {
 	QVariantMap map;
-	map["v1"] = QString("%1, %2").arg(mV1->retVertex().x()).arg(mV1->retVertex().y());
-	map["v2"] = QString("%1, %2").arg(mV2->retVertex().x()).arg(mV2->retVertex().y());
+	QPointF v1 = mV1->retVertex();
+	QPointF v2 = mV2->retVertex();
+	map["v1"] = QString("%1, %2").arg(v1.x()).arg(v1.y());
+	map["v2"] = QString("%1, %2").arg(v2.x()).arg(v2.y());
 
 	return QJsonObject::fromVariantMap(map);
 }
@@ -179,6 +181,21 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> sh
 			break;
 		}
 	}
+}
+
+QJsonObject Face::saveFace()
+{
+	QVariantMap map;
+	vector<Vertex> vertices = retVertices();
+
+	for (int i = 0; i < vertices.size(); i++)
+	{
+		string numVertex = "v" + to_string(i + 1);
+		QPointF v = vertices[i].retVertex();
+		map[numVertex.c_str()] = QString("%1, %2").arg(v.x()).arg(v.y());
+	}
+
+	return QJsonObject::fromVariantMap(map);
 }
 
 string Face::type()
