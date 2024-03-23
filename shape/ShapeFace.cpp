@@ -83,7 +83,7 @@ std::string Face::Type()
 	return mType;
 }
 
-bool Face::CheckShapeType(std::string s)
+bool Face::CheckShapeType(const std::string& s)
 {
 	return !mType.compare(s);
 }

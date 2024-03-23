@@ -1,7 +1,7 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-State::State(std::string name, SelectUtils::ViewportData* data)
+State::State(const std::string& name, SelectUtils::ViewportData* data)
 {
 	mName = name;
 	mViewport = data->viewport;

@@ -8,7 +8,7 @@ public:
 	StateMachine();
 
 	State* CurrentState();
-	State* getState(const std::string& name);
+	State* GetState(const std::string& name);
 	void AddState(State* state);
 	void SetState(const std::string& name);
 	void DeleteState(const std::string& name);

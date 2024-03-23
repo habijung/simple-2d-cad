@@ -31,7 +31,7 @@ std::string Vertex::Type()
 	return mType;
 }
 
-bool Vertex::CheckShapeType(std::string s)
+bool Vertex::CheckShapeType(const std::string& s)
 {
 	return !mType.compare(s);
 }

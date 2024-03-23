@@ -1,7 +1,7 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-DrawFaceState::DrawFaceState(std::string name, SelectUtils::ViewportData* data)
+DrawFaceState::DrawFaceState(const std::string& name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;

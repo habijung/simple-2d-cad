@@ -12,7 +12,7 @@ class Viewport;
 class State
 {
 public:
-	State(std::string name, SelectUtils::ViewportData* data);
+	State(const std::string& name, SelectUtils::ViewportData* data);
 	std::string GetName();
 	bool GetMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
@@ -32,7 +32,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(std::string name, SelectUtils::ViewportData* data);
+	DrawLineState(const std::string& name, SelectUtils::ViewportData* data);
 
 	virtual void UpdateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -55,7 +55,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(std::string name, SelectUtils::ViewportData* data);
+	DrawFaceState(const std::string& name, SelectUtils::ViewportData* data);
 
 	virtual void UpdateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -84,7 +84,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(std::string name, SelectUtils::ViewportData* data);
+	SelectPointState(const std::string& name, SelectUtils::ViewportData* data);
 
 	virtual void UpdateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -117,7 +117,7 @@ private:
 class SelectLineState : public State
 {
 public:
-	SelectLineState(std::string name, SelectUtils::ViewportData* data);
+	SelectLineState(const std::string& name, SelectUtils::ViewportData* data);
 
 	virtual void UpdateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -146,7 +146,7 @@ private:
 class SelectFaceState : public State
 {
 public:
-	SelectFaceState(std::string name, SelectUtils::ViewportData* data);
+	SelectFaceState(const std::string& name, SelectUtils::ViewportData* data);
 
 	virtual void UpdateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;

@@ -1,7 +1,7 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-SelectFaceState::SelectFaceState(std::string name, SelectUtils::ViewportData* data)
+SelectFaceState::SelectFaceState(const std::string& name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;

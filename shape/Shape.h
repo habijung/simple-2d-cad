@@ -10,7 +10,7 @@ class Shape
 public:
 	virtual ~Shape() {}
 	virtual std::string Type() = 0;
-	virtual bool CheckShapeType(std::string s) = 0;
+	virtual bool CheckShapeType(const std::string& s) = 0;
 	virtual void Render(QPainter* painter, Camera* camera) = 0;
 };
 
@@ -23,7 +23,7 @@ public:
 	void UpdateVertex(const QPointF& p);
 
 	virtual std::string Type() override;
-	virtual bool CheckShapeType(std::string s) override;
+	virtual bool CheckShapeType(const std::string& s) override;
 	virtual void Render(QPainter* painter, Camera* camera) override;
 
 private:
@@ -43,7 +43,7 @@ public:
 	QJsonObject SaveLine();
 
 	virtual std::string Type() override;
-	virtual bool CheckShapeType(std::string s) override;
+	virtual bool CheckShapeType(const std::string& s) override;
 	virtual void Render(QPainter* painter, Camera* camera) override;
 
 private:
@@ -63,7 +63,7 @@ public:
 	QJsonObject SaveFace();
 
 	virtual std::string Type() override;
-	virtual bool CheckShapeType(std::string s) override;
+	virtual bool CheckShapeType(const std::string& s) override;
 	virtual void Render(QPainter* painter, Camera* camera) override;
 
 private:

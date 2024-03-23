@@ -64,7 +64,7 @@ std::string Line::Type()
 	return mType;
 }
 
-bool Line::CheckShapeType(std::string s)
+bool Line::CheckShapeType(const std::string& s)
 {
 	return !mType.compare(s);
 }

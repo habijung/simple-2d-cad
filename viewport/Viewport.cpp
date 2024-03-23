@@ -44,13 +44,13 @@ void Viewport::UpdateState(const std::string& name)
 	if (!name.compare("DRAW_LINE"))
 	{
 		mMachine->DeleteState(name);
-		delete dynamic_cast<DrawLineState*>(mMachine->getState(name));
+		delete dynamic_cast<DrawLineState*>(mMachine->GetState(name));
 		mMachine->AddState(new DrawLineState("DRAW_LINE", mData));
 	}
 	else if (!name.compare("DRAW_FACE"))
 	{
 		mMachine->DeleteState(name);
-		delete dynamic_cast<DrawFaceState*>(mMachine->getState(name));
+		delete dynamic_cast<DrawFaceState*>(mMachine->GetState(name));
 		mMachine->AddState(new DrawFaceState("DRAW_FACE", mData));
 	}
 

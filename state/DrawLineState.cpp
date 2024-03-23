@@ -1,7 +1,7 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-DrawLineState::DrawLineState(std::string name, SelectUtils::ViewportData* data)
+DrawLineState::DrawLineState(const std::string& name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;

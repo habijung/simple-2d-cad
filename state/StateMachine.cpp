@@ -40,7 +40,7 @@ void StateMachine::AddState(State* state)
 	}
 }
 
-State* StateMachine::getState(const std::string& name)
+State* StateMachine::GetState(const std::string& name)
 {
 	std::list<State*>::iterator iter = mStates.begin();
 	bool checkSameName = false;
