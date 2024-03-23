@@ -4,6 +4,7 @@
 #include <QSize>
 #include <vector>
 #include <utility>
+#include "Camera.h"
 using namespace std;
 
 
@@ -13,16 +14,14 @@ public:
 	Scene(QWidget* parent = nullptr);
 	void resize(QSize* screenSize);
 
-	// Coordinate conversion
-	void setScreenToWindow(QPoint pScreen, float dx, float dy, float scale);
-	QPoint setWindowToScreen(QPointF pWindow);
-
 	// Render method
 	void renderOrigin(QPainter* painter);
-	void renderScenePoint(QPainter* painter);
+	void renderScenePoint(QPainter* painter, Camera* camera);
+
+	// Add data method
+	void addVertex(QPointF v);
 
 private:
 	int width, height;
-	float dx, dy, scale;
 	vector<QPointF> vert;
 };

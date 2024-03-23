@@ -8,6 +8,7 @@ CentralWidget::CentralWidget(QWidget* parent)
 {
 	qDebug() << "\n Central Widget \n";
 	scene = new Scene(this);
+	camera = new Camera(this);
 }
 
 void CentralWidget::paintEvent(QPaintEvent* event)
@@ -27,12 +28,8 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 	painter1->end();
 
 	QPainter* painter2 = new QPainter(this);
-	scene->renderScenePoint(painter2);
+	scene->renderScenePoint(painter2, camera);
 	painter2->end();
-
-	//QPainter* wPainter = new QPainter(this);
-	//scene->renderWindow(wPainter);
-	//wPainter->end();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -49,14 +46,11 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 
 	if (this->button == Qt::LeftButton)
 	{
-		qDebug() << "Point:" << this->pStart;
-		scene->setScreenToWindow
-		(
-			this->pStart,
-			width() / 2.0,
-			height() / 2.0,
-			100
-		);
+		//qDebug() << "Point:" << this->pStart;
+		float dx = width() / 2.0;
+		float dy = height() / 2.0;
+		float scale = 100.0;
+		scene->addVertex(camera->setScreenToWindow(this->pStart, dx, dy, scale));
 		repaint();
 	}
 }

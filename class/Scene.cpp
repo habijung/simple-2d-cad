@@ -13,36 +13,6 @@ void Scene::resize(QSize* screenSize)
 	this->height = screenSize->height();
 }
 
-// TODO: Move to Class Camera
-void Scene::setScreenToWindow(QPoint pScreen, float dx, float dy, float scale)
-{
-	this->dx = dx;
-	this->dy = dy;
-	this->scale = scale;
-
-	// Function:
-	// { x, y } = { (x - dx) / scale, (y - dy) / scale }
-	QPointF pWindow =
-	{
-		(pScreen.x() - dx) / scale,
-		(pScreen.y() - dy) / scale * -1
-	};
-	this->vert.push_back(pWindow);
-	qDebug() << "Window:" << pWindow;
-	qDebug() << "Screen:" << this->setWindowToScreen(this->vert[this->vert.size() - 1]);
-}
-
-// TODO: Move to Class Camera
-QPoint Scene::setWindowToScreen(QPointF pWindow)
-{
-	QPoint pScreen =
-	{
-		static_cast<int>(pWindow.x() * this->scale + this->dx),
-		static_cast<int>(pWindow.y() * this->scale * -1 + this->dy)
-	};
-	return pScreen;
-}
-
 
 // Render method
 void Scene::renderOrigin(QPainter* painter)
@@ -55,7 +25,7 @@ void Scene::renderOrigin(QPainter* painter)
 	);
 }
 
-void Scene::renderScenePoint(QPainter* painter)
+void Scene::renderScenePoint(QPainter* painter, Camera* camera)
 {
 	vector<QPointF>::iterator iter = this->vert.begin();
 	QPen pen(Qt::black, 5);
@@ -63,6 +33,13 @@ void Scene::renderScenePoint(QPainter* painter)
 
 	for (iter; iter != this->vert.end(); iter++)
 	{
-		painter->drawPoint(this->setWindowToScreen(*iter));
+		painter->drawPoint(camera->setWindowToScreen(*iter));
 	}
+}
+
+
+// Add data method
+void Scene::addVertex(QPointF v)
+{
+	this->vert.push_back(v);
 }

@@ -89,6 +89,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="class\Camera.cpp" />
     <ClCompile Include="class\Scene.cpp" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
@@ -100,6 +101,7 @@
     <ResourceCompile Include="simple-2d-cad.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="class\Camera.h" />
     <ClInclude Include="class\CentralWidget.h" />
     <ClInclude Include="class\Scene.h" />
   </ItemGroup>

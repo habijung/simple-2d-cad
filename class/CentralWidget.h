@@ -3,6 +3,7 @@
 #include <vector>
 #include <utility>
 #include "Scene.h"
+#include "Camera.h"
 using namespace std;
 
 
@@ -29,5 +30,7 @@ private:
 	QPoint pStart, pEnd;
 	vector<pair<QPoint, QPoint>> vert;
 
+	// Class instances
 	Scene* scene;
+	Camera* camera;
 };
