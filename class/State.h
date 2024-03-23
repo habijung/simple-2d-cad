@@ -94,4 +94,5 @@ private:
 	Vertex* v;
 	QPointF p;
 	QPolygonF pol;
+	bool hit;
 };

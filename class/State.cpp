@@ -137,20 +137,27 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 	pol = QPolygonF();
 	v = new Vertex(QPointF(1, 1));
 	pol = createPointBoundingBox(mCamera, v, 25);
-	bool test = hitTestingPoint(mPos, pol);
-	qDebug() << test;
+	hit = hitTestingPoint(mPos, pol);
+	qDebug() << hit;
 
 	mViewport->update();
 }
 
 void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 {
-	// TODO: 점 이동
 	// TODO: 마우스 오버 효과 내기
 	mPos = event->pos();
+
+	if (hit && mButton == Qt::LeftButton && event->button() == Qt::NoButton)
+	{
+		qDebug() << mPos;
+	}
 }
 
-void SelectPointState::mouseReleaseEvent(QMouseEvent* event) {}
+void SelectPointState::mouseReleaseEvent(QMouseEvent* event)
+{
+	mButton = Qt::NoButton;
+}
 
 void SelectPointState::paintEvent(QPainter* painter)
 {
