@@ -72,10 +72,12 @@ private:
 	Camera* mCamera;
 
 	QPointF mPos;
+	int mButton;
+
 	QPolygonF mPolygon;
 	vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points vector
-	int mButton;
 	bool mDrawPolygon;
+	bool mHit;
 };
 
 class SelectPointState : public State

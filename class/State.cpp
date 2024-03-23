@@ -130,17 +130,46 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 	if (mButton == Qt::LeftButton)
 	{
 		mPoints.push_back(mPos);
-		mPolygon << mPos;
+		mDrawPolygon = true;
+
+		// Create bounding box and hit testing by start point.
+		float dx = mViewport->width() / 2.0;
+		float dy = mViewport->height() / 2.0;
+		float scale = 100.0;
+
+		Vertex* v0 = new Vertex(mCamera->setScreenToWindow(mPoints[0].toPoint(), dx, dy, scale));
+		mPolygon = createPointBoundingBox(mCamera, v0, 10);
+		mHit = hitTestingPoint(mPos, mPolygon);
+
+		if (mHit && (mPoints.size() != 1))
+		{
+			qDebug() << "Hit";
+
+			// Initialization
+			mPoints = {};
+			mDrawPolygon = false;
+		}
 	}
 
+	mButton = Qt::NoButton;
 	mViewport->update();
 }
 
 void DrawPolygonState::paintEvent(QPainter* painter)
 {
-	// Draw polygon
-	painter->setPen(QPen(Qt::darkGray, 3));
-	painter->drawPolygon(mPolygon);
+	if (mDrawPolygon)
+	{
+		// Draw polygon points
+		for (int i = 0; i < mPoints.size(); i++)
+		{
+			painter->setPen(QPen(Qt::blue, 10));
+			painter->drawPoint(mPoints[i]);
+		}
+
+		// Draw bounding box with start point
+		painter->setPen(QPen(Qt::blue, 2));
+		painter->drawPolygon(mPolygon);
+	}
 }
 
 SelectPointState::SelectPointState(string name, component* comp)
