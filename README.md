@@ -26,10 +26,10 @@ https://github.com/habi-ze/simple-2d-cad/assets/148021651/e0c8f74a-6418-46f3-8af
 | Visual Studio | 17.7.5     |
 | OS            | Windows 11 |
 
-## Build Program
+## Program Build and Run
 
-- Install Visual Studio 2022
-  - Install Desktop development with C++
+- Install **Visual Studio 2022**
+  - Install **Desktop development with C++**
 - Install QT 6.6.0 with **MSVC**
 - Install Visual Studio QT Extension
   - Visual Studio > Extensions > Manage Extensions > **Qt Visual Studio Tools** install
@@ -48,14 +48,14 @@ https://github.com/habi-ze/simple-2d-cad/assets/148021651/e0c8f74a-6418-46f3-8af
 
 - Draw Line
 - Draw Face
-- Using mouse left button
+  - Using mouse left button
 
 ### Select
 
 - (Default) Select Point
 - Select Line
 - Select Face
-- Using mouse left button
+  - Using mouse left button
 
 ### File I/O
 
@@ -67,4 +67,4 @@ https://github.com/habi-ze/simple-2d-cad/assets/148021651/e0c8f74a-6418-46f3-8af
 
 - Move (Pan)
 - Zoom
-- Using mouse right and wheel button
+  - Using mouse right and wheel button
