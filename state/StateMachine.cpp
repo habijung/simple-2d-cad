@@ -15,7 +15,6 @@ State* StateMachine::CurrentState()
 void StateMachine::AddState(State* state)
 {
 	std::string name = state->GetName();
-	std::list<State*>::iterator iter = this->mStates.begin();
 	bool checkSameName = false;
 
 	if (this->mStates.empty())
@@ -24,7 +23,7 @@ void StateMachine::AddState(State* state)
 	}
 	else
 	{
-		for (iter; iter != this->mStates.end(); iter++)
+		for (std::list<State*>::iterator iter = mStates.begin(); iter != mStates.end(); iter++)
 		{
 			// Check if the same name exists.
 			if (!(*iter)->GetName().compare(name))
@@ -36,7 +35,7 @@ void StateMachine::AddState(State* state)
 
 		if (!checkSameName)
 		{
-			this->mStates.push_back(state);
+			mStates.push_back(state);
 		}
 	}
 }
@@ -68,30 +67,21 @@ State* StateMachine::getState(std::string name)
 
 void StateMachine::SetState(std::string name)
 {
-	std::list<State*>::iterator iter = mStates.begin();
-	bool checkSameName = false;
-
-	for (iter; iter != mStates.end(); iter++)
+	for (std::list<State*>::iterator iter = mStates.begin(); iter != mStates.end(); iter++)
 	{
 		if (!(*iter)->GetName().compare(name))
 		{
-			checkSameName = true;
+			mState = *iter;
 			break;
 		}
-	}
-
-	if (checkSameName)
-	{
-		mState = *iter;
 	}
 }
 
 void StateMachine::DeleteState(std::string name)
 {
-	std::list<State*>::iterator iter = mStates.begin();
 	bool checkSameName = false;
 
-	for (iter; iter != mStates.end(); iter++)
+	for (std::list<State*>::iterator iter = mStates.begin(); iter != mStates.end(); iter++)
 	{
 		if (!(*iter)->GetName().compare(name))
 		{
@@ -109,9 +99,7 @@ void StateMachine::Transition(std::string name, SelectUtils::ViewportData* data)
 
 void StateMachine::PrintAllStates()
 {
-	std::list<State*>::iterator iter = this->mStates.begin();
-
-	for (iter; iter != this->mStates.end(); iter++)
+	for (std::list<State*>::iterator iter = mStates.begin(); iter != mStates.end(); iter++)
 	{
 		qDebug() << (*iter)->GetName();
 	}

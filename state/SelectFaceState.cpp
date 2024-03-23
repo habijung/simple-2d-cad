@@ -31,9 +31,7 @@ void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 
 	if (mButton != Qt::LeftButton)
 	{
-		std::list<Shape*>::reverse_iterator iter = mShapes.rbegin();
-
-		for (iter; iter != mShapes.rend(); iter++)
+		for (std::list<Shape*>::reverse_iterator iter = mShapes.rbegin(); iter != mShapes.rend(); iter++)
 		{
 			if ((*iter)->CheckShapeType("Face"))
 			{

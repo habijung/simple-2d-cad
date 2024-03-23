@@ -16,9 +16,8 @@ Face::Face(Vertex* v)
 std::vector<Vertex> Face::GetVertices()
 {
 	std::vector<Vertex> vertices;
-	std::list<Vertex*>::iterator iter = mVertices.begin();
 
-	for (iter; iter != mVertices.end(); iter++)
+	for (std::list<Vertex*>::iterator iter = mVertices.begin(); iter != mVertices.end(); iter++)
 	{
 		vertices.push_back((*iter)->GetVertex());
 	}
@@ -29,9 +28,8 @@ std::vector<Vertex> Face::GetVertices()
 QPolygonF Face::GetFace(Camera* cam)
 {
 	QPolygonF poly;
-	std::list<Vertex*>::iterator iter = mVertices.begin();
 
-	for (iter; iter != mVertices.end(); iter++)
+	for (std::list<Vertex*>::iterator iter = mVertices.begin(); iter != mVertices.end(); iter++)
 	{
 		QPoint p = cam->SetScreenCoordinate((*iter)->GetVertex());
 		poly << p;
@@ -40,13 +38,12 @@ QPolygonF Face::GetFace(Camera* cam)
 	return poly;
 }
 
-void Face::UpdateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
+void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
 {
 	QPointF offset = pEnd - pStart;
-	std::list<Shape*>::iterator iter = shapes.begin();
 
 	// 현재 Face*를 먼저 찾은 다음 iteration을 반대로 가면서 Face*의 Vertices를 offset만큼 업데이트
-	for (iter; iter != shapes.end(); iter++)
+	for (std::list<Shape*>::iterator iter = shapes.begin(); iter != shapes.end(); iter++)
 	{
 		if ((*iter) == this)
 		{
@@ -95,10 +92,9 @@ bool Face::CheckShapeType(std::string s)
 void Face::Render(QPainter* painter, Camera* camera)
 {
 	QPolygonF poly;
-	std::list<Vertex*>::iterator iter = mVertices.begin();
 	std::vector<QPoint> screenPoints;
 
-	for (iter; iter != mVertices.end(); iter++)
+	for (std::list<Vertex*>::iterator iter = mVertices.begin(); iter != mVertices.end(); iter++)
 	{
 		QPoint p = camera->SetScreenCoordinate((*iter)->GetVertex());
 		poly << p;

@@ -147,15 +147,13 @@ void Viewport::LoadScene()
 			CreateNewScene();
 			std::list<Shape*> shapes = mScene->retShapes();
 			QJsonObject jsonScene = document.object(); // Scene.json file
-			QJsonObject::iterator is = jsonScene.begin();
 
-			for (is; is != jsonScene.end(); is++)
+			for (QJsonObject::iterator is = jsonScene.begin(); is != jsonScene.end(); is++)
 			{
 				QJsonObject jsonShape = (*is).toObject();
 				QStringList keys = jsonShape.keys();
-				QStringList::iterator key = keys.begin();
 
-				for (key; key != keys.end(); key++)
+				for (QStringList::iterator key = keys.begin(); key != keys.end(); key++)
 				{
 					QJsonValue value = jsonShape.take(*key);
 
@@ -167,14 +165,13 @@ void Viewport::LoadScene()
 						{
 							key++;
 							QJsonObject vertices = jsonShape.take(*key).toObject();
-							QJsonObject::iterator vertex = vertices.begin();
 							std::list<Vertex*> lVertices;
 
 							// Separate and Trim JSON Vertex data
 							// https://stackoverflow.com/questions/42545597/how-to-match-spaces-at-the-strings-beginning-using-qregularexpression-in-qt
 							QRegularExpression separator("[,\\s]+");
 
-							for (vertex; vertex != vertices.end(); vertex++)
+							for (QJsonObject::iterator vertex = vertices.begin(); vertex != vertices.end(); vertex++)
 							{
 								QStringList vData = (*vertex).toString().trimmed().split(separator);
 								Vertex* v = new Vertex(QPointF(vData.front().toFloat(), vData.back().toFloat()));

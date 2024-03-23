@@ -93,9 +93,7 @@ void Scene::RenderCoordinate(QPainter* painter)
 
 void Scene::RenderShape(QPainter* painter)
 {
-	std::list<Shape*>::iterator iter;
-
-	for (iter = this->mShapes.begin(); iter != this->mShapes.end(); iter++)
+	for (std::list<Shape*>::iterator iter = mShapes.begin(); iter != mShapes.end(); iter++)
 	{
 		(*iter)->Render(painter, mCamera);
 	}

@@ -30,9 +30,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 	if (mButton != Qt::LeftButton)
 	{
-		std::list<Shape*>::reverse_iterator iter = mShapes.rbegin();
-
-		for (iter; iter != mShapes.rend(); iter++)
+		for (std::list<Shape*>::reverse_iterator iter = mShapes.rbegin(); iter != mShapes.rend(); iter++)
 		{
 			if ((*iter)->CheckShapeType("Point"))
 			{
@@ -53,9 +51,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		mVertex->UpdateVertex(mCamera->SetWindowCoordinate(mPos.toPoint()));
 
 		// Check snapping
-		std::list<Shape*>::iterator iter = mShapes.begin();
-
-		for (iter; iter != mShapes.end(); iter++)
+		for (std::list<Shape*>::iterator iter = mShapes.begin(); iter != mShapes.end(); iter++)
 		{
 			if ((*iter)->CheckShapeType("Point") && ((*iter) != mVertex))
 			{
