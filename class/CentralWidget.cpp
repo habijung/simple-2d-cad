@@ -12,13 +12,14 @@ CentralWidget::CentralWidget(QWidget* parent)
 
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
+	// TODO: Add attribute with Qt::WA_OpaquePaintEvent
+
 	int x = this->point.x();
 	int y = this->point.y();
 	int offset = 100;
 
 	QPainter painter(this);
 	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(QPen(Qt::black, 5, Qt::DashDotLine, Qt::RoundCap));
 
 	if (x | y)
 	{
@@ -44,13 +45,13 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 	qDebug() << "Mouse Press";
 	this->point = event->pos();
 	this->start = event->pos();
-	update();
 }
 
 void CentralWidget::mouseMoveEvent(QMouseEvent* event)
 {
 	xOffset = event->pos().x() - this->start.x();
 	yOffset = event->pos().y() - this->start.y();
+	update();
 }
 
 void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
