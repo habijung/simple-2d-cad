@@ -8,18 +8,26 @@
 #include "Viewport.h"
 
 
-Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera, StateMachine* mainMachine)
+Viewport::Viewport(QWidget* parent)
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
-	mScene = mainScene;
-	mCamera = mainCamera;
-	mMachine = mainMachine;
-	component* comp = new component;
-	mState = new SelectPointState("NULL", comp);
+	mCamera = new Camera(this, QSize(600, 600), 100.0);
+	mScene = new Scene(mCamera);
 	pValue = 80.0;
 	zValue = 60.0;
 	setMouseTracking(true);
+
+	// Define States
+	mComp = new component{ this, mScene, mCamera };
+
+	mMachine = new StateMachine;
+	mMachine->addState(new DrawLineState("DRAW_LINE", mComp));
+	mMachine->addState(new DrawFaceState("DRAW_FACE", mComp));
+	mMachine->addState(new SelectPointState("SELECT_POINT", mComp));
+	mMachine->addState(new SelectLineState("SELECT_LINE", mComp));
+	mMachine->addState(new SelectFaceState("SELECT_FACE", mComp));
+	mMachine->setState("SELECT_POINT");
 }
 
 void Viewport::getKeyEvent(QKeyEvent* event)
@@ -48,10 +56,9 @@ void Viewport::getKeyEvent(QKeyEvent* event)
 	repaint();
 }
 
-void Viewport::updateState(State* state, Scene* newScene)
+void Viewport::updateState(string name)
 {
-	mState = state;
-	mState->updateScene(newScene);
+	mMachine->transition(name, mComp);
 }
 
 void Viewport::saveScene()
@@ -114,7 +121,7 @@ void Viewport::saveScene()
 	}
 }
 
-Scene* Viewport::loadScene(Scene* oldScene)
+void Viewport::loadScene()
 {
 	QString dirPath = QString(getenv("USERPROFILE")) + "/Desktop/";
 	QString filePath = QFileDialog::getOpenFileName(
@@ -136,15 +143,15 @@ Scene* Viewport::loadScene(Scene* oldScene)
 		if (jsonError.error != QJsonParseError::NoError)
 		{
 			qDebug() << "fromJson failed: " << jsonError.errorString().toStdString();
-			return mScene;
+			return;
 		}
 
 		if (document.isObject())
 		{
+			createNewScene();
+			list<Shape*> shapes = mScene->retShapes();
 			QJsonObject jsonScene = document.object(); // Scene.json file
 			QJsonObject::iterator is = jsonScene.begin();
-			mScene = createNewScene(oldScene);
-			list<Shape*> shapes = mScene->retShapes();
 
 			for (is; is != jsonScene.end(); is++)
 			{
@@ -191,24 +198,22 @@ Scene* Viewport::loadScene(Scene* oldScene)
 							}
 
 							mScene->updateShapes(shapes);
+							update();
 						}
 					}
 				}
 			}
 		}
 	}
-
-	return mScene;
 }
 
-Scene* Viewport::createNewScene(Scene* oldScene)
+void Viewport::createNewScene()
 {
-	delete oldScene;
-	mScene = new Scene(this, mCamera);
-	mMachine->getCurrentState()->updateScene(mScene);
+	delete mScene;
+	mScene = new Scene(mCamera);
+	mComp->scene = mScene;
+	mMachine->state()->updateScene(mScene);
 	update();
-
-	return mScene;
 }
 
 void Viewport::paintEvent(QPaintEvent* event)
@@ -221,7 +226,7 @@ void Viewport::paintEvent(QPaintEvent* event)
 	painter->restore();
 
 	painter->save();
-	mMachine->getCurrentState()->paintEvent(painter);
+	mMachine->state()->paintEvent(painter);
 	painter->restore();
 
 	painter->end();
@@ -231,7 +236,7 @@ void Viewport::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	button = event->button();
-	mState->mousePressEvent(event);
+	mMachine->state()->mousePressEvent(event);
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)
@@ -243,13 +248,13 @@ void Viewport::mouseMoveEvent(QMouseEvent* event)
 		mPos = event->pos();
 	}
 
-	mState->mouseMoveEvent(event);
+	mMachine->state()->mouseMoveEvent(event);
 }
 
 void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
 	button = Qt::NoButton;
-	mState->mouseReleaseEvent(event);
+	mMachine->state()->mouseReleaseEvent(event);
 }
 
 void Viewport::wheelEvent(QWheelEvent* event)
@@ -262,5 +267,4 @@ void Viewport::resizeEvent(QResizeEvent* event)
 {
 	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
 	QSize* screenSize = new QSize(width(), height());
-	mScene->resize(screenSize);
 }

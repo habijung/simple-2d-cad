@@ -100,7 +100,7 @@ void DrawLineState::paintEvent(QPainter* painter)
 	);
 }
 
-DrawPolygonState::DrawPolygonState(string name, component* comp)
+DrawFaceState::DrawFaceState(string name, component* comp)
 	: State(name, comp)
 {
 	mName = name;
@@ -112,17 +112,17 @@ DrawPolygonState::DrawPolygonState(string name, component* comp)
 	mVertex = new Vertex(QPoint(INFINITY, INFINITY));
 }
 
-void DrawPolygonState::updateScene(Scene* scene)
+void DrawFaceState::updateScene(Scene* scene)
 {
 	mScene = scene;
 }
 
-void DrawPolygonState::mousePressEvent(QMouseEvent* event)
+void DrawFaceState::mousePressEvent(QMouseEvent* event)
 {
 	mButton = event->button();
 }
 
-void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
+void DrawFaceState::mouseMoveEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 
@@ -150,7 +150,7 @@ void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 	mViewport->update();
 }
 
-void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
+void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (mButton == Qt::LeftButton)
 	{
@@ -188,7 +188,7 @@ void DrawPolygonState::mouseReleaseEvent(QMouseEvent* event)
 	mViewport->update();
 }
 
-void DrawPolygonState::paintEvent(QPainter* painter)
+void DrawFaceState::paintEvent(QPainter* painter)
 {
 	if (mDrawPolygon)
 	{
@@ -432,7 +432,7 @@ void SelectLineState::paintEvent(QPainter* painter)
 	}
 }
 
-SelectPolygonState::SelectPolygonState(string name, component* comp)
+SelectFaceState::SelectFaceState(string name, component* comp)
 	: State(name, comp)
 {
 	mName = name;
@@ -442,12 +442,12 @@ SelectPolygonState::SelectPolygonState(string name, component* comp)
 	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
 }
 
-void SelectPolygonState::updateScene(Scene* scene)
+void SelectFaceState::updateScene(Scene* scene)
 {
 	mScene = scene;
 }
 
-void SelectPolygonState::mousePressEvent(QMouseEvent* event)
+void SelectFaceState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mPosStart = event->pos();
@@ -455,7 +455,7 @@ void SelectPolygonState::mousePressEvent(QMouseEvent* event)
 	mButton = event->button();
 }
 
-void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
+void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mShapes = mScene->retShapes();
@@ -490,12 +490,12 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 	mViewport->update();
 }
 
-void SelectPolygonState::mouseReleaseEvent(QMouseEvent* event)
+void SelectFaceState::mouseReleaseEvent(QMouseEvent* event)
 {
 	mButton = Qt::NoButton;
 }
 
-void SelectPolygonState::paintEvent(QPainter* painter)
+void SelectFaceState::paintEvent(QPainter* painter)
 {
 	if (mHit)
 	{

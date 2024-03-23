@@ -57,10 +57,10 @@ private:
 	bool mDrawLine;
 };
 
-class DrawPolygonState : public State
+class DrawFaceState : public State
 {
 public:
-	DrawPolygonState(string name, component* comp);
+	DrawFaceState(string name, component* comp);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -148,10 +148,10 @@ private:
 	bool mHit;
 };
 
-class SelectPolygonState : public State
+class SelectFaceState : public State
 {
 public:
-	SelectPolygonState(string name, component* comp);
+	SelectFaceState(string name, component* comp);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;

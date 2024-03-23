@@ -30,15 +30,6 @@ private:
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
-	component* mData;
-
-	// State Machine
-	StateMachine* machine;
-	DrawLineState* mDrawLineState;
-	DrawPolygonState* mDrawPolygonState;
-	SelectPointState* mSelectPointState;
-	SelectLineState* mSelectLineState;
-	SelectPolygonState* mSelectPolygonState;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);

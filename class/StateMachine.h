@@ -10,11 +10,11 @@ class StateMachine
 {
 public:
 	StateMachine();
+	State* state();
 	void addState(State* state);
-	void setState(State* state);
-	void transition(State* state);
-	State* getCurrentState();
-
+	State* getState(string name);
+	void setState(string name);
+	void transition(string name, component* comp);
 	void printAllStates();
 
 private:

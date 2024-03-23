@@ -12,18 +12,12 @@ class Viewport :
 	public QWidget
 {
 public:
-	Viewport
-	(
-		QWidget* parent = nullptr,
-		Scene* mainScene = nullptr,
-		Camera* mainCamera = nullptr,
-		StateMachine* mainMachine = nullptr
-	);
+	Viewport(QWidget* parent = nullptr);
 	void getKeyEvent(QKeyEvent* event);
-	void updateState(State* state, Scene* newScene);
+	void updateState(string name);
 	void saveScene();
-	Scene* loadScene(Scene* oldScene);
-	Scene* createNewScene(Scene* oldScene);
+	void loadScene();
+	void createNewScene();
 
 private:
 	void paintEvent(QPaintEvent* event) override;
@@ -37,9 +31,16 @@ private:
 	float pValue, zValue;
 	QPointF mPos;
 
-	// Class instances
+	// Viewport components
 	Scene* mScene;
 	Camera* mCamera;
+	component* mComp;
+
+	// Define States
 	StateMachine* mMachine;
-	State* mState;
+	DrawLineState* mDrawLineState;
+	DrawFaceState* mDrawFaceState;
+	SelectPointState* mSelectPointState;
+	SelectLineState* mSelectLineState;
+	SelectFaceState* mSelectFaceState;
 };

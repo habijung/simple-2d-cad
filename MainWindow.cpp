@@ -12,36 +12,11 @@ MainWindow::MainWindow(QWidget* parent)
 	setMenuBar();
 	setToolbar();
 
-	// Define State Machine and States
-	machine = new StateMachine();
-
-	// Create main scene, camera, viewport
-	mCamera = new Camera(this, QSize(600, 600), 100.0);
-	mScene = new Scene(this, mCamera);
-	mViewport = new Viewport(this, mScene, mCamera, machine);
-	mData = new component{ mViewport, mScene, mCamera };
+	// Create main Viewport
+	mViewport = new Viewport(this);
 	setCentralWidget(mViewport);
-
 	setSidebarWidget(mViewport);
 	setUnderbarWidget(mViewport);
-
-	component* comp = new component;
-	mDrawLineState = new DrawLineState("DRAW_LINE", mData);
-	mDrawPolygonState = new DrawPolygonState("DRAW_POLY", mData);
-	mSelectPointState = new SelectPointState("SELECT_POINT", mData);
-	mSelectLineState = new SelectLineState("SELECT_LINE", mData);
-	mSelectPolygonState = new SelectPolygonState("SELECT_POLYGON", mData);
-
-	machine->addState(mDrawLineState);
-	machine->addState(mDrawPolygonState);
-	machine->addState(mSelectPointState);
-	machine->addState(mSelectLineState);
-	machine->addState(mSelectPolygonState);
-	machine->setState(mSelectPointState);
-	machine->getCurrentState();
-
-	// TODO: 이 부분이 없으면 State에서 nullptr로 들어가는 이유 확인하고 중복되는 곳 병합하기
-	mViewport->updateState(machine->getCurrentState(), mScene);
 }
 
 MainWindow::~MainWindow()
@@ -113,11 +88,11 @@ void MainWindow::setToolbar()
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 	connect(newa, &QAction::triggered, qApp, [this]()
 		{
-			mScene = mViewport->createNewScene(mScene);
+			mViewport->createNewScene();
 		});
 	connect(open, &QAction::triggered, qApp, [this]()
 		{
-			mScene = mViewport->loadScene(mScene);
+			mViewport->loadScene();
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
@@ -133,15 +108,11 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Draw Line Clicked";
-			machine->transition(mDrawLineState);
-			mViewport->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState("DRAW_LINE");
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Draw Poly Clicked";
-			machine->transition(mDrawPolygonState);
-			mViewport->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState("DRAW_FACE");
 		});
 
 	QVBoxLayout* vBox = new QVBoxLayout(wSidebar);
@@ -160,21 +131,15 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 
 	connect(btnPoint, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Select Point Clicked";
-			machine->transition(mSelectPointState);
-			mViewport->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState("SELECT_POINT");
 		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Select Line Clicked";
-			machine->transition(mSelectLineState);
-			mViewport->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState("SELECT_LINE");
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			qDebug() << "Select Poly Clicked";
-			machine->transition(mSelectPolygonState);
-			mViewport->updateState(machine->getCurrentState(), mScene);
+			mViewport->updateState("SELECT_FACE");
 		});
 
 	QHBoxLayout* hBox = new QHBoxLayout(wUnderbar);
@@ -192,12 +157,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event)
 	switch (event->key())
 	{
 	case Qt::Key_QuoteLeft:
-		machine->setState(mSelectPointState);
-		mViewport->updateState(machine->getCurrentState(), mScene);
-
-		// TODO: State refacroting 하면서 자동으로 초기화가 되도록 만들기
-		mDrawLineState = new DrawLineState("DRAW_LINE", mData);
-		mDrawPolygonState = new DrawPolygonState("DRAW_POLY", mData);
+		mViewport->updateState("SELECT_POINT");
 		break;
 	}
 

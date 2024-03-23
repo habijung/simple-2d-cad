@@ -1,10 +1,8 @@
 #include "Scene.h"
 
 
-Scene::Scene(QWidget* parent, Camera* camera) : QWidget(parent)
+Scene::Scene(Camera* camera)
 {
-	this->width = parent->width();
-	this->height = parent->height();
 	mCamera = camera;
 
 	for (int i = -10; i <= 10; i++)
@@ -39,12 +37,6 @@ Scene::Scene(QWidget* parent, Camera* camera) : QWidget(parent)
 		//mShapes.push_back(v5);
 		//mShapes.push_back(new Line(v4, v5));
 	}
-}
-
-void Scene::resize(QSize* screenSize)
-{
-	this->width = screenSize->width();
-	this->height = screenSize->height();
 }
 
 void Scene::updateShapes(list<Shape*> newShapes)

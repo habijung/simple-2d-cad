@@ -8,6 +8,11 @@ StateMachine::StateMachine()
 	this->mStates = {};
 }
 
+State* StateMachine::state()
+{
+	return mState;
+}
+
 void StateMachine::addState(State* state)
 {
 	string name = state->getStateName();
@@ -37,23 +42,62 @@ void StateMachine::addState(State* state)
 	}
 }
 
-void StateMachine::setState(State* state)
+State* StateMachine::getState(string name)
 {
-	this->mState = state;
+	list<State*>::iterator iter = mStates.begin();
+	bool checkSameName = false;
+
+	for (iter; iter != mStates.end(); iter++)
+	{
+		if (!(*iter)->getStateName().compare(name))
+		{
+			checkSameName = true;
+			break;
+		}
+	}
+
+	if (checkSameName)
+	{
+		return *iter;
+	}
 }
 
-void StateMachine::transition(State* state)
+void StateMachine::setState(string name)
 {
-	// TODO: Transmission QEvent with enter, leave
-	this->setState(state);
+	list<State*>::iterator iter = mStates.begin();
+	bool checkSameName = false;
+
+	for (iter; iter != mStates.end(); iter++)
+	{
+		if (!(*iter)->getStateName().compare(name))
+		{
+			checkSameName = true;
+			break;
+		}
+	}
+
+	if (checkSameName)
+	{
+		mState = *iter;
+	}
 }
 
-State* StateMachine::getCurrentState()
+void StateMachine::transition(string name, component* comp)
 {
-	string name = this->mState->getStateName();
-	//qDebug() << "Current State:" << name;
+	// TODO: Transition QEvent with enter, leave
+	if (!name.compare("DRAW_LINE"))
+	{
+		//delete getState(name);
+		addState(new DrawLineState("DRAW_LINE", comp));
+	}
+	else if (!name.compare("DRAW_FACE"))
+	{
+		//delete getState(name);
+		addState(new DrawFaceState("DRAW_FACE", comp));
+	}
 
-	return this->mState;
+	setState(name);
+	mState->updateScene(comp->scene);
 }
 
 void StateMachine::printAllStates()

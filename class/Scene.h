@@ -13,8 +13,7 @@ using namespace std;
 class Scene : public QWidget
 {
 public:
-	Scene(QWidget* parent = nullptr, Camera* camera = nullptr);
-	void resize(QSize* screenSize);
+	Scene(Camera* camera = nullptr);
 	void updateShapes(list<Shape*> newShapes);
 
 	// Render method
@@ -28,7 +27,6 @@ public:
 	list<Shape*> retShapes();
 
 private:
-	int width, height;
 	vector<QPointF> vertScreen;
 	list<Shape*> mShapes;
 	Camera* mCamera;
