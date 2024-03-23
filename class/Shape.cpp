@@ -135,20 +135,31 @@ QPolygonF Face::retFace(Camera* cam)
 	return poly;
 }
 
-void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec, float dx, float dy, float scale)
+void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices, float dx, float dy, float scale)
 {
-	list<Vertex*> newVertices;
 	QPointF offset = pEnd - pStart;
-	vector<Vertex>::iterator iter = vec.begin();
+	list<Shape*>::iterator iter = shapes.begin();
 
-	for (iter; iter != vec.end(); iter++)
+	// 현재 Face*를 먼저 찾은 다음 iteration을 반대로 가면서 Face*의 Vertices를 offset만큼 업데이트
+	for (iter; iter != shapes.end(); iter++)
 	{
-		QPointF p = offset + cam->setWindowToScreen((*iter).retVertex());
-		Vertex* v = new Vertex(cam->setScreenToWindow(p.toPoint(), dx, dy, scale));
-		newVertices.push_back(v);
-	}
+		if ((*iter) == this)
+		{
+			int count = 0;
+			int fSize = vertices.size();
 
-	mVertices = newVertices;
+			while (count < fSize)
+			{
+				count++;
+				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
+				Vertex* v = dynamic_cast<Vertex*>(*iter);
+				QPointF p = offset + cam->setWindowToScreen(vertices[fSize - count].retVertex());
+				v->updateVertex(cam->setScreenToWindow(p.toPoint(), dx, dy, scale));
+			}
+
+			break;
+		}
+	}
 }
 
 string Face::retType()
