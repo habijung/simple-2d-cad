@@ -18,6 +18,7 @@ class State
 public:
 	State(string name, component* comp);
 	string getStateName();
+	bool getMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
 	virtual ~State() {}
 	virtual void mousePressEvent(QMouseEvent* event) = 0;

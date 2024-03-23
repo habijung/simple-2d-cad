@@ -18,6 +18,11 @@ string State::getStateName()
 	return this->mName;
 }
 
+bool State::getMouseLeftPressed(bool hit, int button, QMouseEvent* event)
+{
+	return hit && (button == Qt::LeftButton) && (event->button() == Qt::NoButton);
+}
+
 DrawLineState::DrawLineState(string name, component* comp)
 	: State(name, comp)
 {
@@ -165,7 +170,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		}
 	}
 
-	if (mHit && (mButton == Qt::LeftButton) && (event->button() == Qt::NoButton))
+	if (getMouseLeftPressed(mHit, mButton, event))
 	{
 		float dx = this->mViewport->width() / 2.0;
 		float dy = this->mViewport->height() / 2.0;
@@ -237,6 +242,8 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 			}
 		}
 	}
+
+	if (getMouseLeftPressed(mHit, mButton, event)) {}
 
 	mViewport->update();
 }
