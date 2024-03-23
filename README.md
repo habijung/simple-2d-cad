@@ -10,6 +10,10 @@
 
 https://github.com/habi-ze/simple-2d-cad/assets/148021651/e0c8f74a-6418-46f3-8afd-66c9dc884b3c
 
+## Project Class Structure
+
+<img src="class-diagram.png">
+
 ## Object
 
 - Practice project development skills
