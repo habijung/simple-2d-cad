@@ -33,6 +33,9 @@ class Line : public Shape
 {
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
+	Line(QPointF p1, QPointF p2);
+	vector<QPointF> retVertices();
+	QLineF retLine(Camera* cam);
 
 	virtual string retType() override;
 	virtual void render(QPainter* painter, Camera* camera);

@@ -46,6 +46,30 @@ Line::Line(Vertex* v1, Vertex* v2)
 	mV2 = v2;
 }
 
+Line::Line(QPointF p1, QPointF p2)
+{
+	mType = "Line";
+	mV1 = new Vertex(p1);
+	mV2 = new Vertex(p2);
+}
+
+vector<QPointF> Line::retVertices()
+{
+	vector<QPointF>	vertices;
+	vertices.push_back(mV1->retVertex());
+	vertices.push_back(mV2->retVertex());
+
+	return vertices;
+}
+
+QLineF Line::retLine(Camera* cam)
+{
+	QPointF p1 = cam->setWindowToScreen(mV1->retVertex());
+	QPointF p2 = cam->setWindowToScreen(mV2->retVertex());
+
+	return QLineF(p1, p2);
+}
+
 string Line::retType()
 {
 	return mType;

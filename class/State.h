@@ -115,4 +115,10 @@ private:
 
 	QPointF mPos;
 	int mButton;
+
+	// For select line
+	list<Shape*> mShapes;
+	Line* mLine;
+	QPolygonF mPolygon;
+	bool mHit;
 };

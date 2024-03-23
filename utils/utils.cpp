@@ -26,6 +26,31 @@ QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)
 	return poly;
 }
 
+QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d)
+{
+	QPolygonF poly = QPolygonF();
+	QLineF line = l->retLine(cam);
+	qreal rad = line.angle() * acos(-1) / 180; // PI = acos(-1)
+	qreal dx = d * sin(rad);
+	qreal dy = d * cos(rad);
+	QPointF dt = QPointF(dx, dy);
+	QPointF points[4] =
+	{
+		line.p1() + dt,
+		line.p2() + dt,
+		line.p2() - dt,
+		line.p1() - dt
+	};
+
+	// Counter-Clockwise
+	for (int i = 0; i < 4; i++)
+	{
+		poly << points[i];
+	}
+
+	return poly;
+}
+
 bool hitTestingPoint(QPointF pos, QPolygonF poly)
 {
 	int count = 0;

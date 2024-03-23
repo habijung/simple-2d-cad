@@ -191,7 +191,7 @@ void SelectPointState::paintEvent(QPainter* painter)
 		painter->setPen(QPen(Qt::red, 10, Qt::SolidLine, Qt::RoundCap));
 		painter->drawPoint(mCamera->setWindowToScreen(mVertex->retVertex()));
 
-		// Show bounding box
+		// Draw bounding box
 		painter->setPen(QPen(Qt::blue, 2));
 		painter->drawPolygon(mPolygon);
 	}
@@ -204,24 +204,58 @@ SelectLineState::SelectLineState(string name, component* comp)
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
+	mLine = new Line(QPointF(INFINITY, INFINITY), QPointF(INFINITY, INFINITY));
 }
 
 void SelectLineState::mousePressEvent(QMouseEvent* event)
 {
-	qDebug() << "mouse press event";
+	mPos = event->pos();
+	mButton = event->button();
 }
 
 void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 {
-	qDebug() << "mouse move event";
+	mPos = event->pos();
+	mShapes = mScene->retShapes();
+
+	if (!(mButton == Qt::LeftButton))
+	{
+		list<Shape*>::reverse_iterator iter = mShapes.rbegin();
+
+		for (iter; iter != mShapes.rend(); iter++)
+		{
+			if (!(*iter)->retType().compare("Line"))
+			{
+				mLine = static_cast<Line*>(*iter);
+				mPolygon = createLineBoundingBox(mCamera, mLine, 15);
+				mHit = hitTestingPoint(mPos, mPolygon);
+
+				if (mHit)
+				{
+					break;
+				}
+			}
+		}
+	}
+
+	mViewport->update();
 }
 
 void SelectLineState::mouseReleaseEvent(QMouseEvent* event)
 {
-	qDebug() << "mouse release event";
+	mButton = Qt::NoButton;
 }
 
 void SelectLineState::paintEvent(QPainter* painter)
 {
-	qDebug() << "paint event";
+	if (mHit)
+	{
+		// Line highlight
+		painter->setPen(QPen(Qt::red, 3, Qt::SolidLine, Qt::RoundCap));
+		painter->drawLine(mLine->retLine(mCamera));
+
+		// Draw bounding box
+		painter->setPen(QPen(Qt::green, 5));
+		painter->drawPolygon(mPolygon);
+	}
 }
