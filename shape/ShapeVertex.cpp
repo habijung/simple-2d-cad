@@ -15,30 +15,30 @@ Vertex::Vertex(QPointF p)
 	mY = p.y();
 }
 
-QPointF Vertex::retVertex()
+QPointF Vertex::GetVertex()
 {
 	return QPointF(mX, mY);
 }
 
-void Vertex::updateVertex(QPointF p)
+void Vertex::UpdateVertex(QPointF p)
 {
 	mX = p.x();
 	mY = p.y();
 }
 
-std::string Vertex::type()
+std::string Vertex::Type()
 {
 	return mType;
 }
 
-bool Vertex::checkType(std::string s)
+bool Vertex::CheckShapeType(std::string s)
 {
 	return !mType.compare(s);
 }
 
-void Vertex::render(QPainter* painter, Camera* camera)
+void Vertex::Render(QPainter* painter, Camera* camera)
 {
-	QPoint p = camera->setScreen(QPointF(mX, mY));
+	QPoint p = camera->SetScreenCoordinate(QPointF(mX, mY));
 	painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 	painter->drawPoint(p);
 }

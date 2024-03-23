@@ -1,7 +1,6 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-
 SelectFaceState::SelectFaceState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
@@ -12,7 +11,7 @@ SelectFaceState::SelectFaceState(std::string name, SelectUtils::ViewportData* da
 	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
 }
 
-void SelectFaceState::updateScene(Scene* scene)
+void SelectFaceState::UpdateScene(Scene* scene)
 {
 	mScene = scene;
 }
@@ -21,7 +20,7 @@ void SelectFaceState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mPosStart = event->pos();
-	mFaceVertices = mFace->retVertices();
+	mFaceVertices = mFace->GetVertices();
 	mButton = event->button();
 }
 
@@ -36,11 +35,11 @@ void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
-			if ((*iter)->checkType("Face"))
+			if ((*iter)->CheckShapeType("Face"))
 			{
 				// No need to consider square bounding box type
 				mFace = static_cast<Face*>(*iter);
-				mPolygon = mFace->retFace(mCamera);
+				mPolygon = mFace->GetFace(mCamera);
 				mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 				if (mHit)
@@ -51,10 +50,10 @@ void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 		}
 	}
 
-	if (getMouseLeftPressed(mHit, mButton, event))
+	if (GetMouseLeftPressed(mHit, mButton, event))
 	{
-		mFace->updateFace(mCamera, mPosStart, mPos, mScene->retShapes(), mFaceVertices);
-		mPolygon = mFace->retFace(mCamera);
+		mFace->UpdateFace(mCamera, mPosStart, mPos, mScene->retShapes(), mFaceVertices);
+		mPolygon = mFace->GetFace(mCamera);
 	}
 
 	mViewport->update();

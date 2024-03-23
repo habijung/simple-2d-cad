@@ -15,13 +15,13 @@ public:
 
 	// Update shape
 	std::list<Shape*> retShapes();
-	void addShape(Shape* s);
-	void updateShapes(std::list<Shape*> newShapes);
-	void createSampleShapes();
+	void AddShape(Shape* s);
+	void UpdateShapes(std::list<Shape*> newShapes);
+	void CreateSampleShapes();
 
 	// Render method
-	void renderCoordinate(QPainter* painter);
-	void renderShape(QPainter* painter);
+	void RenderCoordinate(QPainter* painter);
+	void RenderShape(QPainter* painter);
 
 private:
 	std::list<Shape*> mShapes;

@@ -1,7 +1,6 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-
 DrawLineState::DrawLineState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
@@ -13,7 +12,7 @@ DrawLineState::DrawLineState(std::string name, SelectUtils::ViewportData* data)
 	mDrawLine = false;
 }
 
-void DrawLineState::updateScene(Scene* scene)
+void DrawLineState::UpdateScene(Scene* scene)
 {
 	mScene = scene;
 }
@@ -38,12 +37,12 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 
 		if (mPoints.size() == 2)
 		{
-			Vertex* v1 = new Vertex(mCamera->setWindow(mPoints.front().toPoint()));
-			Vertex* v2 = new Vertex(mCamera->setWindow(mPos.toPoint()));
+			Vertex* v1 = new Vertex(mCamera->SetWindowCoordinate(mPoints.front().toPoint()));
+			Vertex* v2 = new Vertex(mCamera->SetWindowCoordinate(mPos.toPoint()));
 			Line* line = new Line(v1, v2);
-			mScene->addShape(v1);
-			mScene->addShape(v2);
-			mScene->addShape(line);
+			mScene->AddShape(v1);
+			mScene->AddShape(v2);
+			mScene->AddShape(line);
 
 			// Initialization
 			mPoints = {};
@@ -74,7 +73,7 @@ void DrawLineState::paintEvent(QPainter* painter)
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setWindow(mPos.toPoint()).x(), 0, 'f', 2)
-		.arg(mCamera->setWindow(mPos.toPoint()).y(), 0, 'f', 2)
+		.arg(mCamera->SetWindowCoordinate(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->SetWindowCoordinate(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }

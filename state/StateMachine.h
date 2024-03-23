@@ -2,18 +2,18 @@
 #include <list>
 #include "State.h"
 
-
 class StateMachine
 {
 public:
 	StateMachine();
-	State* state();
-	void addState(State* state);
+	
+	State* CurrentState();
 	State* getState(std::string name);
-	void setState(std::string name);
-	void deleteState(std::string name);
-	void transition(std::string name, SelectUtils::ViewportData* data);
-	void printAllStates();
+	void AddState(State* state);
+	void SetState(std::string name);
+	void DeleteState(std::string name);
+	void Transition(std::string name, SelectUtils::ViewportData* data);
+	void PrintAllStates();
 
 private:
 	State* mState;

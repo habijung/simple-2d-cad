@@ -1,21 +1,20 @@
 #include <QDebug>
 #include "StateMachine.h"
 
-
 StateMachine::StateMachine()
 {
 	this->mState = nullptr;
 	this->mStates = {};
 }
 
-State* StateMachine::state()
+State* StateMachine::CurrentState()
 {
 	return mState;
 }
 
-void StateMachine::addState(State* state)
+void StateMachine::AddState(State* state)
 {
-	std::string name = state->getStateName();
+	std::string name = state->GetName();
 	std::list<State*>::iterator iter = this->mStates.begin();
 	bool checkSameName = false;
 
@@ -28,7 +27,7 @@ void StateMachine::addState(State* state)
 		for (iter; iter != this->mStates.end(); iter++)
 		{
 			// Check if the same name exists.
-			if (!(*iter)->getStateName().compare(name))
+			if (!(*iter)->GetName().compare(name))
 			{
 				checkSameName = true;
 				break;
@@ -49,7 +48,7 @@ State* StateMachine::getState(std::string name)
 
 	for (iter; iter != mStates.end(); iter++)
 	{
-		if (!(*iter)->getStateName().compare(name))
+		if (!(*iter)->GetName().compare(name))
 		{
 			checkSameName = true;
 			break;
@@ -62,18 +61,19 @@ State* StateMachine::getState(std::string name)
 	}
 	else
 	{
-		return mStates.front(); // State: SELECT_POINT
+		// Return default state: SELECT_POINT
+		return mStates.front();
 	}
 }
 
-void StateMachine::setState(std::string name)
+void StateMachine::SetState(std::string name)
 {
 	std::list<State*>::iterator iter = mStates.begin();
 	bool checkSameName = false;
 
 	for (iter; iter != mStates.end(); iter++)
 	{
-		if (!(*iter)->getStateName().compare(name))
+		if (!(*iter)->GetName().compare(name))
 		{
 			checkSameName = true;
 			break;
@@ -86,14 +86,14 @@ void StateMachine::setState(std::string name)
 	}
 }
 
-void StateMachine::deleteState(std::string name)
+void StateMachine::DeleteState(std::string name)
 {
 	std::list<State*>::iterator iter = mStates.begin();
 	bool checkSameName = false;
 
 	for (iter; iter != mStates.end(); iter++)
 	{
-		if (!(*iter)->getStateName().compare(name))
+		if (!(*iter)->GetName().compare(name))
 		{
 			iter = mStates.erase(iter);
 			break;
@@ -101,18 +101,18 @@ void StateMachine::deleteState(std::string name)
 	}
 }
 
-void StateMachine::transition(std::string name, SelectUtils::ViewportData* data)
+void StateMachine::Transition(std::string name, SelectUtils::ViewportData* data)
 {
-	setState(name);
-	mState->updateScene(data->scene);
+	SetState(name);
+	mState->UpdateScene(data->scene);
 }
 
-void StateMachine::printAllStates()
+void StateMachine::PrintAllStates()
 {
 	std::list<State*>::iterator iter = this->mStates.begin();
 
 	for (iter; iter != this->mStates.end(); iter++)
 	{
-		qDebug() << (*iter)->getStateName();
+		qDebug() << (*iter)->GetName();
 	}
 }

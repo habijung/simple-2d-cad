@@ -13,10 +13,10 @@ public:
 	~Viewport();
 
 	// Update Scene
-	void updateState(std::string name);
-	void saveScene();
-	void loadScene();
-	void createNewScene();
+	void UpdateState(std::string name);
+	void SaveScene();
+	void LoadScene();
+	void CreateNewScene();
 
 private:
 	void paintEvent(QPaintEvent* event) override;

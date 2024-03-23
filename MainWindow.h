@@ -20,15 +20,16 @@ public:
 	MainWindow(QWidget* parent = nullptr);
 	~MainWindow();
 
-	void setMenuBar();
-	void setToolbar();
-	void setSidebarWidget(QWidget* widget);
-	void setUnderbarWidget(QWidget* widget);
+	void SetMenubar();
+	void SetToolbar();
+	void SetSidebarWidget(QWidget* widget);
+	void SetUnderbarWidget(QWidget* widget);
 
 	void resizeEvent(QResizeEvent* event) override;
 
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* mViewport;
-	QWidget* mSidebar, * mUnderbar;
+	QWidget* mSidebar;
+	QWidget* mUnderbar;
 };

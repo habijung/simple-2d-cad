@@ -13,7 +13,7 @@ Camera::Camera(QSize size, float scale)
 }
 
 // Coordinate conversion
-QPointF Camera::setWindow(QPoint pScreen)
+QPointF Camera::SetWindowCoordinate(QPoint pScreen)
 {
 	// f({ x, y }) = { (x - mX) / scale, (y - mY) / (-mScale) }
 	QPointF pWindow =
@@ -24,7 +24,7 @@ QPointF Camera::setWindow(QPoint pScreen)
 	return pWindow;
 }
 
-QPoint Camera::setScreen(QPointF pWindow)
+QPoint Camera::SetScreenCoordinate(QPointF pWindow)
 {
 	QPoint pScreen =
 	{
@@ -35,7 +35,7 @@ QPoint Camera::setScreen(QPointF pWindow)
 }
 
 // Camera action
-void Camera::zoom(float scale)
+void Camera::Zoom(float scale)
 {
 	mScale += scale;
 
@@ -48,10 +48,10 @@ void Camera::zoom(float scale)
 		mScale = 40.0;
 	}
 
-	pan(0, 0);
+	Pan(0, 0);
 }
 
-void Camera::pan(float dx, float dy)
+void Camera::Pan(float dx, float dy)
 {
 	float camX = -mX / mScale + dx;
 	float camY = mY / mScale + dy;
@@ -84,7 +84,7 @@ void Camera::pan(float dx, float dy)
 	mY = camY * mScale;
 }
 
-void Camera::reset(const QSize& size)
+void Camera::Reset(const QSize& size)
 {
 	mX = size.width() / 2.0;
 	mY = size.height() / 2.0;

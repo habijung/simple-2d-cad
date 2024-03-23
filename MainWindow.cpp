@@ -13,11 +13,11 @@ MainWindow::MainWindow(QWidget* parent)
 	// Set UI
 	ui->setupUi(this);
 	setMinimumSize(400, 400);
-	setMenuBar();
-	setToolbar();
+	SetMenubar();
+	SetToolbar();
 	setCentralWidget(mViewport);
-	setSidebarWidget(mViewport);
-	setUnderbarWidget(mViewport);
+	SetSidebarWidget(mViewport);
+	SetUnderbarWidget(mViewport);
 }
 
 MainWindow::~MainWindow()
@@ -25,7 +25,7 @@ MainWindow::~MainWindow()
 	delete ui;
 }
 
-void MainWindow::setMenuBar()
+void MainWindow::SetMenubar()
 {
 	/* Menu Icon */
 	QPixmap newpix("img/new.png");
@@ -75,7 +75,7 @@ void MainWindow::setMenuBar()
 	}
 }
 
-void MainWindow::setToolbar()
+void MainWindow::SetToolbar()
 {
 	/* Toolbar */
 	QToolBar* toolbar = addToolBar("main toolbar");
@@ -89,19 +89,19 @@ void MainWindow::setToolbar()
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
 	connect(newa, &QAction::triggered, qApp, [this]()
 		{
-			mViewport->createNewScene();
+			mViewport->CreateNewScene();
 		});
 	connect(open, &QAction::triggered, qApp, [this]()
 		{
-			mViewport->loadScene();
+			mViewport->LoadScene();
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
-			mViewport->saveScene();
+			mViewport->SaveScene();
 		});
 }
 
-void MainWindow::setSidebarWidget(QWidget* widget)
+void MainWindow::SetSidebarWidget(QWidget* widget)
 {
 	mSidebar = new QWidget(widget);
 	QVBoxLayout* vBox = new QVBoxLayout(mSidebar);
@@ -117,15 +117,15 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			mViewport->updateState("DRAW_LINE");
+			mViewport->UpdateState("DRAW_LINE");
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			mViewport->updateState("DRAW_FACE");
+			mViewport->UpdateState("DRAW_FACE");
 		});
 }
 
-void MainWindow::setUnderbarWidget(QWidget* widget)
+void MainWindow::SetUnderbarWidget(QWidget* widget)
 {
 	mUnderbar = new QWidget(widget);
 	QHBoxLayout* hBox = new QHBoxLayout(mUnderbar);
@@ -144,15 +144,15 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 
 	connect(btnPoint, &QPushButton::clicked, [this]()
 		{
-			mViewport->updateState("SELECT_POINT");
+			mViewport->UpdateState("SELECT_POINT");
 		});
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
-			mViewport->updateState("SELECT_LINE");
+			mViewport->UpdateState("SELECT_LINE");
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
-			mViewport->updateState("SELECT_FACE");
+			mViewport->UpdateState("SELECT_FACE");
 		});
 }
 

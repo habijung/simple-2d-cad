@@ -12,17 +12,17 @@ std::list<Shape*> Scene::retShapes()
 	return mShapes;
 }
 
-void Scene::addShape(Shape* s)
+void Scene::AddShape(Shape* s)
 {
 	mShapes.push_back(s);
 }
 
-void Scene::updateShapes(std::list<Shape*> newShapes)
+void Scene::UpdateShapes(std::list<Shape*> newShapes)
 {
 	mShapes = newShapes;
 }
 
-void Scene::createSampleShapes()
+void Scene::CreateSampleShapes()
 {
 	Vertex* v1 = new Vertex(0, 1);
 	Vertex* v2 = new Vertex(-1, 2);
@@ -49,18 +49,18 @@ void Scene::createSampleShapes()
 
 
 // Render method
-void Scene::renderCoordinate(QPainter* painter)
+void Scene::RenderCoordinate(QPainter* painter)
 {
 	for (int i = -SCREEN_LIMIT; i <= SCREEN_LIMIT; i++)
 	{
 		for (int j = -SCREEN_LIMIT; j <= SCREEN_LIMIT; j++)
 		{
-			QLine xAxis = QLine(mCamera->setScreen(QPoint(i, j)), mCamera->setScreen(QPoint(-i, j)));
-			QLine yAxis = QLine(mCamera->setScreen(QPoint(i, -j)), mCamera->setScreen(QPoint(i, j)));
+			QLine xAxis = QLine(mCamera->SetScreenCoordinate(QPoint(i, j)), mCamera->SetScreenCoordinate(QPoint(-i, j)));
+			QLine yAxis = QLine(mCamera->SetScreenCoordinate(QPoint(i, -j)), mCamera->SetScreenCoordinate(QPoint(i, j)));
 
 			if (i == 0 || j == 0)
 			{
-				QPoint p = mCamera->setScreen(QPoint(i, j));
+				QPoint p = mCamera->SetScreenCoordinate(QPoint(i, j));
 				painter->setPen(QPen(Qt::black, 0.1));
 				painter->setFont(QFont("Arial", 12));
 
@@ -91,12 +91,12 @@ void Scene::renderCoordinate(QPainter* painter)
 	}
 }
 
-void Scene::renderShape(QPainter* painter)
+void Scene::RenderShape(QPainter* painter)
 {
 	std::list<Shape*>::iterator iter;
 
 	for (iter = this->mShapes.begin(); iter != this->mShapes.end(); iter++)
 	{
-		(*iter)->render(painter, mCamera);
+		(*iter)->Render(painter, mCamera);
 	}
 }

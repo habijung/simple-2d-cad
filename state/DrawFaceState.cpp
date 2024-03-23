@@ -1,7 +1,6 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-
 DrawFaceState::DrawFaceState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
@@ -14,7 +13,7 @@ DrawFaceState::DrawFaceState(std::string name, SelectUtils::ViewportData* data)
 	mVertex = new Vertex(QPoint(INFINITY, INFINITY));
 }
 
-void DrawFaceState::updateScene(Scene* scene)
+void DrawFaceState::UpdateScene(Scene* scene)
 {
 	mScene = scene;
 }
@@ -32,7 +31,7 @@ void DrawFaceState::mouseMoveEvent(QMouseEvent* event)
 	{
 		// Create bounding box and hit testing by start point.
 		mLine = QLineF(mPoints.back(), mPos);
-		mVertex = new Vertex(mCamera->setWindow(mPoints[0].toPoint()));
+		mVertex = new Vertex(mCamera->SetWindowCoordinate(mPoints[0].toPoint()));
 		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
 		mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
@@ -72,12 +71,12 @@ void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 				// 마지막 점은 polygon 구성에서 빼기
 				for (int i = 0; i < mPoints.size() - 1; i++)
 				{
-					v = new Vertex(mCamera->setWindow(mPoints[i].toPoint()));
+					v = new Vertex(mCamera->SetWindowCoordinate(mPoints[i].toPoint()));
 					vertices.push_back(v);
-					mScene->addShape(v);
+					mScene->AddShape(v);
 				}
 
-				mScene->addShape(new Face(vertices));
+				mScene->AddShape(new Face(vertices));
 			}
 
 			mPoints = {};
@@ -147,7 +146,7 @@ void DrawFaceState::paintEvent(QPainter* painter)
 		mPos.x() + 15,
 		mPos.y() - 15,
 		QString("x: %1, y: %2")
-		.arg(mCamera->setWindow(mPos.toPoint()).x(), 0, 'f', 2)
-		.arg(mCamera->setWindow(mPos.toPoint()).y(), 0, 'f', 2)
+		.arg(mCamera->SetWindowCoordinate(mPos.toPoint()).x(), 0, 'f', 2)
+		.arg(mCamera->SetWindowCoordinate(mPos.toPoint()).y(), 0, 'f', 2)
 	);
 }

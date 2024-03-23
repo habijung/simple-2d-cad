@@ -1,7 +1,6 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-
 State::State(std::string name, SelectUtils::ViewportData* data)
 {
 	mName = name;
@@ -10,12 +9,12 @@ State::State(std::string name, SelectUtils::ViewportData* data)
 	mCamera = data->camera;
 }
 
-std::string State::getStateName()
+std::string State::GetName()
 {
 	return this->mName;
 }
 
-bool State::getMouseLeftPressed(bool hit, int button, QMouseEvent* event)
+bool State::GetMouseLeftPressed(bool hit, int button, QMouseEvent* event)
 {
 	return hit && (button == Qt::LeftButton) && (event->button() == Qt::NoButton);
 }

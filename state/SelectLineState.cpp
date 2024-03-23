@@ -1,7 +1,6 @@
 #include "State.h"
 #include "../viewport/Viewport.h"
 
-
 SelectLineState::SelectLineState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
@@ -12,7 +11,7 @@ SelectLineState::SelectLineState(std::string name, SelectUtils::ViewportData* da
 	mLine = new Line(QPointF(INFINITY, INFINITY), QPointF(INFINITY, INFINITY));
 }
 
-void SelectLineState::updateScene(Scene* scene)
+void SelectLineState::UpdateScene(Scene* scene)
 {
 	mScene = scene;
 }
@@ -21,7 +20,7 @@ void SelectLineState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 	mPosStart = event->pos();
-	mLineVertices = mLine->retVertices();
+	mLineVertices = mLine->GetVertices();
 	mButton = event->button();
 }
 
@@ -36,7 +35,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
-			if ((*iter)->checkType("Line"))
+			if ((*iter)->CheckShapeType("Line"))
 			{
 				mLine = static_cast<Line*>(*iter);
 				mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);
@@ -50,9 +49,9 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 		}
 	}
 
-	if (getMouseLeftPressed(mHit, mButton, event))
+	if (GetMouseLeftPressed(mHit, mButton, event))
 	{
-		mLine->updateLine(mCamera, mPosStart, mPos, mLineVertices);
+		mLine->UpdateLine(mCamera, mPosStart, mPos, mLineVertices);
 		mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);
 	}
 
@@ -70,7 +69,7 @@ void SelectLineState::paintEvent(QPainter* painter)
 	{
 		// Line highlight
 		painter->setPen(QPen(Qt::red, 3, Qt::SolidLine, Qt::RoundCap));
-		painter->drawLine(mLine->retLine(mCamera));
+		painter->drawLine(mLine->GetLine(mCamera));
 
 		// Draw bounding box
 		mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);

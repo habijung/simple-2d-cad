@@ -6,7 +6,7 @@
 QPolygonF SelectUtils::CreatePointBoundingBox(Camera* cam, Vertex* v, int d)
 {
 	QPolygonF poly = QPolygonF();
-	QPointF p = cam->setScreen(v->retVertex());
+	QPointF p = cam->SetScreenCoordinate(v->GetVertex());
 	QPointF dt[2] = { QPointF(d, d), QPointF(-d, d) };
 	QPointF points[4] =
 	{
@@ -28,7 +28,7 @@ QPolygonF SelectUtils::CreatePointBoundingBox(Camera* cam, Vertex* v, int d)
 QPolygonF SelectUtils::CreateLineBoundingBox(Camera* cam, Line* l, int d)
 {
 	QPolygonF poly = QPolygonF();
-	QLineF line = l->retLine(cam);
+	QLineF line = l->GetLine(cam);
 	qreal rad = line.angle() * acos(-1) / 180; // PI = acos(-1)
 	qreal dx = d * sin(rad);
 	qreal dy = d * cos(rad);
@@ -53,7 +53,7 @@ QPolygonF SelectUtils::CreateLineBoundingBox(Camera* cam, Line* l, int d)
 QPolygonF SelectUtils::CreateLineSelectionBox(Camera* cam, Line* l)
 {
 	QPolygonF poly = QPolygonF();
-	QLineF line = l->retLine(cam);
+	QLineF line = l->GetLine(cam);
 
 	// No need to consider polygon direction
 	poly << line.p1()
@@ -66,7 +66,7 @@ QPolygonF SelectUtils::CreateLineSelectionBox(Camera* cam, Line* l)
 
 QPolygonF SelectUtils::CreateFaceSelectionBox(Camera* cam, Face* f)
 {
-	QPolygonF poly = f->retFace(cam);
+	QPolygonF poly = f->GetFace(cam);
 	SelectUtils::PointReal min = { INFINITY, INFINITY };
 	SelectUtils::PointReal max = { -INFINITY, -INFINITY };
 

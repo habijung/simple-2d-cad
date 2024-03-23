@@ -22,57 +22,57 @@ Line::Line(std::list<Vertex*> vertices)
 	mV2 = vertices.back();
 }
 
-std::vector<Vertex> Line::retVertices()
+std::vector<Vertex> Line::GetVertices()
 {
 	std::vector<Vertex> vertices;
-	vertices.push_back(mV1->retVertex());
-	vertices.push_back(mV2->retVertex());
+	vertices.push_back(mV1->GetVertex());
+	vertices.push_back(mV2->GetVertex());
 
 	return vertices;
 }
 
-QLineF Line::retLine(Camera* cam)
+QLineF Line::GetLine(Camera* cam)
 {
-	QPointF p1 = cam->setScreen(mV1->retVertex());
-	QPointF p2 = cam->setScreen(mV2->retVertex());
+	QPointF p1 = cam->SetScreenCoordinate(mV1->GetVertex());
+	QPointF p2 = cam->SetScreenCoordinate(mV2->GetVertex());
 
 	return QLineF(p1, p2);
 }
 
-void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, std::vector<Vertex> vec)
+void Line::UpdateLine(Camera* cam, QPointF pStart, QPointF pEnd, std::vector<Vertex> vec)
 {
 	QPointF offset = pEnd - pStart;
-	QPointF p1 = offset + cam->setScreen(vec.front().retVertex());
-	QPointF p2 = offset + cam->setScreen(vec.back().retVertex());
-	mV1->updateVertex(cam->setWindow(p1.toPoint()));
-	mV2->updateVertex(cam->setWindow(p2.toPoint()));
+	QPointF p1 = offset + cam->SetScreenCoordinate(vec.front().GetVertex());
+	QPointF p2 = offset + cam->SetScreenCoordinate(vec.back().GetVertex());
+	mV1->UpdateVertex(cam->SetWindowCoordinate(p1.toPoint()));
+	mV2->UpdateVertex(cam->SetWindowCoordinate(p2.toPoint()));
 }
 
-QJsonObject Line::saveLine()
+QJsonObject Line::SaveLine()
 {
 	QVariantMap map;
-	QPointF v1 = mV1->retVertex();
-	QPointF v2 = mV2->retVertex();
+	QPointF v1 = mV1->GetVertex();
+	QPointF v2 = mV2->GetVertex();
 	map["v1"] = QString("%1, %2").arg(v1.x()).arg(v1.y());
 	map["v2"] = QString("%1, %2").arg(v2.x()).arg(v2.y());
 
 	return QJsonObject::fromVariantMap(map);
 }
 
-std::string Line::type()
+std::string Line::Type()
 {
 	return mType;
 }
 
-bool Line::checkType(std::string s)
+bool Line::CheckShapeType(std::string s)
 {
 	return !mType.compare(s);
 }
 
-void Line::render(QPainter* painter, Camera* camera)
+void Line::Render(QPainter* painter, Camera* camera)
 {
-	QPointF p1 = camera->setScreen(mV1->retVertex());
-	QPointF p2 = camera->setScreen(mV2->retVertex());
+	QPointF p1 = camera->SetScreenCoordinate(mV1->GetVertex());
+	QPointF p2 = camera->SetScreenCoordinate(mV2->GetVertex());
 	QLineF line = QLineF(p1, p2);
 	painter->setPen(QPen(Qt::darkGray, 3, Qt::SolidLine, Qt::RoundCap));
 	painter->drawLine(line);

@@ -13,34 +13,34 @@ Face::Face(Vertex* v)
 	mVertices.push_back(v);
 }
 
-std::vector<Vertex> Face::retVertices()
+std::vector<Vertex> Face::GetVertices()
 {
 	std::vector<Vertex> vertices;
 	std::list<Vertex*>::iterator iter = mVertices.begin();
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
-		vertices.push_back((*iter)->retVertex());
+		vertices.push_back((*iter)->GetVertex());
 	}
 
 	return vertices;
 }
 
-QPolygonF Face::retFace(Camera* cam)
+QPolygonF Face::GetFace(Camera* cam)
 {
 	QPolygonF poly;
 	std::list<Vertex*>::iterator iter = mVertices.begin();
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
-		QPoint p = cam->setScreen((*iter)->retVertex());
+		QPoint p = cam->SetScreenCoordinate((*iter)->GetVertex());
 		poly << p;
 	}
 
 	return poly;
 }
 
-void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
+void Face::UpdateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape*> shapes, std::vector<Vertex> vertices)
 {
 	QPointF offset = pEnd - pStart;
 	std::list<Shape*>::iterator iter = shapes.begin();
@@ -58,8 +58,8 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape
 				count++;
 				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
 				Vertex* v = dynamic_cast<Vertex*>(*iter);
-				QPointF p = offset + cam->setScreen(vertices[fSize - count].retVertex());
-				v->updateVertex(cam->setWindow(p.toPoint()));
+				QPointF p = offset + cam->SetScreenCoordinate(vertices[fSize - count].GetVertex());
+				v->UpdateVertex(cam->SetWindowCoordinate(p.toPoint()));
 			}
 
 			break;
@@ -70,29 +70,29 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, std::list<Shape
 QJsonObject Face::saveFace()
 {
 	QVariantMap map;
-	std::vector<Vertex> vertices = retVertices();
+	std::vector<Vertex> vertices = GetVertices();
 
 	for (int i = 0; i < vertices.size(); i++)
 	{
 		std::string numVertex = "v" + std::to_string(i + 1);
-		QPointF v = vertices[i].retVertex();
+		QPointF v = vertices[i].GetVertex();
 		map[numVertex.c_str()] = QString("%1, %2").arg(v.x()).arg(v.y());
 	}
 
 	return QJsonObject::fromVariantMap(map);
 }
 
-std::string Face::type()
+std::string Face::Type()
 {
 	return mType;
 }
 
-bool Face::checkType(std::string s)
+bool Face::CheckShapeType(std::string s)
 {
 	return !mType.compare(s);
 }
 
-void Face::render(QPainter* painter, Camera* camera)
+void Face::Render(QPainter* painter, Camera* camera)
 {
 	QPolygonF poly;
 	std::list<Vertex*>::iterator iter = mVertices.begin();
@@ -100,7 +100,7 @@ void Face::render(QPainter* painter, Camera* camera)
 
 	for (iter; iter != mVertices.end(); iter++)
 	{
-		QPoint p = camera->setScreen((*iter)->retVertex());
+		QPoint p = camera->SetScreenCoordinate((*iter)->GetVertex());
 		poly << p;
 		screenPoints.push_back(p);
 	}
