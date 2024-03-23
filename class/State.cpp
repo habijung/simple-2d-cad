@@ -124,7 +124,7 @@ void DrawPolygonState::mouseMoveEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
 
-	if ((mButton != Qt::LeftButton) && mPoints.size())
+	if (mPoints.size() && ((mButton != Qt::LeftButton) || (mButton == Qt::LeftButton)))
 	{
 		// Create bounding box and hit testing by start point.
 		float dx = mViewport->width() / 2.0;
@@ -181,11 +181,19 @@ void DrawPolygonState::paintEvent(QPainter* painter)
 			// Draw polygon points
 			painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
 			painter->drawPoint(mPoints[i]);
+			painter->drawPoint(mPos);
 		}
 
-		// Draw bounding box with start point
-		painter->setPen(QPen(Qt::blue, 2));
-		painter->drawPolygon(mPolygon);
+		if (mHit && (mPoints.size() > 1))
+		{
+			// Draw mouse hover points
+			painter->setPen(QPen(Qt::red, 10, Qt::SolidLine, Qt::RoundCap));
+			painter->drawPoint(mPoints[0]);
+
+			// Draw bounding box with start point
+			painter->setPen(QPen(Qt::blue, 2));
+			painter->drawPolygon(mPolygon);
+		}
 	}
 
 	float dx = mViewport->width() / 2.0;
