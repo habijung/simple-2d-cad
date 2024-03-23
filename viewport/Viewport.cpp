@@ -8,8 +8,7 @@
 #include "Viewport.h"
 
 
-Viewport::Viewport(QWidget* parent)
-	: QWidget(parent)
+Viewport::Viewport(QWidget* parent) : QWidget(parent)
 {
 	// Set Viewport options
 	setAutoFillBackground(true);
@@ -33,6 +32,13 @@ Viewport::Viewport(QWidget* parent)
 	mMachine->setState("SELECT_POINT");
 }
 
+Viewport::~Viewport()
+{
+	delete mScene;
+	delete mCamera;
+}
+
+// Update Scene
 void Viewport::updateState(std::string name)
 {
 	if (!name.compare("DRAW_LINE"))

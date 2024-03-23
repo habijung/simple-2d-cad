@@ -6,12 +6,13 @@
 #include "Camera.h"
 #include "../state/StateMachine.h"
 
-
-class Viewport :
-	public QWidget
+class Viewport : public QWidget
 {
 public:
 	Viewport(QWidget* parent = nullptr);
+	~Viewport();
+
+	// Update Scene
 	void updateState(std::string name);
 	void saveScene();
 	void loadScene();
