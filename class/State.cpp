@@ -136,16 +136,7 @@ void SelectPointState::mousePressEvent(QMouseEvent* event)
 
 	pol = QPolygonF();
 	v = new Vertex(QPointF(1, 1));
-	p = mCamera->setWindowToScreen(v->retVertex());
-	int w = 25;
-	QPointF dt[2] = { QPointF(w, w), QPointF(-w, w) };
-	QPointF ps[4] = {
-		p + dt[0],
-		p + dt[1],
-		p - dt[0],
-		p - dt[1]
-	};
-	for (int i = 0; i < 4; i++) { pol << ps[i]; }
+	pol = createPointBoundingBox(mCamera, v, 25);
 
 	int count = 0;
 	for (int i = 0; i < pol.size(); i++)
@@ -178,8 +169,11 @@ void SelectPointState::mouseReleaseEvent(QMouseEvent* event) {}
 
 void SelectPointState::paintEvent(QPainter* painter)
 {
-	painter->setPen(QPen(Qt::red, 10));
-	painter->drawPoint(p.toPoint());
+	if (mPos.x() > 0 && mPos.y() > 0)
+	{
+		painter->setPen(QPen(Qt::red, 10));
+		painter->drawPoint(mCamera->setWindowToScreen(v->retVertex()));
+	}
 	painter->setPen(QPen(Qt::blue, 3));
 	painter->drawPolygon(pol);
 }

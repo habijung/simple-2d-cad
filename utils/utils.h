@@ -1,4 +1,7 @@
 #pragma once
+#include <QPoint>
+#include <QPolygon>
+#include "../class/Shape.h"
 
 
 // Circular Dependency
@@ -18,3 +21,11 @@ struct Point
 	int x;
 	int y;
 };
+
+struct PointReal
+{
+	qreal x;
+	qreal y;
+};
+
+QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d);
