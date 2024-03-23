@@ -282,7 +282,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		}
 	}
 
-	if (getMouseLeftPressed(mHit, mButton, event))
+	if (getMouseLeftPressed(mHit, mButton, event) && mShapes.size())
 	{
 		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint()));
 
