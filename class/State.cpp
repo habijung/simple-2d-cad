@@ -44,20 +44,20 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 {
 	if (mButton == Qt::LeftButton)
 	{
-		float dx = mViewport->width() / 2.0;
-		float dy = mViewport->height() / 2.0;
-		float scale = 100.0;
-
-		Vertex* v = new Vertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
-		mScene->addShape(v);
 		mPoints.push_back(mPos);
 		mDrawLine = true;
 
 		if (mPoints.size() == 2)
 		{
+			float dx = mViewport->width() / 2.0;
+			float dy = mViewport->height() / 2.0;
+			float scale = 100.0;
+
 			Vertex* v1 = new Vertex(mCamera->setScreenToWindow(mPoints.front().toPoint(), dx, dy, scale));
 			Vertex* v2 = new Vertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
 			Line* line = new Line(v1, v2);
+			mScene->addShape(v1);
+			mScene->addShape(v2);
 			mScene->addShape(line);
 
 			// Initialization
@@ -74,10 +74,13 @@ void DrawLineState::paintEvent(QPainter* painter)
 {
 	if (mDrawLine && mPoints.size() != 2)
 	{
+		// Draw line first
 		painter->setPen(QPen(Qt::darkGray, 3));
-		painter->drawLine(mPoints.back(), mPos);
+		painter->drawLine(mPoints.at(0), mPos);
+
+		// Draw points on line
 		painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
-		painter->drawPoint(mPoints.back());
+		painter->drawPoint(mPoints.at(0));
 		painter->drawPoint(mPos);
 	}
 

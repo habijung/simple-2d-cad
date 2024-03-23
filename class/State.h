@@ -48,8 +48,8 @@ private:
 	Scene* mScene;
 	Camera* mCamera;
 
+	vector<QPointF> mPoints; // Line 구성을 위한 임시 points vector
 	QPointF mPos;
-	vector<QPointF> mPoints;
 	bool mDrawLine;
 	int mButton;
 };
