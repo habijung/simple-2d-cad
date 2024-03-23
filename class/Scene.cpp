@@ -5,6 +5,14 @@ Scene::Scene(QWidget* parent) : QWidget(parent)
 {
 	this->width = parent->width();
 	this->height = parent->height();
+
+	for (int i = -10; i <= 10; i++)
+	{
+		for (int j = -10; j <= 10; j++)
+		{
+			this->vertScreen.push_back(QPointF(i, j));
+		}
+	}
 }
 
 void Scene::resize(QSize* screenSize)
@@ -15,14 +23,19 @@ void Scene::resize(QSize* screenSize)
 
 
 // Render method
-void Scene::renderOrigin(QPainter* painter)
+void Scene::renderScreenCoordinate(QPainter* painter, Camera* camera)
 {
-	painter->drawText
-	(
-		this->width / 2,
-		this->height / 2,
-		QString("(0, 0)")
-	);
+	vector<QPointF>::iterator iter = this->vertScreen.begin();
+	QPen pen(Qt::black, 2);
+	painter->setPen(pen);
+
+	for (iter; iter != this->vertScreen.end(); iter++)
+	{
+		QPointF pWindow = *iter;
+		QPoint  pScreen = camera->setWindowToScreen(pWindow);
+		painter->drawText(pScreen, QString("%1, %2").arg(pWindow.x()).arg(pWindow.y()));
+		painter->drawPoint(pScreen);
+	}
 }
 
 void Scene::renderScenePoint(QPainter* painter, Camera* camera)

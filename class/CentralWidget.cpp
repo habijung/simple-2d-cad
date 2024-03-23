@@ -24,7 +24,7 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 
 	// Class Scene test
 	QPainter* painter1 = new QPainter(this);
-	scene->renderOrigin(painter1);
+	scene->renderScreenCoordinate(painter1, camera);
 	painter1->end();
 
 	QPainter* painter2 = new QPainter(this);

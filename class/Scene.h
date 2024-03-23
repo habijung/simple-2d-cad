@@ -15,7 +15,7 @@ public:
 	void resize(QSize* screenSize);
 
 	// Render method
-	void renderOrigin(QPainter* painter);
+	void renderScreenCoordinate(QPainter* painter, Camera* camera);
 	void renderScenePoint(QPainter* painter, Camera* camera);
 
 	// Add data method
@@ -23,5 +23,6 @@ public:
 
 private:
 	int width, height;
+	vector<QPointF> vertScreen;
 	vector<QPointF> vert;
 };
