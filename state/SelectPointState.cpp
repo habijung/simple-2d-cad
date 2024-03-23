@@ -61,7 +61,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 				if (mSnap)
 				{
-					// Snap이 발생하면 현재 Vertex를 해당 위치로 업데이트
+					// If occur snap, update Vertex position to another Vertex position
 					QPointF p = mSnapVertex.GetVertex();
 					mVertex->UpdateVertex(p);
 					mSnapPoint = mCamera->SetScreenCoordinate(p);
@@ -70,7 +70,6 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 			}
 		}
 
-		// Snap 발생과 상관없이 Vertex의 마지막 위치에서 bounding box 생성
 		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 10);
 	}
 

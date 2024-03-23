@@ -47,7 +47,7 @@ private:
 	Camera* mCamera;
 
 	QPointF mPos;
-	std::vector<QPointF> mPoints; // Line 구성을 위한 임시 points std::vector
+	std::vector<QPointF> mPoints; // Temporary points for line construction
 	int mButton;
 	bool mDrawLine;
 };
@@ -76,7 +76,7 @@ private:
 	QPolygonF mGuidePolygon;
 	QLineF mLine;
 	Vertex* mVertex;
-	std::vector<QPointF> mPoints; // Polygon 구성을 위한 임시 points std::vector
+	std::vector<QPointF> mPoints; // Temporary points for polygon construction
 	bool mDrawPolygon;
 	bool mHit;
 };

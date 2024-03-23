@@ -58,7 +58,7 @@ void Camera::Pan(float dx, float dy)
 	float scrLength = 6.0 * 100 / mScale;
 
 	// Calculate x-axis
-	// camX 값은 Window의 좌측
+	// camX value is window left side
 	if (camX + scrLength >= SCREEN_LIMIT)
 	{
 		camX = SCREEN_LIMIT - scrLength;
@@ -71,7 +71,7 @@ void Camera::Pan(float dx, float dy)
 	mX = -camX * mScale;
 
 	// Calculate y-axis
-	// y-axis는 아래의 footer 때문에 값을 조정함
+	// Adjust y-axis value because of window footer size
 	if (camY >= SCREEN_LIMIT)
 	{
 		camY = SCREEN_LIMIT;

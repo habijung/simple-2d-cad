@@ -109,7 +109,7 @@ bool SelectUtils::HitTesting(const QPointF& pos, QPolygonF poly)
 
 	for (int i = 0; i < poly.size(); i++)
 	{
-		// 모든 점과 다음 점의 라인으로 cross check
+		// Cross check line of each point with next point
 		int j = (i + 1) % static_cast<int>(poly.size());
 		SelectUtils::PointReal p1 = { poly[i].x(), poly[i].y() }; // prev
 		SelectUtils::PointReal p2 = { poly[j].x(), poly[j].y() }; // next

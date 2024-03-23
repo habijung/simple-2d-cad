@@ -41,7 +41,8 @@ void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, s
 {
 	QPointF offset = pEnd - pStart;
 
-	// 현재 Face*를 먼저 찾은 다음 iteration을 반대로 가면서 Face*의 Vertices를 offset만큼 업데이트
+	// Find current Face* and get vertices as Face size using reverse iterator
+	// And update vertex with offset
 	for (std::list<Shape*>::iterator iter = shapes.begin(); iter != shapes.end(); iter++)
 	{
 		if ((*iter) == this)
@@ -52,7 +53,7 @@ void Face::UpdateFace(Camera* cam, const QPointF& pStart, const QPointF& pEnd, s
 			while (count < fSize)
 			{
 				count++;
-				iter--; // Face* 직전의 연속된 Vertex가 Face*의 Vertices
+				iter--; // Continuous vertices just before Face* are Face Vertices
 				QPointF p = offset + cam->SetScreenCoordinate(vertices[fSize - count].GetVertex());
 				dynamic_cast<Vertex*>(*iter)->UpdateVertex(cam->SetWindowCoordinate(p.toPoint()));
 			}

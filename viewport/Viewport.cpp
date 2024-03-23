@@ -202,7 +202,6 @@ void Viewport::LoadScene()
 
 void Viewport::CreateNewScene()
 {
-	// TODO: Create new scene 할 때는 sample 그리고, Load scene 할 때는 sample 그리지 않기
 	delete mScene;
 	mScene = new Scene(mCamera);
 	mData->scene = mScene;
@@ -294,6 +293,6 @@ void Viewport::keyPressEvent(QKeyEvent* event)
 
 void Viewport::resizeEvent(QResizeEvent* event)
 {
-	// TODO: Window 조절할 때 Camera Scale 조정하기
+	// TODO: When resizing window, change the Camera scale value like PowerPoint
 	//mCamera->resizeEvent(event);
 }

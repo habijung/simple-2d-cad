@@ -32,7 +32,7 @@ void DrawFaceState::mouseMoveEvent(QMouseEvent* event)
 		// Create bounding box and hit testing by start point.
 		mLine = QLineF(mPoints.back(), mPos);
 		mVertex = new Vertex(mCamera->SetWindowCoordinate(mPoints[0].toPoint()));
-		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
+		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 15); // Start point's bounding box
 		mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 		if (mHit && (mPoints.size() > 1))
@@ -61,14 +61,12 @@ void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 		// Draw finish and Initialization
 		if (mHit && (mPoints.size() > 2))
 		{
-			// TODO: Polygon을 Scene에 저장하기
 			if (mPoints.size() != 3)
 			{
 				Vertex* v;
 				std::list<Vertex*> vertices;
 
-				// Add vertices to Scene
-				// 마지막 점은 polygon 구성에서 빼기
+				// Add vertices to Scene and polygon without last vertex
 				for (int i = 0; i < mPoints.size() - 1; i++)
 				{
 					v = new Vertex(mCamera->SetWindowCoordinate(mPoints[i].toPoint()));
