@@ -7,6 +7,14 @@ Scene::Scene(Camera* camera)
 	mCamera = camera;
 }
 
+Scene::~Scene()
+{
+	for (std::list<Shape*>::iterator iter; iter != mShapes.end(); iter++)
+	{
+		delete (*iter);
+	}
+}
+
 std::list<Shape*> Scene::retShapes()
 {
 	return mShapes;

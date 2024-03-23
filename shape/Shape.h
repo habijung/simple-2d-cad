@@ -55,7 +55,7 @@ private:
 class Face : public Shape
 {
 public:
-	Face(std::list<Vertex*> vertices = {});
+	Face(const std::list<Vertex*>& vertices = {});
 	Face(Vertex* v);
 
 	std::vector<Vertex> GetVertices();

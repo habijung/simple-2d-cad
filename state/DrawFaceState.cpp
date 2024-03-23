@@ -63,13 +63,12 @@ void DrawFaceState::mouseReleaseEvent(QMouseEvent* event)
 		{
 			if (mPoints.size() != 3)
 			{
-				Vertex* v;
 				std::list<Vertex*> vertices;
 
 				// Add vertices to Scene and polygon without last vertex
 				for (int i = 0; i < mPoints.size() - 1; i++)
 				{
-					v = new Vertex(mCamera->SetWindowCoordinate(mPoints[i].toPoint()));
+					Vertex* v = new Vertex(mCamera->SetWindowCoordinate(mPoints[i].toPoint()));
 					vertices.push_back(v);
 					mScene->AddShape(v);
 				}

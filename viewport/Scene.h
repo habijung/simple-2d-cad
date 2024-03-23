@@ -12,6 +12,7 @@ class Scene
 {
 public:
 	Scene(Camera* camera = nullptr);
+	~Scene();
 
 	// Update shape
 	std::list<Shape*> retShapes();

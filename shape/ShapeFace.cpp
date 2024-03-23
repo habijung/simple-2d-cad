@@ -1,6 +1,6 @@
 #include "Shape.h"
 
-Face::Face(std::list<Vertex*> vertices)
+Face::Face(const std::list<Vertex*>& vertices)
 {
 	mType = "Face";
 	mVertices = vertices;
