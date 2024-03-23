@@ -283,7 +283,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
-			if (!(*iter)->retType().compare("Point"))
+			if ((*iter)->checkType("Point"))
 			{
 				mVertex = static_cast<Vertex*>(*iter);
 				mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
@@ -306,7 +306,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.end(); iter++)
 		{
-			if (!(*iter)->retType().compare("Point") && ((*iter) != mVertex))
+			if ((*iter)->checkType("Point") && ((*iter) != mVertex))
 			{
 				mSnapVertex = dynamic_cast<Vertex*>(*iter)->retVertex();
 				mSnapPolygon = createPointBoundingBox(mCamera, &mSnapVertex, 10);
@@ -384,7 +384,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
-			if (!(*iter)->retType().compare("Line"))
+			if ((*iter)->checkType("Line"))
 			{
 				mLine = static_cast<Line*>(*iter);
 				mPolygon = createLineBoundingBox(mCamera, mLine, 10);
@@ -466,7 +466,7 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 
 		for (iter; iter != mShapes.rend(); iter++)
 		{
-			if (!(*iter)->retType().compare("Face"))
+			if ((*iter)->checkType("Face"))
 			{
 				// No need to consider square bounding box type
 				mFace = static_cast<Face*>(*iter);

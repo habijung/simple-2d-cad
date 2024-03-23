@@ -63,8 +63,8 @@ void Viewport::saveScene()
 	{
 		QJsonObject obj;
 		obj.insert("Num", count);
-		obj.insert("Type", (*i)->retType().c_str());
-		string name = (*i)->retType() + "_" + to_string(count);
+		obj.insert("Type", (*i)->type().c_str());
+		string name = (*i)->type() + "_" + to_string(count);
 		content.insert(name.c_str(), obj);
 		count++;
 	}

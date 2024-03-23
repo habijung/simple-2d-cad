@@ -27,9 +27,14 @@ void Vertex::updateVertex(QPointF p)
 	mY = p.y();
 }
 
-string Vertex::retType()
+string Vertex::type()
 {
 	return mType;
+}
+
+bool Vertex::checkType(string s)
+{
+	return !mType.compare(s);
 }
 
 void Vertex::render(QPainter* painter, Camera* camera)
@@ -79,9 +84,14 @@ void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> 
 	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint()));
 }
 
-string Line::retType()
+string Line::type()
 {
 	return mType;
+}
+
+bool Line::checkType(string s)
+{
+	return !mType.compare(s);
 }
 
 void Line::render(QPainter* painter, Camera* camera)
@@ -162,9 +172,14 @@ void Face::updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> sh
 	}
 }
 
-string Face::retType()
+string Face::type()
 {
 	return mType;
+}
+
+bool Face::checkType(string s)
+{
+	return !mType.compare(s);
 }
 
 void Face::render(QPainter* painter, Camera* camera)

@@ -9,8 +9,9 @@ class Shape
 {
 public:
 	virtual ~Shape() {}
-	virtual string retType() = 0;
-	virtual void render(QPainter* painter, Camera* camera) {}
+	virtual string type() = 0;
+	virtual bool checkType(string s) = 0;
+	virtual void render(QPainter* painter, Camera* camera) = 0;
 };
 
 class Vertex : public Shape
@@ -21,8 +22,9 @@ public:
 	QPointF retVertex();
 	void updateVertex(QPointF p);
 
-	virtual string retType() override;
-	virtual void render(QPainter* painter, Camera* camera);
+	virtual string type() override;
+	virtual bool checkType(string s) override;
+	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
 	string mType;
@@ -38,8 +40,9 @@ public:
 	QLineF retLine(Camera* cam);
 	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart);
 
-	virtual string retType() override;
-	virtual void render(QPainter* painter, Camera* camera);
+	virtual string type() override;
+	virtual bool checkType(string s) override;
+	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
 	string mType;
@@ -56,8 +59,9 @@ public:
 	QPolygonF retFace(Camera* cam);
 	void updateFace(Camera* cam, QPointF pStart, QPointF pEnd, list<Shape*> shapes, vector<Vertex> vertices);
 
-	virtual string retType() override;
-	virtual void render(QPainter* painter, Camera* camera);
+	virtual string type() override;
+	virtual bool checkType(string s) override;
+	virtual void render(QPainter* painter, Camera* camera) override;
 
 private:
 	string mType;
