@@ -159,7 +159,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 			if (!(*iter)->retType().compare("Point"))
 			{
 				mVertex = static_cast<Vertex*>(*iter);
-				mPolygon = createPointBoundingBox(mCamera, mVertex, 15);
+				mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
 				mHit = hitTestingPoint(mPos, mPolygon);
 
 				if (mHit)
@@ -177,7 +177,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		float scale = 100.0;
 
 		mVertex->updateVertex(mCamera->setScreenToWindow(mPos.toPoint(), dx, dy, scale));
-		mPolygon = createPointBoundingBox(mCamera, mVertex, 15);
+		mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
 	}
 
 	mViewport->update();
@@ -215,6 +215,8 @@ SelectLineState::SelectLineState(string name, component* comp)
 void SelectLineState::mousePressEvent(QMouseEvent* event)
 {
 	mPos = event->pos();
+	mPosStart = event->pos();
+	mLineVertices = mLine->retVertices();
 	mButton = event->button();
 }
 
@@ -232,7 +234,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 			if (!(*iter)->retType().compare("Line"))
 			{
 				mLine = static_cast<Line*>(*iter);
-				mPolygon = createLineBoundingBox(mCamera, mLine, 15);
+				mPolygon = createLineBoundingBox(mCamera, mLine, 10);
 				mHit = hitTestingPoint(mPos, mPolygon);
 
 				if (mHit)
@@ -243,7 +245,15 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 		}
 	}
 
-	if (getMouseLeftPressed(mHit, mButton, event)) {}
+	if (getMouseLeftPressed(mHit, mButton, event))
+	{
+		float dx = this->mViewport->width() / 2.0;
+		float dy = this->mViewport->height() / 2.0;
+		float scale = 100.0;
+
+		mLine->updateLine(mCamera, mPosStart, mPos, mLineVertices, dx, dy, scale);
+		mPolygon = createLineBoundingBox(mCamera, mLine, 10);
+	}
 
 	mViewport->update();
 }
@@ -261,9 +271,14 @@ void SelectLineState::paintEvent(QPainter* painter)
 		painter->setPen(QPen(Qt::red, 3, Qt::SolidLine, Qt::RoundCap));
 		painter->drawLine(mLine->retLine(mCamera));
 
+		// Draw bounding box
+		mPolygon = createLineBoundingBox(mCamera, mLine, 10);
+		painter->setPen(QPen(Qt::blue, 3));
+		painter->drawPolygon(mPolygon);
+
 		// Draw selection box
-		mPolygon = createLineSelectionBox(mCamera, mLine, 15);
-		painter->setPen(QPen(Qt::green, 5));
+		mPolygon = createLineSelectionBox(mCamera, mLine);
+		painter->setPen(QPen(Qt::green, 3));
 		painter->drawPolygon(mPolygon);
 	}
 }

@@ -30,5 +30,5 @@ struct PointReal
 
 QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d);
 QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d);
-QPolygonF createLineSelectionBox(Camera* cam, Line* l, int d);
+QPolygonF createLineSelectionBox(Camera* cam, Line* l);
 bool hitTestingPoint(QPointF pos, QPolygonF poly);

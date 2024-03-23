@@ -53,9 +53,9 @@ Line::Line(QPointF p1, QPointF p2)
 	mV2 = new Vertex(p2);
 }
 
-vector<QPointF> Line::retVertices()
+vector<Vertex> Line::retVertices()
 {
-	vector<QPointF>	vertices;
+	vector<Vertex> vertices;
 	vertices.push_back(mV1->retVertex());
 	vertices.push_back(mV2->retVertex());
 
@@ -68,6 +68,15 @@ QLineF Line::retLine(Camera* cam)
 	QPointF p2 = cam->setWindowToScreen(mV2->retVertex());
 
 	return QLineF(p1, p2);
+}
+
+void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vec, float dx, float dy, float scale)
+{
+	QPointF offset = pEnd - pStart;
+	QPointF p1 = offset + cam->setWindowToScreen(vec.front().retVertex());
+	QPointF p2 = offset + cam->setWindowToScreen(vec.back().retVertex());
+	mV1->updateVertex(cam->setScreenToWindow(p1.toPoint(), dx, dy, scale));
+	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint(), dx, dy, scale));
 }
 
 string Line::retType()

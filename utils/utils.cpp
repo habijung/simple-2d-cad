@@ -51,7 +51,7 @@ QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d)
 	return poly;
 }
 
-QPolygonF createLineSelectionBox(Camera* cam, Line* l, int d)
+QPolygonF createLineSelectionBox(Camera* cam, Line* l)
 {
 	QPolygonF poly = QPolygonF();
 	QLineF line = l->retLine(cam);
