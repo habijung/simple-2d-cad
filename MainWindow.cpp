@@ -15,6 +15,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::setMenuBar()
 {
+	/* File */
 	QAction* newa = new QAction("&New", this);
 	QAction* open = new QAction("&Open", this);
 	QAction* quit = new QAction("&Quit", this);
@@ -29,4 +30,25 @@ void MainWindow::setMenuBar()
 	qApp->setAttribute(Qt::AA_DontShowIconsInMenus, false);  // Icons are no longer shown in menus
 
 	connect(quit, &QAction::triggered, qApp, QApplication::quit);
+
+
+	/* Edit */
+
+	/* View */
+	QAction* viewst = new QAction("&View statusbar", this);
+	viewst->setCheckable(true);
+	viewst->setChecked(true);
+
+	QMenu* view = menuBar()->addMenu("&View");
+	view->addAction(viewst);
+	statusBar();
+
+	if (viewst->isChecked())
+	{
+		statusBar()->show();
+	}
+	else
+	{
+		statusBar()->hide();
+	}
 }
