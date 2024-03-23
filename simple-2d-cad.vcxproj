@@ -94,6 +94,11 @@
     <ClCompile Include="shape\Face.cpp" />
     <ClCompile Include="shape\Line.cpp" />
     <ClCompile Include="shape\Vertex.cpp" />
+    <ClCompile Include="state\DrawFaceState.cpp" />
+    <ClCompile Include="state\DrawLineState.cpp" />
+    <ClCompile Include="state\SelectFaceState.cpp" />
+    <ClCompile Include="state\SelectLineState.cpp" />
+    <ClCompile Include="state\SelectPointState.cpp" />
     <ClCompile Include="state\StateMachine.cpp" />
     <ClCompile Include="state\State.cpp" />
     <ClCompile Include="utils\utils.cpp" />
