@@ -19,8 +19,8 @@ public:
 
 	virtual ~State() {}
 	virtual void mousePressEvent(QMouseEvent* event) {}
-	virtual void mouseMoveEvent() {}
-	virtual void mouseReleaseEvent() {}
+	virtual void mouseMoveEvent(QMouseEvent* event) {}
+	virtual void mouseReleaseEvent(QMouseEvent* event) {}
 	virtual void paintEvent(QPainter* painter) {}
 
 private:
@@ -36,8 +36,8 @@ public:
 	DrawLineState(string name, component* comp);
 
 	virtual void mousePressEvent(QMouseEvent* event) override;
-	virtual void mouseMoveEvent() {}
-	virtual void mouseReleaseEvent() {}
+	virtual void mouseMoveEvent(QMouseEvent* event) override;
+	virtual void mouseReleaseEvent(QMouseEvent* event) override;
 	virtual void paintEvent(QPainter* painter);
 
 private:
@@ -45,6 +45,8 @@ private:
 	Viewport* mViewport;
 	Scene* mScene;
 	Camera* mCamera;
+	QPoint mStartPoint, mEndPoint;
+	int mButton;
 };
 
 class DrawFaceState : public State

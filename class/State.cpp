@@ -28,12 +28,39 @@ DrawLineState::DrawLineState(string name, component* comp)
 
 void DrawLineState::mousePressEvent(QMouseEvent* event)
 {
-	if (event->button() == Qt::LeftButton)
+	mStartPoint = event->pos();
+	mButton = event->button();
+
+	if (mButton == Qt::LeftButton)
 	{
 		float dx = mViewport->width() / 2.0;
 		float dy = mViewport->height() / 2.0;
 		float scale = 100.0;
-		mScene->addVertex(mCamera->setScreenToWindow(event->pos(), dx, dy, scale));
+		mScene->addVertex(mCamera->setScreenToWindow(mStartPoint, dx, dy, scale));
+	}
+}
+
+void DrawLineState::mouseMoveEvent(QMouseEvent* event)
+{
+	int xOffset = event->pos().x() - mStartPoint.x();
+	int yOffset = event->pos().y() - mStartPoint.y();
+
+	if (event->button() == Qt::NoButton)
+	{
+		mViewport->update();
+	}
+}
+
+void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
+{
+	mEndPoint = event->pos();
+
+	if (mButton == Qt::LeftButton)
+	{
+		float dx = mViewport->width() / 2.0;
+		float dy = mViewport->height() / 2.0;
+		float scale = 100.0;
+		mScene->addVertex(mCamera->setScreenToWindow(mEndPoint, dx, dy, scale));
 	}
 }
 

@@ -53,7 +53,7 @@ void Viewport::paintEvent(QPaintEvent* event)
 	// Activate this when State Machine finished.  
 	{
 		// Draw line with mouse event
-		//this->drawLine();
+		this->drawLine();
 
 		// Render method test
 		//this->renderAll();
@@ -79,44 +79,20 @@ void Viewport::paintEvent(QPaintEvent* event)
 
 void Viewport::mousePressEvent(QMouseEvent* event)
 {
-	this->pStart = event->pos();
-	this->button = event->button();
-
-	if (this->button == Qt::RightButton)
-	{
-		this->xOffset = 0;
-		this->yOffset = 0;
-		repaint();
-	}
-
 	state->mousePressEvent(event);
 	repaint();
 }
 
 void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
-	this->xOffset = event->pos().x() - this->pStart.x();
-	this->yOffset = event->pos().y() - this->pStart.y();
-
-	// Draw only mouse left button
-	if ((this->button == Qt::LeftButton) &&
-		(event->button() == Qt::NoButton))
-	{
-		update();
-	}
+	state->mouseMoveEvent(event);
+	update();
 }
 
 void Viewport::mouseReleaseEvent(QMouseEvent* event)
 {
-	this->pEnd = event->pos();
-
-	// Draw only mouse left button
-	if (this->button == Qt::LeftButton)
-	{
-		// Add vertex
-		pair<QPoint, QPoint> p = { this->pStart, this->pEnd };
-		this->vert.push_back(p);
-	}
+	state->mouseReleaseEvent(event);
+	repaint();
 }
 
 void Viewport::resizeEvent(QResizeEvent* event)
