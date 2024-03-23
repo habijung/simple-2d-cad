@@ -68,10 +68,10 @@ void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
 			// Initialization
 			mPoints = {};
 			mDrawLine = false;
-			mButton = Qt::NoButton;
 		}
 	}
 
+	mButton = Qt::NoButton;
 	mViewport->update();
 }
 
