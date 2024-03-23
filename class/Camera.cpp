@@ -92,7 +92,7 @@ void Camera::reset(const QSize& size)
 {
 	mX = size.width() / 2.0;
 	mY = size.height() / 2.0;
-	mScale = 100.0;
+	mScale = 80.0;
 }
 
 void Camera::resizeEvent(QResizeEvent* event)
