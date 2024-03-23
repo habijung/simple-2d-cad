@@ -13,7 +13,6 @@ class Viewport :
 {
 public:
 	Viewport(QWidget* parent = nullptr);
-	void getKeyEvent(QKeyEvent* event);
 	void updateState(string name);
 	void saveScene();
 	void loadScene();
@@ -25,6 +24,7 @@ private:
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
 	void wheelEvent(QWheelEvent* event) override;
+	void keyPressEvent(QKeyEvent* event) override;
 	void resizeEvent(QResizeEvent* event) override;
 
 	int button;

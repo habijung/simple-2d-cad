@@ -151,15 +151,3 @@ void MainWindow::setUnderbarWidget(QWidget* widget)
 	wUnderbar->setLayout(hBox);
 	wUnderbar->move(100, 450);
 }
-
-void MainWindow::keyPressEvent(QKeyEvent* event)
-{
-	switch (event->key())
-	{
-	case Qt::Key_QuoteLeft:
-		mViewport->updateState("SELECT_POINT");
-		break;
-	}
-
-	mViewport->getKeyEvent(event);
-}

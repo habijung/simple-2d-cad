@@ -28,9 +28,4 @@ public:
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* mViewport;
-	Scene* mScene;
-	Camera* mCamera;
-
-protected:
-	void keyPressEvent(QKeyEvent* event);
 };

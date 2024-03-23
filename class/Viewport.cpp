@@ -29,32 +29,6 @@ Viewport::Viewport(QWidget* parent)
 	mMachine->setState("SELECT_POINT");
 }
 
-void Viewport::getKeyEvent(QKeyEvent* event)
-{
-	switch (event->key())
-	{
-	case Qt::Key_E: // Zoom In
-		mCamera->zoom(zValue);
-		break;
-	case Qt::Key_Q: // Zoom Out
-		mCamera->zoom(-zValue);
-		break;
-	case Qt::Key_W: // Move Up
-		mCamera->pan(0.0, pValue);
-		break;
-	case Qt::Key_S: // Move Down
-		mCamera->pan(0.0, -pValue);
-		break;
-	case Qt::Key_D: // Move Right
-		mCamera->pan(pValue, 0.0);
-		break;
-	case Qt::Key_A: // Move Left
-		mCamera->pan(-pValue, 0.0);
-		break;
-	}
-	repaint();
-}
-
 void Viewport::updateState(string name)
 {
 	if (!name.compare("DRAW_LINE"))
@@ -272,6 +246,36 @@ void Viewport::mouseReleaseEvent(QMouseEvent* event)
 void Viewport::wheelEvent(QWheelEvent* event)
 {
 	mCamera->zoom(static_cast<float>(event->angleDelta().y() / 8));
+	update();
+}
+
+void Viewport::keyPressEvent(QKeyEvent* event)
+{
+	switch (event->key())
+	{
+	case Qt::Key_E: // Zoom In
+		mCamera->zoom(zValue);
+		break;
+	case Qt::Key_Q: // Zoom Out
+		mCamera->zoom(-zValue);
+		break;
+	case Qt::Key_W: // Move Up
+		mCamera->pan(0.0, pValue);
+		break;
+	case Qt::Key_S: // Move Down
+		mCamera->pan(0.0, -pValue);
+		break;
+	case Qt::Key_D: // Move Right
+		mCamera->pan(pValue, 0.0);
+		break;
+	case Qt::Key_A: // Move Left
+		mCamera->pan(-pValue, 0.0);
+		break;
+	case Qt::Key_QuoteLeft:
+		updateState("SELECT_POINT");
+		break;
+	}
+
 	update();
 }
 
