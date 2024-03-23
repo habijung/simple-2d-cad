@@ -65,6 +65,45 @@ QPolygonF createLineSelectionBox(Camera* cam, Line* l)
 	return poly;
 }
 
+QPolygonF createFaceSelectionBox(Camera* cam, Face* f)
+{
+	QPolygonF poly = f->retFace(cam);
+	PointReal min = { INFINITY, INFINITY };
+	PointReal max = { -INFINITY, -INFINITY };
+
+	for (int i = 0; i < poly.size(); i++)
+	{
+		if (min.x >= poly[i].x())
+		{
+			min.x = poly[i].x();
+		}
+
+		if (min.y >= poly[i].y())
+		{
+			min.y = poly[i].y();
+		}
+
+		if (max.x <= poly[i].x())
+		{
+			max.x = poly[i].x();
+		}
+
+		if (max.y <= poly[i].y())
+		{
+			max.y = poly[i].y();
+		}
+	}
+
+	// Counter-Clockwise
+	poly = QPolygonF();
+	poly << QPointF(max.x, max.y)
+		<< QPointF(min.x, max.y)
+		<< QPointF(min.x, min.y)
+		<< QPointF(max.x, min.y);
+
+	return poly;
+}
+
 bool hitTestingPoint(QPointF pos, QPolygonF poly)
 {
 	int count = 0;

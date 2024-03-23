@@ -102,6 +102,12 @@ Face::Face(list<Vertex*> vertices)
 	mVertices = vertices;
 }
 
+Face::Face(Vertex* v)
+{
+	mType = "Face";
+	mVertices.push_back(v);
+}
+
 QPolygonF Face::retFace(Camera* cam)
 {
 	QPolygonF poly;

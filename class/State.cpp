@@ -421,6 +421,7 @@ SelectPolygonState::SelectPolygonState(string name, component* comp)
 	mViewport = comp->viewport;
 	mScene = comp->scene;
 	mCamera = comp->camera;
+	mFace = new Face(new Vertex(QPointF(INFINITY, INFINITY)));
 }
 
 void SelectPolygonState::mousePressEvent(QMouseEvent* event)
@@ -447,10 +448,15 @@ void SelectPolygonState::mouseMoveEvent(QMouseEvent* event)
 				mPolygon = mFace->retFace(mCamera);
 				mHit = hitTestingPoint(mPos, mPolygon);
 
-				qDebug() << mHit;
+				if (mHit)
+				{
+					break;
+				}
 			}
 		}
 	}
+
+	mViewport->update();
 }
 
 void SelectPolygonState::mouseReleaseEvent(QMouseEvent* event)
@@ -460,5 +466,26 @@ void SelectPolygonState::mouseReleaseEvent(QMouseEvent* event)
 
 void SelectPolygonState::paintEvent(QPainter* painter)
 {
-	qDebug() << "Select Polygon State :: Paint";
+	if (mHit)
+	{
+		// TODO: Line highlight
+
+		// Face highlight
+		painter->setPen(QPen(Qt::red, 3));
+		painter->drawPolygon(mPolygon);
+
+		// Draw polygon points again for priority
+		painter->setPen(QPen(Qt::blue, 10, Qt::SolidLine, Qt::RoundCap));
+
+		for (int i = 0; i < mPolygon.size(); i++)
+		{
+			painter->drawPoint(QPoint(mPolygon[i].toPoint()));
+		}
+
+		// Draw selection box
+		mPolygon = QPolygonF();
+		mPolygon = createFaceSelectionBox(mCamera, mFace);
+		painter->setPen(QPen(Qt::green, 3));
+		painter->drawPolygon(mPolygon);
+	}
 }
