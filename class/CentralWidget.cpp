@@ -13,6 +13,9 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 {
 	// Draw line with mouse event
 	this->drawLine();
+
+	// Render method test
+	this->renderAll();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -63,5 +66,13 @@ void CentralWidget::drawLine()
 			.arg(yEnd)
 		);
 	}
+	painter.end();
+}
+
+void CentralWidget::renderAll()
+{
+	QPainter painter(this);
+	painter.setRenderHint(QPainter::Antialiasing);
+	painter.drawRect(100, 100, 100, 50);
 	painter.end();
 }
