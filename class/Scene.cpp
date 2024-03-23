@@ -64,8 +64,13 @@ void Scene::renderScenePoint(QPainter* painter, Camera* camera)
 void Scene::renderShape(QPainter* painter)
 {
 	// mShapes insert text
-	Vertex* v = new Vertex(150, 150);
-	this->mShapes.push_back(v);
+	Vertex* v1 = new Vertex(150, 150);
+	Vertex* v2 = new Vertex(350, 350);
+	this->mShapes.push_back(v1);
+	this->mShapes.push_back(v2);
+
+	Line* l1 = new Line(v1, v2);
+	this->mShapes.push_back(l1);
 
 	list<Shape*>::iterator iter;
 
