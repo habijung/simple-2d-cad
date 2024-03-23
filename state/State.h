@@ -5,7 +5,7 @@
 #include "../viewport/Scene.h"
 #include "../viewport/Camera.h"
 #include "../shape/Shape.h"
-#include "../utils/utils.h"
+#include "../utils/SelectUtils.h"
 
 
 class Viewport; // Circular Dependency
@@ -13,7 +13,7 @@ class Viewport; // Circular Dependency
 class State
 {
 public:
-	State(std::string name, viewportData* data);
+	State(std::string name, SelectUtils::ViewportData* data);
 	std::string getStateName();
 	bool getMouseLeftPressed(bool hit, int button, QMouseEvent* event);
 
@@ -34,7 +34,7 @@ private:
 class DrawLineState : public State
 {
 public:
-	DrawLineState(std::string name, viewportData* data);
+	DrawLineState(std::string name, SelectUtils::ViewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -57,7 +57,7 @@ private:
 class DrawFaceState : public State
 {
 public:
-	DrawFaceState(std::string name, viewportData* data);
+	DrawFaceState(std::string name, SelectUtils::ViewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -86,7 +86,7 @@ private:
 class SelectPointState : public State
 {
 public:
-	SelectPointState(std::string name, viewportData* data);
+	SelectPointState(std::string name, SelectUtils::ViewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -119,7 +119,7 @@ private:
 class SelectLineState : public State
 {
 public:
-	SelectLineState(std::string name, viewportData* data);
+	SelectLineState(std::string name, SelectUtils::ViewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;
@@ -148,7 +148,7 @@ private:
 class SelectFaceState : public State
 {
 public:
-	SelectFaceState(std::string name, viewportData* data);
+	SelectFaceState(std::string name, SelectUtils::ViewportData* data);
 
 	virtual void updateScene(Scene* scene) override;
 	virtual void mousePressEvent(QMouseEvent* event) override;

@@ -91,9 +91,9 @@
   <ItemGroup>
     <ClCompile Include="viewport\Camera.cpp" />
     <ClCompile Include="viewport\Scene.cpp" />
-    <ClCompile Include="shape\Face.cpp" />
-    <ClCompile Include="shape\Line.cpp" />
-    <ClCompile Include="shape\Vertex.cpp" />
+    <ClCompile Include="shape\ShapeFace.cpp" />
+    <ClCompile Include="shape\ShapeLine.cpp" />
+    <ClCompile Include="shape\ShapeVertex.cpp" />
     <ClCompile Include="state\DrawFaceState.cpp" />
     <ClCompile Include="state\DrawLineState.cpp" />
     <ClCompile Include="state\SelectFaceState.cpp" />
@@ -101,7 +101,7 @@
     <ClCompile Include="state\SelectPointState.cpp" />
     <ClCompile Include="state\StateMachine.cpp" />
     <ClCompile Include="state\State.cpp" />
-    <ClCompile Include="utils\utils.cpp" />
+    <ClCompile Include="utils\SelectUtils.cpp" />
     <QtRcc Include="MainWindow.qrc" />
     <QtUic Include="MainWindow.ui" />
     <QtMoc Include="MainWindow.h" />
@@ -119,7 +119,7 @@
     <ClInclude Include="shape\Shape.h" />
     <ClInclude Include="state\StateMachine.h" />
     <ClInclude Include="state\State.h" />
-    <ClInclude Include="utils\utils.h" />
+    <ClInclude Include="utils\SelectUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">

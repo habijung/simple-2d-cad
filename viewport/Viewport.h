@@ -30,8 +30,8 @@ private:
 	QPointF mPos;
 
 	// Viewport data
+	SelectUtils::ViewportData* mData;
 	Scene* mScene;
 	Camera* mCamera;
-	viewportData* mData;
 	StateMachine* mMachine;
 };

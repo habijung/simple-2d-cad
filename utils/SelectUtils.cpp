@@ -1,10 +1,9 @@
-#include "utils.h"
+#include "SelectUtils.h"
 #include "../viewport/Viewport.h"
 #include "../viewport/Scene.h"
 #include "../viewport/Camera.h"
 
-
-QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)
+QPolygonF SelectUtils::CreatePointBoundingBox(Camera* cam, Vertex* v, int d)
 {
 	QPolygonF poly = QPolygonF();
 	QPointF p = cam->setScreen(v->retVertex());
@@ -26,7 +25,7 @@ QPolygonF createPointBoundingBox(Camera* cam, Vertex* v, int d)
 	return poly;
 }
 
-QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d)
+QPolygonF SelectUtils::CreateLineBoundingBox(Camera* cam, Line* l, int d)
 {
 	QPolygonF poly = QPolygonF();
 	QLineF line = l->retLine(cam);
@@ -51,7 +50,7 @@ QPolygonF createLineBoundingBox(Camera* cam, Line* l, int d)
 	return poly;
 }
 
-QPolygonF createLineSelectionBox(Camera* cam, Line* l)
+QPolygonF SelectUtils::CreateLineSelectionBox(Camera* cam, Line* l)
 {
 	QPolygonF poly = QPolygonF();
 	QLineF line = l->retLine(cam);
@@ -65,11 +64,11 @@ QPolygonF createLineSelectionBox(Camera* cam, Line* l)
 	return poly;
 }
 
-QPolygonF createFaceSelectionBox(Camera* cam, Face* f)
+QPolygonF SelectUtils::CreateFaceSelectionBox(Camera* cam, Face* f)
 {
 	QPolygonF poly = f->retFace(cam);
-	PointReal min = { INFINITY, INFINITY };
-	PointReal max = { -INFINITY, -INFINITY };
+	SelectUtils::PointReal min = { INFINITY, INFINITY };
+	SelectUtils::PointReal max = { -INFINITY, -INFINITY };
 
 	for (int i = 0; i < poly.size(); i++)
 	{
@@ -104,7 +103,7 @@ QPolygonF createFaceSelectionBox(Camera* cam, Face* f)
 	return poly;
 }
 
-bool hitTestingPoint(QPointF pos, QPolygonF poly)
+bool SelectUtils::HitTesting(QPointF pos, QPolygonF poly)
 {
 	int count = 0;
 
@@ -112,8 +111,8 @@ bool hitTestingPoint(QPointF pos, QPolygonF poly)
 	{
 		// 모든 점과 다음 점의 라인으로 cross check
 		int j = (i + 1) % static_cast<int>(poly.size());
-		PointReal p1 = { poly[i].x(), poly[i].y() }; // prev
-		PointReal p2 = { poly[j].x(), poly[j].y() }; // next
+		SelectUtils::PointReal p1 = { poly[i].x(), poly[i].y() }; // prev
+		SelectUtils::PointReal p2 = { poly[j].x(), poly[j].y() }; // next
 
 		if (p1.y < pos.y() != p2.y < pos.y())
 		{

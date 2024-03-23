@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-SelectFaceState::SelectFaceState(std::string name, viewportData* data)
+SelectFaceState::SelectFaceState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -41,7 +41,7 @@ void SelectFaceState::mouseMoveEvent(QMouseEvent* event)
 				// No need to consider square bounding box type
 				mFace = static_cast<Face*>(*iter);
 				mPolygon = mFace->retFace(mCamera);
-				mHit = hitTestingPoint(mPos, mPolygon);
+				mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 				if (mHit)
 				{
@@ -84,7 +84,7 @@ void SelectFaceState::paintEvent(QPainter* painter)
 
 		// Draw selection box
 		mPolygon = QPolygonF();
-		mPolygon = createFaceSelectionBox(mCamera, mFace);
+		mPolygon = SelectUtils::CreateFaceSelectionBox(mCamera, mFace);
 		painter->setPen(QPen(Qt::green, 3));
 		painter->setBrush(QBrush());
 		painter->drawPolygon(mPolygon);

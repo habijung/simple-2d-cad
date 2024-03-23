@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-DrawFaceState::DrawFaceState(std::string name, viewportData* data)
+DrawFaceState::DrawFaceState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -33,8 +33,8 @@ void DrawFaceState::mouseMoveEvent(QMouseEvent* event)
 		// Create bounding box and hit testing by start point.
 		mLine = QLineF(mPoints.back(), mPos);
 		mVertex = new Vertex(mCamera->setWindow(mPoints[0].toPoint()));
-		mPolygon = createPointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
-		mHit = hitTestingPoint(mPos, mPolygon);
+		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 15); // Start point의 bounding box
+		mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 		if (mHit && (mPoints.size() > 1))
 		{

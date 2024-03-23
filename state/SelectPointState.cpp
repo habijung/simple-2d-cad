@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-SelectPointState::SelectPointState(std::string name, viewportData* data)
+SelectPointState::SelectPointState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -38,8 +38,8 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 			if ((*iter)->checkType("Point"))
 			{
 				mVertex = static_cast<Vertex*>(*iter);
-				mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
-				mHit = hitTestingPoint(mPos, mPolygon);
+				mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 10);
+				mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 				if (mHit)
 				{
@@ -61,8 +61,8 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 			if ((*iter)->checkType("Point") && ((*iter) != mVertex))
 			{
 				mSnapVertex = dynamic_cast<Vertex*>(*iter)->retVertex();
-				mSnapPolygon = createPointBoundingBox(mCamera, &mSnapVertex, 10);
-				mSnap = hitTestingPoint(mPos, mSnapPolygon);
+				mSnapPolygon = SelectUtils::CreatePointBoundingBox(mCamera, &mSnapVertex, 10);
+				mSnap = SelectUtils::HitTesting(mPos, mSnapPolygon);
 
 				if (mSnap)
 				{
@@ -76,7 +76,7 @@ void SelectPointState::mouseMoveEvent(QMouseEvent* event)
 		}
 
 		// Snap 발생과 상관없이 Vertex의 마지막 위치에서 bounding box 생성
-		mPolygon = createPointBoundingBox(mCamera, mVertex, 10);
+		mPolygon = SelectUtils::CreatePointBoundingBox(mCamera, mVertex, 10);
 	}
 
 	mViewport->update();

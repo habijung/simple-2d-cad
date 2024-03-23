@@ -46,48 +46,69 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\Viewport.cpp">
+    <ClCompile Include="utils\SelectUtils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\Scene.cpp">
+    <ClCompile Include="viewport\Camera.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\Camera.cpp">
+    <ClCompile Include="viewport\Scene.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\Shape.cpp">
+    <ClCompile Include="shape\ShapeFace.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\StateMachine.cpp">
+    <ClCompile Include="shape\ShapeLine.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="class\State.cpp">
+    <ClCompile Include="shape\ShapeVertex.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="utils\utils.cpp">
+    <ClCompile Include="state\DrawFaceState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\DrawLineState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\SelectFaceState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\SelectLineState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\SelectPointState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\StateMachine.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="state\State.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="viewport\Viewport.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="class\Viewport.h">
+    <ClInclude Include="utils\SelectUtils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="class\Scene.h">
+    <ClInclude Include="viewport\Camera.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="class\Camera.h">
+    <ClInclude Include="viewport\Viewport.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="class\Shape.h">
+    <ClInclude Include="viewport\Scene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="class\StateMachine.h">
+    <ClInclude Include="shape\Shape.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="class\State.h">
+    <ClInclude Include="state\StateMachine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="utils\utils.h">
+    <ClInclude Include="state\State.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

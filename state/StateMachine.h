@@ -12,7 +12,7 @@ public:
 	State* getState(std::string name);
 	void setState(std::string name);
 	void deleteState(std::string name);
-	void transition(std::string name, viewportData* data);
+	void transition(std::string name, SelectUtils::ViewportData* data);
 	void printAllStates();
 
 private:

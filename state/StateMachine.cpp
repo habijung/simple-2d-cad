@@ -101,7 +101,7 @@ void StateMachine::deleteState(std::string name)
 	}
 }
 
-void StateMachine::transition(std::string name, viewportData* data)
+void StateMachine::transition(std::string name, SelectUtils::ViewportData* data)
 {
 	setState(name);
 	mState->updateScene(data->scene);

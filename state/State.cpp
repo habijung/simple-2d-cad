@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-State::State(std::string name, viewportData* data)
+State::State(std::string name, SelectUtils::ViewportData* data)
 {
 	mName = name;
 	mViewport = data->viewport;

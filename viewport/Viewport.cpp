@@ -23,7 +23,7 @@ Viewport::Viewport(QWidget* parent)
 	mScene->createSampleShapes();
 
 	// Define States
-	mData = new viewportData{ this, mScene, mCamera };
+	mData = new SelectUtils::ViewportData{ this, mScene, mCamera };
 	mMachine = new StateMachine;
 	mMachine->addState(new SelectPointState("SELECT_POINT", mData));
 	mMachine->addState(new SelectLineState("SELECT_LINE", mData));

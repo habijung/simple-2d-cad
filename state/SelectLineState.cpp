@@ -2,7 +2,7 @@
 #include "../viewport/Viewport.h"
 
 
-SelectLineState::SelectLineState(std::string name, viewportData* data)
+SelectLineState::SelectLineState(std::string name, SelectUtils::ViewportData* data)
 	: State(name, data)
 {
 	mName = name;
@@ -39,8 +39,8 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 			if ((*iter)->checkType("Line"))
 			{
 				mLine = static_cast<Line*>(*iter);
-				mPolygon = createLineBoundingBox(mCamera, mLine, 10);
-				mHit = hitTestingPoint(mPos, mPolygon);
+				mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);
+				mHit = SelectUtils::HitTesting(mPos, mPolygon);
 
 				if (mHit)
 				{
@@ -53,7 +53,7 @@ void SelectLineState::mouseMoveEvent(QMouseEvent* event)
 	if (getMouseLeftPressed(mHit, mButton, event))
 	{
 		mLine->updateLine(mCamera, mPosStart, mPos, mLineVertices);
-		mPolygon = createLineBoundingBox(mCamera, mLine, 10);
+		mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);
 	}
 
 	mViewport->update();
@@ -73,12 +73,12 @@ void SelectLineState::paintEvent(QPainter* painter)
 		painter->drawLine(mLine->retLine(mCamera));
 
 		// Draw bounding box
-		mPolygon = createLineBoundingBox(mCamera, mLine, 10);
+		mPolygon = SelectUtils::CreateLineBoundingBox(mCamera, mLine, 10);
 		painter->setPen(QPen(Qt::blue, 3));
 		painter->drawPolygon(mPolygon);
 
 		// Draw selection box
-		mPolygon = createLineSelectionBox(mCamera, mLine);
+		mPolygon = SelectUtils::CreateLineSelectionBox(mCamera, mLine);
 		painter->setPen(QPen(Qt::green, 3));
 		painter->drawPolygon(mPolygon);
 	}
