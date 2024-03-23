@@ -3,10 +3,12 @@
 #include <QtWidgets/QMainWindow>
 #include <QPainter>
 #include "ui_MainWindow.h"
+#include "class/CentralWidget.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };
 QT_END_NAMESPACE
+
 
 class MainWindow : public QMainWindow
 {
@@ -24,11 +26,4 @@ private:
 
 protected:
 	//void paintEvent(QPaintEvent* event) override;
-};
-
-class CentralWidget : public QWidget
-{
-public:
-	CentralWidget(QWidget* parent = nullptr);
-	void paintEvent(QPaintEvent* event) override;
 };

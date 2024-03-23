@@ -1,19 +1,5 @@
 #include "MainWindow.h"
 
-CentralWidget::CentralWidget(QWidget* parent)
-	: QWidget(parent)
-{
-	qDebug() << "\nCentralWidget\n";
-}
-
-void CentralWidget::paintEvent(QPaintEvent* event)
-{
-	QPainter painter(this);
-	painter.setRenderHint(QPainter::Antialiasing);
-	painter.setPen(QPen(Qt::black, 12, Qt::DashDotLine, Qt::RoundCap));
-	painter.drawLine(0, 0, 200, 200);
-	painter.end();
-}
 
 MainWindow::MainWindow(QWidget* parent)
 	: QMainWindow(parent)
