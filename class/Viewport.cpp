@@ -1,5 +1,6 @@
 #include <QPainter>
 #include <QMouseEvent>
+#include <QKeyEvent>
 #include "Viewport.h"
 
 
@@ -9,6 +10,14 @@ Viewport::Viewport(QWidget* parent)
 	qDebug() << "\n Central Widget \n";
 	scene = new Scene(this);
 	camera = new Camera(this, QSize(600, 600), 100.0);
+}
+
+void Viewport::getKeyEvent(QKeyEvent* event)
+{
+	if (event->key() == Qt::Key_1)
+	{
+		qDebug() << "Key: 1";
+	}
 }
 
 void Viewport::paintEvent(QPaintEvent* event)

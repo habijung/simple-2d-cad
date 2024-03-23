@@ -1,7 +1,7 @@
 #pragma once
 
 #include <QtWidgets/QMainWindow>
-#include <QPainter>
+#include <QKeyEvent>
 #include "ui_MainWindow.h"
 #include "class/Viewport.h"
 
@@ -23,7 +23,8 @@ public:
 
 private:
 	Ui::MainWindowClass* ui;
+	Viewport* widget;
 
 protected:
-	//void paintEvent(QPaintEvent* event) override;
+	void keyPressEvent(QKeyEvent* event);
 };

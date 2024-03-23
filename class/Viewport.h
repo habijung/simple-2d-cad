@@ -12,6 +12,7 @@ class Viewport :
 {
 public:
 	Viewport(QWidget* parent = nullptr);
+	void getKeyEvent(QKeyEvent* event);
 
 private:
 	void paintEvent(QPaintEvent* event) override;

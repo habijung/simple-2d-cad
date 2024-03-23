@@ -10,8 +10,8 @@ MainWindow::MainWindow(QWidget* parent)
 	this->setMenuBar();
 	this->setToolbar();
 
-	Viewport* widget = new Viewport(this);
-	setCentralWidget(widget);
+	this->widget = new Viewport(this);
+	setCentralWidget(this->widget);
 }
 
 MainWindow::~MainWindow()
@@ -86,4 +86,9 @@ void MainWindow::setToolbar()
 	QAction* quit = toolbar->addAction(QIcon(quitpix), "Quit Application");
 
 	connect(quit, &QAction::triggered, qApp, &QApplication::quit);
+}
+
+void MainWindow::keyPressEvent(QKeyEvent* event)
+{
+	this->widget->getKeyEvent(event);
 }
