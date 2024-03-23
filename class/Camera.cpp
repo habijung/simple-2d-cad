@@ -43,14 +43,16 @@ void Camera::zoom(float scale)
 {
 	mScale += scale;
 
-	if (mScale >= 300.0)
+	if (mScale >= 250.0)
 	{
-		mScale = 300.0;
+		mScale = 250.0;
 	}
-	else if (mScale <= 50.0)
+	else if (mScale <= 40.0)
 	{
-		mScale = 50.0;
+		mScale = 40.0;
 	}
+
+	pan(0, 0);
 }
 
 void Camera::pan(float dx, float dy)

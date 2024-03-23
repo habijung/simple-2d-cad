@@ -11,7 +11,7 @@
 Viewport::Viewport(QWidget* parent)
 	: QWidget(parent)
 {
-	mCamera = new Camera(this, parent->size(), 100.0);
+	mCamera = new Camera(this, parent->size(), 80.0);
 	mScene = new Scene(mCamera);
 	setMouseTracking(true);
 
@@ -227,8 +227,8 @@ void Viewport::mouseMoveEvent(QMouseEvent* event)
 {
 	if ((button == Qt::RightButton) && (event->button() == Qt::NoButton))
 	{
-		float scale = 100.0;
-		QPointF offset = (event->pos() - mPos) / scale;
+		float sensitivity = 80.0;
+		QPointF offset = (event->pos() - mPos) / sensitivity;
 		mCamera->pan(-offset.x(), offset.y());
 		mPos = event->pos();
 	}
@@ -251,7 +251,7 @@ void Viewport::wheelEvent(QWheelEvent* event)
 void Viewport::keyPressEvent(QKeyEvent* event)
 {
 	float interval = 1.0;
-	float scale = 50.0;
+	float scale = 60.0;
 
 	switch (event->key())
 	{
