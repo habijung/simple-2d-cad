@@ -32,5 +32,5 @@ namespace SelectUtils
 	QPolygonF CreateLineBoundingBox(Camera* cam, Line* l, int d);
 	QPolygonF CreateLineSelectionBox(Camera* cam, Line* l);
 	QPolygonF CreateFaceSelectionBox(Camera* cam, Face* f);
-	bool HitTesting(QPointF pos, QPolygonF poly);
+	bool HitTesting(const QPointF& pos, QPolygonF poly);
 }

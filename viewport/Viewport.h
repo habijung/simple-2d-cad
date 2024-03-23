@@ -13,7 +13,7 @@ public:
 	~Viewport();
 
 	// Update Scene
-	void UpdateState(std::string name);
+	void UpdateState(const std::string& name);
 	void SaveScene();
 	void LoadScene();
 	void CreateNewScene();

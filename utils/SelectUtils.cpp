@@ -103,7 +103,7 @@ QPolygonF SelectUtils::CreateFaceSelectionBox(Camera* cam, Face* f)
 	return poly;
 }
 
-bool SelectUtils::HitTesting(QPointF pos, QPolygonF poly)
+bool SelectUtils::HitTesting(const QPointF& pos, QPolygonF poly)
 {
 	int count = 0;
 

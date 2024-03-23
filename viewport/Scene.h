@@ -15,8 +15,8 @@ public:
 
 	// Update shape
 	std::list<Shape*> retShapes();
-	void AddShape(Shape* s);
-	void UpdateShapes(std::list<Shape*> newShapes);
+	void AddShape(Shape* shape);
+	void UpdateShapes(const std::list<Shape*>& newShapes);
 	void CreateSampleShapes();
 
 	// Render method

@@ -39,7 +39,7 @@ Viewport::~Viewport()
 }
 
 // Update Scene
-void Viewport::UpdateState(std::string name)
+void Viewport::UpdateState(const std::string& name)
 {
 	if (!name.compare("DRAW_LINE"))
 	{
@@ -284,7 +284,7 @@ void Viewport::keyPressEvent(QKeyEvent* event)
 	case Qt::Key_A: // Move Left
 		mCamera->Pan(-interval, 0);
 		break;
-	case Qt::Key_QuoteLeft:
+	case Qt::Key_QuoteLeft: // Set "SELECT_POINT" state
 		UpdateState("SELECT_POINT");
 		break;
 	}

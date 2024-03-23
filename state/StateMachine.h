@@ -6,13 +6,13 @@ class StateMachine
 {
 public:
 	StateMachine();
-	
+
 	State* CurrentState();
-	State* getState(std::string name);
+	State* getState(const std::string& name);
 	void AddState(State* state);
-	void SetState(std::string name);
-	void DeleteState(std::string name);
-	void Transition(std::string name, SelectUtils::ViewportData* data);
+	void SetState(const std::string& name);
+	void DeleteState(const std::string& name);
+	void Transition(const std::string& name, SelectUtils::ViewportData* data);
 	void PrintAllStates();
 
 private:

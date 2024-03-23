@@ -12,12 +12,12 @@ std::list<Shape*> Scene::retShapes()
 	return mShapes;
 }
 
-void Scene::AddShape(Shape* s)
+void Scene::AddShape(Shape* shape)
 {
-	mShapes.push_back(s);
+	mShapes.push_back(shape);
 }
 
-void Scene::UpdateShapes(std::list<Shape*> newShapes)
+void Scene::UpdateShapes(const std::list<Shape*>& newShapes)
 {
 	mShapes = newShapes;
 }

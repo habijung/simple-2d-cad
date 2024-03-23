@@ -40,7 +40,7 @@ void StateMachine::AddState(State* state)
 	}
 }
 
-State* StateMachine::getState(std::string name)
+State* StateMachine::getState(const std::string& name)
 {
 	std::list<State*>::iterator iter = mStates.begin();
 	bool checkSameName = false;
@@ -65,7 +65,7 @@ State* StateMachine::getState(std::string name)
 	}
 }
 
-void StateMachine::SetState(std::string name)
+void StateMachine::SetState(const std::string& name)
 {
 	for (std::list<State*>::iterator iter = mStates.begin(); iter != mStates.end(); iter++)
 	{
@@ -77,7 +77,7 @@ void StateMachine::SetState(std::string name)
 	}
 }
 
-void StateMachine::DeleteState(std::string name)
+void StateMachine::DeleteState(const std::string& name)
 {
 	bool checkSameName = false;
 
@@ -91,7 +91,7 @@ void StateMachine::DeleteState(std::string name)
 	}
 }
 
-void StateMachine::Transition(std::string name, SelectUtils::ViewportData* data)
+void StateMachine::Transition(const std::string& name, SelectUtils::ViewportData* data)
 {
 	SetState(name);
 	mState->UpdateScene(data->scene);
