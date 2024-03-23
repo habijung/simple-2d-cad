@@ -13,6 +13,7 @@ private:
 	void mousePressEvent(QMouseEvent* event) override;
 	void mouseMoveEvent(QMouseEvent* event) override;
 	void mouseReleaseEvent(QMouseEvent* event) override;
+	void drawLine();
 
 	QPoint pStart, pEnd;
 	int xOffset, yOffset;

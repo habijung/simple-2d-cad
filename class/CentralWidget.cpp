@@ -11,6 +11,29 @@ CentralWidget::CentralWidget(QWidget* parent)
 
 void CentralWidget::paintEvent(QPaintEvent* event)
 {
+	// Draw line with mouse event
+	this->drawLine();
+}
+
+void CentralWidget::mousePressEvent(QMouseEvent* event)
+{
+	this->pStart = event->pos();
+}
+
+void CentralWidget::mouseMoveEvent(QMouseEvent* event)
+{
+	xOffset = event->pos().x() - this->pStart.x();
+	yOffset = event->pos().y() - this->pStart.y();
+	update();
+}
+
+void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
+{
+	this->pEnd = event->pos();
+}
+
+void CentralWidget::drawLine()
+{
 	// TODO: Add attribute with Qt::WA_OpaquePaintEvent
 	int xStart = this->pStart.x();
 	int yStart = this->pStart.y();
@@ -41,21 +64,4 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 		);
 	}
 	painter.end();
-}
-
-void CentralWidget::mousePressEvent(QMouseEvent* event)
-{
-	this->pStart = event->pos();
-}
-
-void CentralWidget::mouseMoveEvent(QMouseEvent* event)
-{
-	xOffset = event->pos().x() - this->pStart.x();
-	yOffset = event->pos().y() - this->pStart.y();
-	update();
-}
-
-void CentralWidget::mouseReleaseEvent(QMouseEvent* event)
-{
-	this->pEnd = event->pos();
 }
