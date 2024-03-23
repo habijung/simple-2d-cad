@@ -2,6 +2,7 @@
 #include "StateMachine.h"
 
 
+// TODO: Change string to class State in StateMachine
 StateMachine::StateMachine()
 {
 	this->mState = nullptr;
@@ -49,6 +50,12 @@ void StateMachine::setState(string name)
 			break;
 		}
 	}
+}
+
+void StateMachine::transition(string name)
+{
+	// TODO: Transmission QEvent with enter, leave
+	this->setState(name);
 }
 
 string StateMachine::getCurrentState()

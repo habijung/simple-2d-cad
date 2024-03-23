@@ -12,7 +12,7 @@ public:
 	StateMachine();
 	void addState(string name);
 	void setState(string name);
-	void transitionState(State* state);
+	void transition(string name);
 	string getCurrentState();
 
 	void printAllStates();

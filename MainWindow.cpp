@@ -111,6 +111,8 @@ void MainWindow::setSidebarWidget(QWidget* widget)
 	connect(btnLine, &QPushButton::clicked, [this]()
 		{
 			qDebug() << "Line Clicked";
+			this->machine->transition("DRAW_LINE");
+			this->machine->getCurrentState();
 		});
 	connect(btnFace, &QPushButton::clicked, [this]()
 		{
