@@ -1,5 +1,6 @@
 #include <QPushButton>
 #include <QBoxLayout>
+#include <QFileDialog>
 #include "MainWindow.h"
 
 
@@ -114,6 +115,19 @@ void MainWindow::setToolbar()
 	connect(newa, &QAction::triggered, qApp, [this]()
 		{
 			mScene = widget->createNewScene(mScene);
+		});
+	connect(open, &QAction::triggered, qApp, [this]()
+		{
+			QFileDialog* fd = new QFileDialog;
+			fd->setFileMode(QFileDialog::AnyFile);
+			fd->setOptions(QFileDialog::ShowDirsOnly);
+			fd->setViewMode(QFileDialog::Detail);
+			int result = fd->exec();
+			if (result)
+			{
+				QString filePath = fd->selectedFiles()[0];
+				//ui->filePathEdit->setText(filePath);
+			}
 		});
 }
 
