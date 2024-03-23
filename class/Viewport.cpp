@@ -11,7 +11,7 @@ Viewport::Viewport(QWidget* parent, Scene* mainScene, Camera* mainCamera, StateM
 	: QWidget(parent)
 {
 	qDebug() << "\n Central Widget \n";
-	scene = mainScene;
+	mScene = mainScene;
 	camera = mainCamera;
 	machine = mainMachine;
 	component* comp = new component;
@@ -56,7 +56,7 @@ void Viewport::updateState(State* state, Scene* newScene)
 void Viewport::saveScene()
 {
 	QJsonObject content;
-	list<Shape*> shapes = scene->retShapes();
+	list<Shape*> shapes = mScene->retShapes();
 	int numShape = 0; // Check priority
 	int numLine = 0;
 	int numFace = 0;
@@ -133,7 +133,7 @@ void Viewport::loadScene()
 		if (jsonError.error != QJsonParseError::NoError)
 		{
 			qDebug() << "fromJson failed: " << jsonError.errorString().toStdString();
-			return;
+			return mScene;
 		}
 
 		if (document.isObject())
@@ -147,11 +147,11 @@ void Viewport::loadScene()
 Scene* Viewport::createNewScene(Scene* oldScene)
 {
 	delete oldScene;
-	scene = new Scene(this, camera);
-	machine->getCurrentState()->updateScene(scene);
+	mScene = new Scene(this, camera);
+	machine->getCurrentState()->updateScene(mScene);
 	update();
 
-	return scene;
+	return mScene;
 }
 
 void Viewport::paintEvent(QPaintEvent* event)
@@ -159,8 +159,8 @@ void Viewport::paintEvent(QPaintEvent* event)
 	QPainter* painter = new QPainter(this);
 
 	painter->save();
-	scene->renderScreenCoordinate(painter);
-	scene->renderShape(painter);
+	mScene->renderScreenCoordinate(painter);
+	mScene->renderShape(painter);
 	painter->restore();
 
 	painter->save();
@@ -217,7 +217,7 @@ void Viewport::resizeEvent(QResizeEvent* event)
 {
 	// TODO: resizeEvent가 발생하면 좌표를 실시간으로 이동
 	QSize* screenSize = new QSize(width(), height());
-	scene->resize(screenSize);
+	mScene->resize(screenSize);
 }
 
 void Viewport::drawLine()

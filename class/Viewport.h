@@ -46,7 +46,7 @@ private:
 	vector<pair<QPoint, QPoint>> vert;
 
 	// Class instances
-	Scene* scene;
+	Scene* mScene;
 	Camera* camera;
 	State* state;
 	StateMachine* machine;

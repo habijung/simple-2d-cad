@@ -118,7 +118,7 @@ void MainWindow::setToolbar()
 		});
 	connect(open, &QAction::triggered, qApp, [this]()
 		{
-			widget->loadScene();
+			mScene = widget->loadScene(mScene);
 		});
 	connect(save, &QAction::triggered, qApp, [this]()
 		{
