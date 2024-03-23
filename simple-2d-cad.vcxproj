@@ -101,6 +101,7 @@
     <ClCompile Include="class\Viewport.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="main.cpp" />
+    <None Include=".editorconfig" />
     <None Include="simple-2d-cad.ico" />
     <ResourceCompile Include="simple-2d-cad.rc" />
   </ItemGroup>
