@@ -50,10 +50,21 @@ void Viewport::updateState(State* state)
 
 void Viewport::paintEvent(QPaintEvent* event)
 {
+	QPainter* painter = new QPainter(this);
+
+	painter->save();
+	scene->renderScreenCoordinate(painter);
+	scene->renderShape(painter);
+	painter->restore();
+
+	painter->save();
+	machine->getCurrentState()->paintEvent(painter);
+	painter->restore();
+
 	// Activate this when State Machine finished.  
 	{
 		// Draw line with mouse event
-		this->drawLine();
+		//this->drawLine();
 
 		// Render method test
 		//this->renderAll();
@@ -62,19 +73,7 @@ void Viewport::paintEvent(QPaintEvent* event)
 		//this->selectLine(this->pStart);
 	}
 
-	// Class Scene test
-	QPainter* painter1 = new QPainter(this);
-	scene->renderScreenCoordinate(painter1, this->camera);
-	painter1->end();
-
-	QPainter* painter2 = new QPainter(this);
-	machine->getCurrentState()->paintEvent(painter2);
-	scene->renderScenePoint(painter2, this->camera);
-	painter2->end();
-
-	QPainter* shapePainter = new QPainter(this);
-	scene->renderShape(shapePainter);
-	shapePainter->end();
+	painter->end();
 }
 
 void Viewport::mousePressEvent(QMouseEvent* event)

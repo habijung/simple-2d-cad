@@ -4,13 +4,14 @@
 
 Vertex::Vertex(float x, float y)
 {
+	mType = "Point";
 	this->x = x;
 	this->y = y;
 }
 
-void Vertex::render(QPainter* painter)
+void Vertex::render(QPainter* painter, Camera* camera)
 {
-	QPoint p = QPoint(this->x, this->y);
+	QPoint p = camera->setWindowToScreen(QPointF(this->x, this->y));
 	QPen pen(Qt::blue, 10);
 	painter->setPen(pen);
 	painter->drawPoint(p);
@@ -23,11 +24,12 @@ QPointF Vertex::retVertex()
 
 Line::Line(Vertex* p1, Vertex* p2)
 {
+	mType = "Line";
 	this->p1 = p1;
 	this->p2 = p2;
 }
 
-void Line::render(QPainter* painter)
+void Line::render(QPainter* painter, Camera* camera)
 {
 	QPointF p1 = this->p1->retVertex();
 	QPointF p2 = this->p2->retVertex();
@@ -41,10 +43,11 @@ void Line::render(QPainter* painter)
 
 Face::Face(list<Vertex*> vertices)
 {
+	mType = "Face";
 	this->vertices = vertices;
 }
 
-void Face::render(QPainter* painter)
+void Face::render(QPainter* painter, Camera* camera)
 {
 	QPolygonF polygon;
 	list<Vertex*>::iterator iter = this->vertices.begin();

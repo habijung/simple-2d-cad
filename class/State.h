@@ -9,6 +9,12 @@
 using namespace std;
 
 
+struct Point
+{
+	int x;
+	int y;
+};
+
 class Viewport; // Circular Dependency
 
 class State
@@ -47,6 +53,7 @@ private:
 	Camera* mCamera;
 	QPoint mStartPoint, mEndPoint;
 	int mButton;
+	int mXOffset, mYOffset;
 };
 
 class DrawFaceState : public State

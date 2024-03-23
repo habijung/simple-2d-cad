@@ -16,8 +16,8 @@ MainWindow::MainWindow(QWidget* parent)
 	machine = new StateMachine();
 
 	// Create main scene, camera, viewport
-	mScene = new Scene(this);
 	mCamera = new Camera(this, QSize(600, 600), 100.0);
+	mScene = new Scene(this, mCamera);
 	this->widget = new Viewport(this, mScene, mCamera, machine);
 	mData = new component{ this->widget, mScene, mCamera };
 	setCentralWidget(this->widget);

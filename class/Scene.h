@@ -13,12 +13,11 @@ using namespace std;
 class Scene : public QWidget
 {
 public:
-	Scene(QWidget* parent = nullptr);
+	Scene(QWidget* parent = nullptr, Camera* camera = nullptr);
 	void resize(QSize* screenSize);
 
 	// Render method
-	void renderScreenCoordinate(QPainter* painter, Camera* camera);
-	void renderScenePoint(QPainter* painter, Camera* camera);
+	void renderScreenCoordinate(QPainter* painter);
 	void renderShape(QPainter* painter);
 
 	// Add data method
@@ -27,6 +26,6 @@ public:
 private:
 	int width, height;
 	vector<QPointF> vertScreen;
-	vector<QPointF> vert;
 	list<Shape*> mShapes;
+	Camera* mCamera;
 };

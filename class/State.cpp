@@ -42,13 +42,13 @@ void DrawLineState::mousePressEvent(QMouseEvent* event)
 
 void DrawLineState::mouseMoveEvent(QMouseEvent* event)
 {
-	int xOffset = event->pos().x() - mStartPoint.x();
-	int yOffset = event->pos().y() - mStartPoint.y();
+	mXOffset = event->pos().x() - mStartPoint.x();
+	mYOffset = event->pos().y() - mStartPoint.y();
 
-	if (event->button() == Qt::NoButton)
-	{
-		mViewport->update();
-	}
+	//if ((mButton == Qt::LeftButton) && (event->button() == Qt::NoButton))
+	//{
+	//	mViewport->update();
+	//}
 }
 
 void DrawLineState::mouseReleaseEvent(QMouseEvent* event)
@@ -68,6 +68,24 @@ void DrawLineState::paintEvent(QPainter* painter)
 {
 	QPen pen(Qt::green, 10);
 	painter->setPen(pen);
+
+	Point start = { mStartPoint.x(), mStartPoint.y() };
+	Point end = { mEndPoint.x(), mEndPoint.y() };
+
+	if (start.x | start.y)
+	{
+		painter->drawLine(start.x, start.y, end.x, end.y);
+		painter->drawText(
+			start.x + 10,
+			start.y,
+			QString("x: %1, y: %2").arg(start.x).arg(start.y)
+		);
+		painter->drawText(
+			end.x + 10,
+			end.y,
+			QString("x: %1, y: %2").arg(end.x).arg(end.y)
+		);
+	}
 }
 
 DrawFaceState::DrawFaceState(string name, component* comp)
