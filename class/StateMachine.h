@@ -1,16 +1,17 @@
 #pragma once
 #include <list>
+#include <string>
 using namespace std;
 
 
 class State
 {
 public:
-	State(QString* name);
-	QString* getStateName();
+	State(string name);
+	string getStateName();
 
 private:
-	QString* mName;
+	string mName;
 };
 
 
@@ -18,10 +19,12 @@ class StateMachine
 {
 public:
 	StateMachine();
-	void addState(QString* name);
+	void addState(string name);
 	void setInitialState(State* state);
 	void transitionState(State* state);
-	QString* getCurrentState();
+	string getCurrentState();
+
+	void printAllStates();
 
 private:
 	State* mState;

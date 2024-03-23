@@ -4,6 +4,7 @@
 #include <QKeyEvent>
 #include "ui_MainWindow.h"
 #include "class/Viewport.h"
+#include "class/StateMachine.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindowClass; };
@@ -26,6 +27,7 @@ public:
 private:
 	Ui::MainWindowClass* ui;
 	Viewport* widget;
+	StateMachine* stateMachine;
 
 protected:
 	void keyPressEvent(QKeyEvent* event);

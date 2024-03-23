@@ -17,6 +17,12 @@ MainWindow::MainWindow(QWidget* parent)
 
 	this->setSidebarWidget(this->widget);
 	this->setUnderbarWidget(this->widget);
+
+	// State Machine Test
+	stateMachine = new StateMachine();
+	this->stateMachine->addState("s1");
+	this->stateMachine->addState("s2");
+	this->stateMachine->printAllStates();
 }
 
 MainWindow::~MainWindow()
