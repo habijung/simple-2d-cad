@@ -26,12 +26,12 @@ void CentralWidget::paintEvent(QPaintEvent* event)
 	//scene->render(scenePainter);
 	//scenePainter->end();
 	QPainter* sPainter = new QPainter(this);
-	scene->renderScreen(sPainter);
+	scene->renderScreenPoint(sPainter);
 	sPainter->end();
 
-	QPainter* wPainter = new QPainter(this);
-	scene->renderWindow(wPainter);
-	wPainter->end();
+	//QPainter* wPainter = new QPainter(this);
+	//scene->renderWindow(wPainter);
+	//wPainter->end();
 }
 
 void CentralWidget::mousePressEvent(QMouseEvent* event)
@@ -51,8 +51,9 @@ void CentralWidget::mousePressEvent(QMouseEvent* event)
 		scene->setScreenToWindow
 		(
 			this->pStart,
-			static_cast<int>(width() / 2.0),
-			static_cast<int>(height() / 2.0)
+			width() / 2.0,
+			height() / 2.0,
+			100
 		);
 		repaint();
 	}

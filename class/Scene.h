@@ -13,13 +13,16 @@ public:
 	Scene(QWidget* parent = nullptr);
 	void render(QPainter* painter);
 	void resize(QSize* screenSize);
-	void setScreenToWindow(QPoint p, int xOffset, int yOffset);
+
+	void setScreenToWindow(QPoint pScreen, float dx, float dy, float scale);
+	void renderScreenPoint(QPainter* painter);
+
+	// Not ready
 	QPoint setWindowToScreen(QPoint p);
-	void renderScreen(QPainter* painter);
 	void renderWindow(QPainter* painter);
 
 private:
 	int width, height;
 	int dx, dy;
-	vector<QPoint> vert;
+	vector<QPointF> vert;
 };
