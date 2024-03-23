@@ -27,7 +27,7 @@ void MainWindow::setMenuBar()
 	QAction* newa = new QAction(newpix, "&New", this);
 	QAction* open = new QAction(openpix, "&Open", this);
 	QAction* quit = new QAction(quitpix, "&Quit", this);
-	quit->setShortcut(tr("CTRL+Q"));
+	quit->setShortcut(tr("ESC"));
 
 	QMenu* file = menuBar()->addMenu("&File");
 	file->addAction(newa);
