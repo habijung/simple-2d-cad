@@ -8,8 +8,8 @@ public:
 	Camera(QSize size = QSize(600, 600), float scale = 100.0);
 
 	// Coordinate conversion
-	QPointF SetWindowCoordinate(QPoint pScreen);
-	QPoint  SetScreenCoordinate(QPointF pWindow);
+	QPointF SetWindowCoordinate(const QPoint& pScreen);
+	QPoint  SetScreenCoordinate(const QPointF& pWindow);
 
 	// Camera action
 	void Zoom(float scale);

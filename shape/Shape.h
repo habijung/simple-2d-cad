@@ -18,9 +18,9 @@ class Vertex : public Shape
 {
 public:
 	Vertex(float x = 0, float y = 0);
-	Vertex(QPointF p);
+	Vertex(const QPointF& p);
 	QPointF GetVertex();
-	void UpdateVertex(QPointF p);
+	void UpdateVertex(const QPointF& p);
 
 	virtual std::string Type() override;
 	virtual bool CheckShapeType(std::string s) override;
@@ -35,7 +35,7 @@ class Line : public Shape
 {
 public:
 	Line(Vertex* v1 = nullptr, Vertex* v2 = nullptr);
-	Line(QPointF p1, QPointF p2);
+	Line(const QPointF& p1, const QPointF& p2);
 	Line(std::list<Vertex*> vertices);
 	std::vector<Vertex> GetVertices();
 	QLineF GetLine(Camera* cam);

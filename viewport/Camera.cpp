@@ -13,7 +13,7 @@ Camera::Camera(QSize size, float scale)
 }
 
 // Coordinate conversion
-QPointF Camera::SetWindowCoordinate(QPoint pScreen)
+QPointF Camera::SetWindowCoordinate(const QPoint& pScreen)
 {
 	// f({ x, y }) = { (x - mX) / scale, (y - mY) / (-mScale) }
 	QPointF pWindow =
@@ -24,7 +24,7 @@ QPointF Camera::SetWindowCoordinate(QPoint pScreen)
 	return pWindow;
 }
 
-QPoint Camera::SetScreenCoordinate(QPointF pWindow)
+QPoint Camera::SetScreenCoordinate(const QPointF& pWindow)
 {
 	QPoint pScreen =
 	{

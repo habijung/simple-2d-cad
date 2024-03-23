@@ -8,7 +8,7 @@ Vertex::Vertex(float x, float y)
 	mY = y;
 }
 
-Vertex::Vertex(QPointF p)
+Vertex::Vertex(const QPointF& p)
 {
 	mType = "Point";
 	mX = p.x();
@@ -20,7 +20,7 @@ QPointF Vertex::GetVertex()
 	return QPointF(mX, mY);
 }
 
-void Vertex::UpdateVertex(QPointF p)
+void Vertex::UpdateVertex(const QPointF& p)
 {
 	mX = p.x();
 	mY = p.y();

@@ -8,7 +8,7 @@ Line::Line(Vertex* v1, Vertex* v2)
 	mV2 = v2;
 }
 
-Line::Line(QPointF p1, QPointF p2)
+Line::Line(const QPointF& p1, const QPointF& p2)
 {
 	mType = "Line";
 	mV1 = new Vertex(p1);
