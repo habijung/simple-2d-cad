@@ -57,16 +57,27 @@ void Viewport::saveScene()
 {
 	QJsonObject content;
 	list<Shape*> shapes = scene->retShapes();
-	int count = 0;
+	int numLine = 0;
+	int numFace = 0;
 
-	for (auto i = shapes.begin(); i != shapes.end(); i++)
+	for (auto iter = shapes.begin(); iter != shapes.end(); iter++)
 	{
 		QJsonObject obj;
-		obj.insert("Num", count);
-		obj.insert("Type", (*i)->type().c_str());
-		string name = (*i)->type() + "_" + to_string(count);
-		content.insert(name.c_str(), obj);
-		count++;
+
+		if ((*iter)->checkType("Line"))
+		{
+			string name = (*iter)->type() + "-" + to_string(numLine);
+			obj.insert("Num", numLine);
+			obj.insert("Type", (*iter)->type().c_str());
+			obj.insert("Vertices", dynamic_cast<Line*>(*iter)->saveLine());
+			content.insert(name.c_str(), obj);
+			numLine++;
+		}
+
+		if ((*iter)->checkType("Face"))
+		{
+			numFace++;
+		}
 	}
 
 	QJsonDocument document;

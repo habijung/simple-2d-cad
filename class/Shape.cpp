@@ -84,6 +84,15 @@ void Line::updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> 
 	mV2->updateVertex(cam->setScreenToWindow(p2.toPoint()));
 }
 
+QJsonObject Line::saveLine()
+{
+	QVariantMap map;
+	map["v1"] = QString("%1, %2").arg(mV1->retVertex().x()).arg(mV1->retVertex().y());
+	map["v2"] = QString("%1, %2").arg(mV2->retVertex().x()).arg(mV2->retVertex().y());
+
+	return QJsonObject::fromVariantMap(map);
+}
+
 string Line::type()
 {
 	return mType;

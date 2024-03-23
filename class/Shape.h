@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <QPainter>
+#include <QJsonObject>
 #include "Camera.h"
 using namespace std;
 
@@ -39,6 +40,7 @@ public:
 	vector<Vertex> retVertices();
 	QLineF retLine(Camera* cam);
 	void updateLine(Camera* cam, QPointF pStart, QPointF pEnd, vector<Vertex> vStart);
+	QJsonObject saveLine();
 
 	virtual string type() override;
 	virtual bool checkType(string s) override;
