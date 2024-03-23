@@ -91,7 +91,9 @@
   <ItemGroup>
     <ClCompile Include="class\Camera.cpp" />
     <ClCompile Include="class\Scene.cpp" />
-    <ClCompile Include="shape\Shape.cpp" />
+    <ClCompile Include="shape\Face.cpp" />
+    <ClCompile Include="shape\Line.cpp" />
+    <ClCompile Include="shape\Vertex.cpp" />
     <ClCompile Include="state\StateMachine.cpp" />
     <ClCompile Include="state\State.cpp" />
     <ClCompile Include="utils\utils.cpp" />
